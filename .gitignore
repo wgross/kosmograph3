@@ -1,0 +1,22 @@
+# Ignore hg repository
+.hg
+/.hgignore
+
+# Ignore compiler output
+**/bin
+**/obj
+*.pdb
+
+#Ignore Nuget package repository
+/packages
+
+# Ignore VS files
+*.user
+*.suo
+*.mdf
+*.ldf
+
+# Misc
+*.orig
+*.bak
+

@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89DC37E7-F5D0-4DB2-B694-6951803CD048}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KosmoGraph.Desktop.ViewModel</RootNamespace>
+    <AssemblyName>KosmoGraph.Desktop.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\packages\Prism.MEFExtensions.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssignedTagViewModelBase.cs" />
+    <Compile Include="Common\AssignedFacetViewModel.cs" />
+    <Compile Include="Common\EditFacetedViewModelBase.cs" />
+    <Compile Include="Common\Edit\EditAssignedFacetViewModelBase.cs" />
+    <Compile Include="Common\Edit\EditExistingAssignedFacetViewModel.cs" />
+    <Compile Include="Entity\Edit\EditAssignedEntityTagViewModel.cs" />
+    <Compile Include="EditAssignedRelationshipTagViewModel.cs" />
+    <Compile Include="Property\Edit\EditExistingPropertyValueViewModel.cs" />
+    <Compile Include="Entity\Edit\EditExistingEntityViewModel.cs" />
+    <Compile Include="Entity\Edit\EditEntityViewModelBase.cs" />
+    <Compile Include="Common\Edit\EditModelItemViewModelBase.cs" />
+    <Compile Include="Common\Edit\EditNewAssignedFacetViewModel.cs" />
+    <Compile Include="Property\Edit\EditNewPropertyValueViewModel.cs" />
+    <Compile Include="Property\Edit\EditPropertyValueViewModelBase.cs" />
+    <Compile Include="Entity\Edit\EditNewEntityViewModel.cs" />
+    <Compile Include="Entity\Edit\PendingAssignedFacetPropertyDefinitionViewModel.cs" />
+    <Compile Include="Entity\Edit\PendingAssignedFacetPropertyValue.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="Facet\EditExistingPropertyDefinitionViewModel.cs" />
+    <Compile Include="EditRelationshipPropertyValueViewModel.cs" />
+    <Compile Include="Entity\Edit\PendingAssignedFacetViewModel.cs" />
+    <Compile Include="Facet\EditNewPropertyDefinitionViewModel.cs" />
+    <Compile Include="Facet\EditPropertyDefinitionViewModelBase.cs" />
+    <Compile Include="Property\IPropertyValue.cs" />
+    <Compile Include="Property\IPropertyDefinition.cs" />
+    <Compile Include="Relationship\EditNewRelationshipViewModel.cs" />
+    <Compile Include="Relationship\EditExistingRelationshipViewModel.cs" />
+    <Compile Include="Facet\Edit\EditFacetViewModelBase.cs" />
+    <Compile Include="Facet\Edit\EditExistingFacetViewModel.cs" />
+    <Compile Include="EntityConnectorViewModel.cs" />
+    <Compile Include="EntityRelationshipViewModel_2.cs" />
+    <Compile Include="Entity\EntityViewModel.cs" />
+    <Compile Include="Contracts\ILayoutEdge.cs" />
+    <Compile Include="Contracts\ILayoutNode.cs" />
+    <Compile Include="Facet\Edit\EditNewFacetViewModel.cs" />
+    <Compile Include="ModelItemViewModelBase.cs" />
+    <Compile Include="NamedModelItemViewModelBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property\PropertyDefinitionViewModel.cs" />
+    <Compile Include="Property\PropertyValueViewModel.cs" />
+    <Compile Include="Relationship\EditRelationshipViewModelBase.cs" />
+    <Compile Include="Relationship\RelationshipViewModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="System\ListExtensions.cs" />
+    <Compile Include="TaggedModelItemViewModelBase.cs" />
+    <Compile Include="Facet\FacetViewModel.cs" />
+    <Compile Include="TagViewModelIsVisibleChangedEvent.cs" />
+    <Compile Include="WeakPropertyChangedEventHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KosmoGraph.Model\KosmoGraph.Model.csproj">
+      <Project>{70f2021d-1f2a-4df8-82ea-8fe3a19b51f6}</Project>
+      <Name>KosmoGraph.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KosmoGraph.Services\KosmoGraph.Services.csproj">
+      <Project>{966f8371-35ea-40b2-b372-18d1175ff54d}</Project>
+      <Name>KosmoGraph.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

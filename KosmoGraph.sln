@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Model.Test", "KosmoGraph.Model.Test\KosmoGraph.Model.Test.csproj", "{CB8F8DA7-1B59-462E-906B-B1D862142FCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Model", "KosmoGraph.Model\KosmoGraph.Model.csproj", "{70F2021D-1F2A-4DF8-82EA-8FE3A19B51F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Test", "KosmoGraph.Test\KosmoGraph.Test.csproj", "{42138764-E1E2-4ECB-9539-76267B1F6B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Persistence.MongoDb.Test", "KosmoGraph.Persistence.MongoDb.Test\KosmoGraph.Persistence.MongoDb.Test.csproj", "{EDE9F804-D647-4681-9337-D40C88D24C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Persistence.MongoDb", "KosmoGraph.Persistence.MongoDb\KosmoGraph.Persistence.MongoDb.csproj", "{CFC251C7-D92F-4F87-90CB-2AED71638AFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Services", "KosmoGraph.Services\KosmoGraph.Services.csproj", "{966F8371-35EA-40B2-B372-18D1175FF54D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Services.Test", "KosmoGraph.Services.Test\KosmoGraph.Services.Test.csproj", "{6F4BDD29-2356-4898-92D4-5FF611B996F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Cli", "Kosmograph.Cli\KosmoGraph.Cli.csproj", "{FEF7E3D6-C0BE-4422-A523-BFCC3A24923C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Desktop.ViewModel", "KosmoGraph.Desktop.ViewModel\KosmoGraph.Desktop.ViewModel.csproj", "{89DC37E7-F5D0-4DB2-B694-6951803CD048}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Persistence", "KosmoGraph.Persistence\KosmoGraph.Persistence.csproj", "{0EDD85AB-DE0B-4C93-8470-849744C064FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Desktop.ViewModel.Test", "KosmoGraph.Desktop.ViewModel.Test\KosmoGraph.Desktop.ViewModel.Test.csproj", "{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB8F8DA7-1B59-462E-906B-B1D862142FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB8F8DA7-1B59-462E-906B-B1D862142FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB8F8DA7-1B59-462E-906B-B1D862142FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB8F8DA7-1B59-462E-906B-B1D862142FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70F2021D-1F2A-4DF8-82EA-8FE3A19B51F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70F2021D-1F2A-4DF8-82EA-8FE3A19B51F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70F2021D-1F2A-4DF8-82EA-8FE3A19B51F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70F2021D-1F2A-4DF8-82EA-8FE3A19B51F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42138764-E1E2-4ECB-9539-76267B1F6B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42138764-E1E2-4ECB-9539-76267B1F6B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42138764-E1E2-4ECB-9539-76267B1F6B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42138764-E1E2-4ECB-9539-76267B1F6B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE9F804-D647-4681-9337-D40C88D24C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE9F804-D647-4681-9337-D40C88D24C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE9F804-D647-4681-9337-D40C88D24C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE9F804-D647-4681-9337-D40C88D24C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC251C7-D92F-4F87-90CB-2AED71638AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC251C7-D92F-4F87-90CB-2AED71638AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC251C7-D92F-4F87-90CB-2AED71638AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC251C7-D92F-4F87-90CB-2AED71638AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966F8371-35EA-40B2-B372-18D1175FF54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966F8371-35EA-40B2-B372-18D1175FF54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966F8371-35EA-40B2-B372-18D1175FF54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966F8371-35EA-40B2-B372-18D1175FF54D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4BDD29-2356-4898-92D4-5FF611B996F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4BDD29-2356-4898-92D4-5FF611B996F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4BDD29-2356-4898-92D4-5FF611B996F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4BDD29-2356-4898-92D4-5FF611B996F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEF7E3D6-C0BE-4422-A523-BFCC3A24923C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF7E3D6-C0BE-4422-A523-BFCC3A24923C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEF7E3D6-C0BE-4422-A523-BFCC3A24923C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEF7E3D6-C0BE-4422-A523-BFCC3A24923C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DC37E7-F5D0-4DB2-B694-6951803CD048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DC37E7-F5D0-4DB2-B694-6951803CD048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DC37E7-F5D0-4DB2-B694-6951803CD048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DC37E7-F5D0-4DB2-B694-6951803CD048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDD85AB-DE0B-4C93-8470-849744C064FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDD85AB-DE0B-4C93-8470-849744C064FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDD85AB-DE0B-4C93-8470-849744C064FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDD85AB-DE0B-4C93-8470-849744C064FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
