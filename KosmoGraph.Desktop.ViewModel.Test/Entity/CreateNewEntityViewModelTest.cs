@@ -15,11 +15,32 @@
     [TestClass]
     public class CreateNewEntityViewModelTest
     {
+        private Mock<IManageEntitiesAndRelationships> ersvc;
+        private Mock<IManageFacets> fsvc;
+        private EntityRelationshipViewModel vm;
+
         [TestInitialize]
         public void BeforeEachTest()
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            
+            // There is only a view model
+
+            this.ersvc = new Mock<IManageEntitiesAndRelationships>();
+            this.ersvc // Db contains no entities
+                .Setup(_ => _.GetAllEntities())
+                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
+            this.ersvc // Db Contains no relationships
+                .Setup(_ => _.GetAllRelationships())
+                .Returns(Task.FromResult(Enumerable.Empty<Relationship>()));
+
+            this.fsvc = new Mock<IManageFacets>();
+            this.fsvc // Db contains no facets
+                .Setup(_ => _.GetAllFacets())
+                .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
+
+            this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
         #region CreateNewEntity
@@ -30,17 +51,9 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            
             // ACT
 
-            EditNewEntityViewModel e1edit = vm.CreateNewEntity();
+            EditNewEntityViewModel e1edit = this.vm.CreateNewEntity();
             
             // ASSERT
             // edit is initialized but cant commit
@@ -49,11 +62,11 @@
             Assert.IsFalse(e1edit.Commit.CanExecute());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Entities.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Entities.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
             
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion 
@@ -66,15 +79,7 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var e1edit = vm.CreateNewEntity();
+            var e1edit = this.vm.CreateNewEntity();
 
             // ACT
 
@@ -87,11 +92,11 @@
             Assert.IsTrue(e1edit.Commit.CanExecute());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Entities.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Entities.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion 
@@ -104,19 +109,11 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
-            ersvc // expects entity creation
+            this.ersvc // expects entity creation
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
                 .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
 
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var e1edit = vm.CreateNewEntity();
+            var e1edit = this.vm.CreateNewEntity();
             e1edit.Name = "e1";
 
             // ACT
@@ -131,15 +128,15 @@
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
             
-            Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Items.Count());
+            Assert.AreEqual(1, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Items.Count());
 
-            Assert.AreSame(vm.Items.First(), vm.Entities.First());
-            Assert.AreEqual("e1", vm.Entities.First().Name);
+            Assert.AreSame(this.vm.Items.First(), this.vm.Entities.First());
+            Assert.AreEqual("e1", this.vm.Entities.First().Name);
             
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.fsvc.VerifyAll();
         }
 
         [TestMethod]
@@ -148,19 +145,11 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
             ersvc // expects entity creation
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
                 .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
 
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var e1edit = vm.CreateNewEntity();
+            var e1edit = this.vm.CreateNewEntity();
 
             e1edit.Name = "e1";
             e1edit.Commit.Execute();
@@ -176,15 +165,15 @@
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
 
-            Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Items.Count);
 
-            Assert.AreSame(vm.Items.First(), vm.Entities.First());
-            Assert.AreEqual("e1", vm.Entities.First().Name);
+            Assert.AreSame(this.vm.Items.First(), this.vm.Entities.First());
+            Assert.AreEqual("e1", this.vm.Entities.First().Name);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.fsvc.VerifyAll();
         }
 
         #endregion
@@ -197,15 +186,7 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var e1edit = vm.CreateNewEntity();
+            var e1edit = this.vm.CreateNewEntity();
             e1edit.Name = "e1";
 
             // ACT
@@ -219,11 +200,11 @@
             Assert.IsFalse(e1edit.Commit.CanExecute());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Entities.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Entities.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion
@@ -236,19 +217,12 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expect retrieval of all entites
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(Enumerable.Empty<Entity>()));
-
             ersvc // expects entity creation
               .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
               .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
 
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var e1edit = vm.CreateNewEntity();
+            var e1edit = this.vm.CreateNewEntity();
+            
             e1edit.Name = "e1";
             e1edit.Rollback.Execute();
             
@@ -264,15 +238,15 @@
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
 
-            Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Items.Count);
 
-            Assert.AreSame(vm.Items.First(), vm.Entities.First());
-            Assert.AreEqual("e1", vm.Entities.First().Name);
+            Assert.AreSame(this.vm.Items.First(), this.vm.Entities.First());
+            Assert.AreEqual("e1", this.vm.Entities.First().Name);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.fsvc.VerifyAll();
         }
 
         #endregion 
@@ -289,19 +263,19 @@
         //        .Returns((Action<Entity> a) => EntityFactory.CreateNew(a));
 
 
-        //    var fsvc = new Mock<IManageFacets>();
-        //    fsvc // expects Facet creation
+        //    var this.fsvc. = new Mock<IManageFacets>();
+        //    this.fsvc. // expects Facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
         //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
 
-        //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-        //    var f1 = vm.Add(vm.CreateNewFacet("f1"));
+        //    var vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
+        //    var f1 = this.vm.Add(this.vm.CreateNewFacet("f1"));
 
         //    f1.IsVisible = true;
 
         //    // ACT
 
-        //    EntityViewModel e1 = vm.CreateNewEntity("e1");
+        //    EntityViewModel e1 = this.vm.CreateNewEntity("e1");
 
         //    // ASSERT
         //    // adding an e1 to the model lets it show up in Items list and Entities list
@@ -313,8 +287,8 @@
         //    Assert.AreEqual(1, e1.ModelItem.AssignedFacets.Count());
         //    Assert.AreEqual(f1.ModelItem.Id, e1.ModelItem.AssignedFacets.First().FacetId);
 
-        //    ersvc.VerifyAll();
-        //    fsvc.VerifyAll();
+        //    this.ersvc.VerifyAll();
+        //    this.fsvc.VerifyAll();
         //}
     }
 }
