@@ -75,7 +75,9 @@
     <Compile Include="Entity\CreateNewEntityFacetViewModelTest.cs" />
     <Compile Include="Entity\RemoveAssignedEntityFacetTest.cs" />
     <Compile Include="Entity\UpdateExistingEntityViewModelTest.cs" />
-    <Compile Include="Facet\RemoveFacetPropertyDefinitionTest.cs" />
+    <Compile Include="Facet\RemoveAssignedEntityFacetsPropertyDefinitionTest.cs" />
+    <Compile Include="Facet\RemoveUnassignedFacetsPropertyDefinitionTest.cs" />
+    <Compile Include="Facet\RemoveAssignedRelationshipFacetsPropertyDefinitionTest.cs" />
     <Compile Include="Facet\RemoveFacetViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />

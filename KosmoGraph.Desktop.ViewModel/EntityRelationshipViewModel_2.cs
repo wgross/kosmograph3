@@ -342,5 +342,11 @@
         {
             return new EditExistingFacetViewModel(facetViewModel, this.FacetService);
         }
+
+        internal void UpdateAssignedFacets(FacetViewModel facetViewModel)
+        {
+            this.Entities.ForEach(e => e.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
+            this.Relationships.ForEach(r => r.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
+        }
     }
 }

@@ -11,26 +11,18 @@
 
     public abstract class FacetedModelItemViewModelBase : ModelItemViewModelBase
     {
-        #region Construction and initialization of this instance 
+        #region Construction and initialization of this instance
 
         public FacetedModelItemViewModelBase(EntityRelationshipViewModel parentEntityRelationshipModel, IHasAssignedFacets modelItem)
-            :base(parentEntityRelationshipModel)
+            : base(parentEntityRelationshipModel)
         {
             this.facetedModelItem = modelItem;
             this.AssignedFacets = new ObservableCollection<AssignedFacetViewModel>();
             this.Properties = new ObservableCollection<PropertyValueViewModel>();
             this.VisibleProperties = new ObservableCollection<PropertyValueViewModel>();
 
-            this.facetedModelItem
-              .AssignedFacets
-              .Select(at => this.CreateAssignedFacetFromModelItem(this.Model.Facets.Single(t => t.ModelItem.Id == at.FacetId), at))
-              .ToList()
-              .ForEach(at => this.AssignedFacets.Add(at));
-
-            this.AssignedFacets
-                .SelectMany(at => at.Properties)
-                .ToList()
-                .ForEach(pv => this.Properties.Add(pv));
+            this.InitializeAssignedFacets();
+            this.InitializeAggregatedProperties();
 
             this.AssignedFacets.CollectionChanged += AssignedTags_CollectionChanged;
             this.VisibleProperties.CollectionChanged += VisibleProperties_CollectionChanged;
@@ -38,7 +30,7 @@
 
         private readonly IHasAssignedFacets facetedModelItem;
 
-        #endregion 
+        #endregion
 
         public virtual void RefreshIsVisible()
         {
@@ -46,7 +38,16 @@
               this.Properties.Where(pv => pv.Definition.Facet.IsVisible));
         }
 
-        #region A relationship has tags assigned
+        #region A relationship has facets assigned
+
+        private void InitializeAssignedFacets()
+        {
+            this.facetedModelItem
+                .AssignedFacets
+                .Select(at => this.CreateAssignedFacetFromModelItem(this.Model.Facets.Single(t => t.ModelItem.Id == at.FacetId), at))
+                .ToList()
+                .ForEach(at => this.AssignedFacets.Add(at));
+        }
 
         public ObservableCollection<AssignedFacetViewModel> AssignedFacets { get; private set; }
 
@@ -99,7 +100,7 @@
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Create an AssigedTag instance for this relationship
 
@@ -113,7 +114,7 @@
             return new AssignedFacetViewModel(assigned, modelItem);
         }
 
-        #endregion 
+        #endregion
 
         #region Add or Remove assigned Tags
 
@@ -162,9 +163,17 @@
             return result;
         }
 
-        #endregion 
+        #endregion
 
-        #region Aggregate all propert values from all assigned tags
+        #region Aggregate all property values from all assigned tags
+
+        private void InitializeAggregatedProperties()
+        {
+            this.Properties.Clear();
+            this.AssignedFacets
+              .SelectMany(at => at.Properties)
+              .ForEach(pv => this.Properties.Add(pv));
+        }
 
         public ObservableCollection<PropertyValueViewModel> Properties { get; set; }
 
@@ -200,6 +209,23 @@
             }
         }
 
-        #endregion 
+        #endregion
+
+        #region Update assigned facets
+
+        internal void UpdatePropertyValuesOfAssignedFacet(FacetViewModel fromChangedFacet)
+        {
+            var facetToUpdate = this
+                .AssignedFacets
+                .FirstOrDefault(af => af.ModelItem.FacetId == fromChangedFacet.ModelItem.Id);
+
+            if (facetToUpdate == null)
+                return; // the changed ´facet is not part of the model
+
+            facetToUpdate.UpdatePropertyValues();
+            this.InitializeAggregatedProperties();
+        }
+
+        #endregion
     }
 }

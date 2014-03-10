@@ -17,52 +17,65 @@
         {
             this.ModelItem = modelItem;
             this.Facet = assigned;
-            this.Facet.Properties.CollectionChanged += PropertyDefinitions_CollectionChanged;
+            //this.Facet.Properties.CollectionChanged += PropertyDefinitions_CollectionChanged;
             this.Properties = new ObservableCollection<PropertyValueViewModel>();
-            this.ModelItem
-                .Properties
-                .ToList()
-                .ForEach(pv =>
-                {
-                    this.Properties.Add(this.Facet
-                        .Properties
-                        .First(pd => pd.ModelItem.Id == pv.DefinitionId)
-                        .CreatePropertyValue(pv));
-                });
+            this.UpdatePropertyValues();
         }
 
-        void PropertyDefinitions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public void UpdatePropertyValues()
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                // property defininition view models are added -> change this in model
-                e.NewItems
-                    .Cast<PropertyDefinitionViewModel>()
-                    .Select(pdvm => pdvm.CreateNewPropertyValue(this.ModelItem))
-                    .ToList()
-                    .ForEach(pvvm =>
-                    {
-                        this.Properties.Add(pvvm);
-                    });
-
-                // Set values in model item
-                this.ModelItem.Properties = this.Properties.Select(pvvm => pvvm.ModelItem);
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                e.OldItems
-                    .Cast<PropertyDefinitionViewModel>()
-                    .ToList()
-                    .ForEach(pd =>
-                    {
-                        var propertyToRemove = this.Properties.First(p => p.Definition.Equals(pd));
-                        this.Properties.Remove(propertyToRemove);
-                    });
-
-                // Set values in model item
-                this.ModelItem.Properties = this.Properties.Select(pvvm => pvvm.ModelItem);
-            }
+            this.Properties.Clear();
+            this.ModelItem
+               .Properties
+               .ToList() // work on snapshot
+               .ForEach(pv =>
+               {
+                   var propertyDefinition = this.Facet.Properties.FirstOrDefault(pd => pd.ModelItem.Id == pv.DefinitionId);
+                   if(propertyDefinition==null)
+                   {
+                       // property definition is doesn't exist anymore
+                       this.ModelItem.Properties.Remove(pv);
+                   }
+                   else
+                   {
+                        // property definietin exists -> create view model
+                        this.Properties.Add(propertyDefinition.CreatePropertyValue(pv));
+                   }
+               });
         }
+
+        //void PropertyDefinitions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (e.Action == NotifyCollectionChangedAction.Add)
+        //    {
+        //        // property defininition view models are added -> change this in model
+        //        e.NewItems
+        //            .Cast<PropertyDefinitionViewModel>()
+        //            .Select(pdvm => pdvm.CreateNewPropertyValue(this.ModelItem))
+        //            .ToList()
+        //            .ForEach(pvvm =>
+        //            {
+        //                this.Properties.Add(pvvm);
+        //            });
+
+        //        // Set values in model item
+        //        this.ModelItem.Properties = this.Properties.Select(pvvm => pvvm.ModelItem);
+        //    }
+        //    else if (e.Action == NotifyCollectionChangedAction.Remove)
+        //    {
+        //        e.OldItems
+        //            .Cast<PropertyDefinitionViewModel>()
+        //            .ToList()
+        //            .ForEach(pd =>
+        //            {
+        //                var propertyToRemove = this.Properties.First(p => p.Definition.Equals(pd));
+        //                this.Properties.Remove(propertyToRemove);
+        //            });
+
+        //        // Set values in model item
+        //        this.ModelItem.Properties = this.Properties.Select(pvvm => pvvm.ModelItem);
+        //    }
+        //}
 
         public AssignedFacet ModelItem
         {

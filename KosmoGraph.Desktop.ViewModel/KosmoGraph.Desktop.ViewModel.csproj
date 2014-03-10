@@ -111,7 +111,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="System\ListExtensions.cs" />
-    <Compile Include="TaggedModelItemViewModelBase.cs" />
+    <Compile Include="FacetedModelItemViewModelBase.cs" />
     <Compile Include="Facet\FacetViewModel.cs" />
     <Compile Include="TagViewModelIsVisibleChangedEvent.cs" />
     <Compile Include="WeakPropertyChangedEventHandler.cs" />

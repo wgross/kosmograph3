@@ -55,7 +55,10 @@ using System.Threading.Tasks;
                     this.Edited.Remove(pd);
             });
             
-            this.facets.UpdateFacet(this.Edited.ModelItem).Wait();
+            this.facets
+                .UpdateFacet(this.Edited.ModelItem)
+                .EndWith(succeeded:f => this.Edited.Model.UpdateAssignedFacets(this.Edited));
+
             this.hasAlreadyCommitted = true;
             this.isPropertiesChanged = false;
         }

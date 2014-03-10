@@ -14,7 +14,7 @@
 
         #region An assigned facet owns a set of property values
 
-        public IEnumerable<PropertyValue> Properties
+        public ICollection<PropertyValue> Properties
         {
             get
             {
