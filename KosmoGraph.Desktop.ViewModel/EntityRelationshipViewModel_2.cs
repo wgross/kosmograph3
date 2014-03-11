@@ -9,10 +9,13 @@
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Text;
+    using NLog;
 
     public class EntityRelationshipViewModel
     {
-        #region Construction and initialization of this instance 
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
+        #region Construction and initialization of this instance
 
         public EntityRelationshipViewModel(IManageEntitiesAndRelationships forService, IManageFacets withFacets)
         {
@@ -21,7 +24,7 @@
 
             // initialize facets with all facets for facet service
             this.Facets = new ObservableCollection<FacetViewModel>();
-            this.FacetService.GetAllFacets().EndWith(facets =>
+            this.FacetService.GetAllFacets().ContinueWith(facets =>
             {
                 // get all facets in different thread and observe changes lateron
                 facets
@@ -29,21 +32,25 @@
                     .ForEach(f => this.Facets.Add(this.CreateFacetFromModelItem(f)));
 
                 this.Facets.CollectionChanged += Facets_CollectionChanged;
-            });
+
+                log.Info("Retrieved '{0}' facets from service.", this.Facets.Count);
+            }).Wait();
 
             // initialize all Entities, facets are needed!
             this.Entities = new ObservableCollection<EntityViewModel>();
-            this.EntityRelationshipService.GetAllEntities().EndWith(entities =>
+            this.EntityRelationshipService.GetAllEntities().ContinueWith(entities =>
             {
                 entities
                     .ToList()
                     .ForEach(e => this.Entities.Add(this.CreateNewEntityFromModelItem(e)));
 
                 this.Entities.CollectionChanged += Entities_CollectionChanged;
-            });
+
+                log.Info("Retrieved '{0}' entities from service.", this.Entities.Count);
+            }).Wait();
 
             this.Relationships = new ObservableCollection<RelationshipViewModel>();
-            this.EntityRelationshipService.GetAllRelationships().EndWith(relationships =>
+            this.EntityRelationshipService.GetAllRelationships().ContinueWith(relationships =>
             {
                 relationships.ToList().ForEach(r =>
                 {
@@ -51,7 +58,9 @@
                 });
 
                 this.Relationships.CollectionChanged += Relationships_CollectionChanged;
-            });
+
+                log.Info("Retrieved '{0}' relationships from service.", this.Relationships.Count);
+            }).Wait();
 
             this.Items = new ObservableCollection<ModelItemViewModelBase>(this.Facets
                 .Cast<ModelItemViewModelBase>()
@@ -83,13 +92,14 @@
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Entities of this model
 
         public ObservableCollection<EntityViewModel> Entities
         {
-            get; private set;
+            get;
+            private set;
         }
 
         private void Entities_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -126,7 +136,7 @@
             }
         }
 
-        #endregion 
+        #endregion
 
         public ObservableCollection<ModelItemViewModelBase> Items { get; set; }
 
@@ -165,14 +175,23 @@
         private EntityViewModel GetOrCreateEntityFromModelItem(Entity modelItem)
         {
             // TODO: Where is the newly created entity added to the model. 
-            return this.GetOrCreateEntityFromModelItemId(modelItem.Id) ?? this.CreateNewEntityFromModelItem(modelItem);
+            return this.GetEntityViewModelFromModelItemId(modelItem.Id) ?? this.CreateNewEntityFromModelItem(modelItem);
         }
 
-        private EntityViewModel GetOrCreateEntityFromModelItemId(Guid entityId)
+        private EntityViewModel GetEntityViewModelFromModelItemId(Guid entityId)
         {
-            return this
+            var tmp = this
                 .Entities
                 .FirstOrDefault(evm => evm.ModelItem.Id == entityId);
+
+            if (tmp == null)
+            {
+                log.Info("GetEntityViewModelFromModelItemId: Didn't found entity view model from Id '{0}'", entityId);
+                return null;
+            }
+
+            log.Info("GetEntityViewModelFromModelItemId: found entity view model from Id '{0}'", entityId);
+            return tmp;
         }
 
         private EntityViewModel CreateNewEntityFromModelItem(Entity modelItem)
@@ -202,20 +221,20 @@
         private RelationshipViewModel CreateRelationshipFromModelItem(Relationship modelItem)
         {
             return new RelationshipViewModel(
-                new EntityConnectorViewModel(this.GetOrCreateEntityFromModelItemId(modelItem.FromId)),
-                new EntityConnectorViewModel(this.GetOrCreateEntityFromModelItemId(modelItem.ToId)),
+                new EntityConnectorViewModel(this.GetEntityViewModelFromModelItemId(modelItem.FromId)),
+                new EntityConnectorViewModel(this.GetEntityViewModelFromModelItemId(modelItem.ToId)),
                 modelItem);
         }
 
         private RelationshipViewModel CreateRelationshipFromModelItem(Relationship modelItem, Entity from, Entity to)
         {
             return new RelationshipViewModel(
-                new EntityConnectorViewModel(this.GetOrCreateEntityFromModelItem(from)), 
+                new EntityConnectorViewModel(this.GetOrCreateEntityFromModelItem(from)),
                 new EntityConnectorViewModel(this.GetOrCreateEntityFromModelItem(to)),
                 modelItem);
         }
 
-        #endregion 
+        #endregion
 
         #region Edit existing model items
 
@@ -234,7 +253,7 @@
             return new EditExistingFacetViewModel(facetViewModel, this.FacetService);
         }
 
-        #endregion 
+        #endregion
 
         public void ClearSelectedItems()
         {
@@ -325,10 +344,10 @@
             return relationship;
         }
 
-        #endregion 
+        #endregion
 
         #region Remove Model items
-        
+
         public void Remove(FacetViewModel facetToRemove)
         {
             this.FacetService
@@ -362,8 +381,8 @@
             });
         }
 
-        #endregion 
-        
+        #endregion
+
         internal void UpdateAssignedFacets(FacetViewModel facetViewModel)
         {
             this.Entities.ForEach(e => e.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
