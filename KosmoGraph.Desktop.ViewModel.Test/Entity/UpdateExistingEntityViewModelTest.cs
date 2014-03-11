@@ -25,7 +25,7 @@
         #region UpdateExistingEntity
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void UpdateExistingEmptyEntityViewModel()
         {
             // ARRANGE
@@ -68,7 +68,7 @@
         #region UpdateExistingEntity > Modify
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void ModifyNameAllowsEditExistingEntityViewModelCommit()
         {
             // ARRANGE
@@ -108,7 +108,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void ModifyPropertyValueAllowsEditExistigEntityViewModelCommit()
         {
             // ARRANGE
@@ -177,7 +177,7 @@
         #region UpdateExistingEntity > Modify > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void CommitEditExistingEntityViewModelUpdatesEntity()
         {
             // ARRANGE
@@ -252,7 +252,7 @@
         #region UpdateExistingEntity > Modify > Rollback
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void RollbackEditExistingEntityViewModelInitializesAgain()
         {
             // ARRANGE
@@ -322,7 +322,7 @@
         #region UpdateExistingEntity > Modify > Rollback > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void RollbackEditExistingEntityViewModelAllowsEditingAgainTillCommit()
         {
             // ARRANGE
@@ -398,7 +398,7 @@
         #endregion 
 
         //[TestMethod]
-        //[TestCategory("UpdateExistingEntity")]
+        //[TestCategory("EditEntity")]
         //public void InitializeEntityViewModelWithVisibleTagsFromModel()
         //{
         //    // ARRANGE

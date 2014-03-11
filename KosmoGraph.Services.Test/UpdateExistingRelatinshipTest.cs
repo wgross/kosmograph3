@@ -18,7 +18,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void UpdateExistingRelationshipInDb()
         {
             // ARRANGE

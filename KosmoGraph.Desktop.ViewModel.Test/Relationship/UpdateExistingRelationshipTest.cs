@@ -22,7 +22,7 @@
         #region UpdateExistingRelationship
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void UpdateExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -106,7 +106,7 @@
         #region UpdateExistingRelationship > Modify
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void ModifyPropertyValueAllowsEditExistigRelationshipViewModelCommit()
         {
             // ARRANGE
@@ -194,7 +194,7 @@
         #region UpdateExistingRelationship > Modify > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void CommitEditExistingRelationshipViewModelUpdateRelationship()
         {
             // ARRANGE
@@ -289,7 +289,7 @@
         #region UpdateExistingRelationship > Modify > Rollback
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void RollbackEditExistingEntityViewModelInitializesAgain()
         {
             // ARRANGE
@@ -379,7 +379,7 @@
         #region UpdateExistingRelationship > Modify > Rolback > Modify > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void RollbackEditExistingRelationshipViewModelAllowsEditingAgainTillCommit()
         {
             // ARRANGE

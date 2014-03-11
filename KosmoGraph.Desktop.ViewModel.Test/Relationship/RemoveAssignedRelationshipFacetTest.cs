@@ -22,7 +22,7 @@
         #region RemoveRelationshipFacet
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"),TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"),TestCategory("EditRelationship")]
         public void RemoveEmptyAssignedFacetFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -92,7 +92,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void RemoveAssignedFacetWithPropertyFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -171,7 +171,7 @@
         #region RemoveRelationshipFacet > Commit
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitRemovedEmptyAssignedFacetFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -246,7 +246,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitRemovedAssignedFacetWithPropertyFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -329,7 +329,7 @@
         #region RemoveRelationshipFacet > Rollback
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackRemovedEmptyAssignedFacetFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -401,7 +401,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackRemovedAssignedFacetWithPropertyFromExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -482,7 +482,7 @@
         #region RemoveRelationshipFacet > Rollback > UnassignFacet > Commit
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitRemovedEmptyAssignedFacetFromExistingRelationshipViewModelAfterRollback()
         {
             // ARRANGE
@@ -559,7 +559,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("RemoveRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitRemovedAssignedFacetWithPropertyFromExistingRelationshipViewModelAfterRollback()
         {
             // ARRANGE

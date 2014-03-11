@@ -22,7 +22,7 @@
         #region RemoveAssignedFacet
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"),TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"),TestCategory("EditEntity")]
         public void RemoveEmptyAssignedFacetFromEntityViewModel()
         {
             // ARRANGE
@@ -83,7 +83,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void RemoveAssignedFacetWothPropertyFromEntityViewModel()
         {
             // ARRANGE
@@ -153,7 +153,7 @@
         #region RemoveAssignedFacet > Commit
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void CommitRemovedEmptyAssignedFacetFromEntityViewModel()
         {
             // ARRANGE
@@ -216,7 +216,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void CommitRemovedAssignedFacetWothPropertyFromEntityViewModel()
         {
             // ARRANGE
@@ -286,7 +286,7 @@
         #region RemoveAssignedFacet > Rollback
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void RollbackRemovedEmptyAssignedFacetFromEntityViewModel()
         {
             // ARRANGE
@@ -352,7 +352,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void RollbackRemovedAssignedFacetWithPropertyFromEntityViewModel()
         {
             // ARRANGE
@@ -423,7 +423,7 @@
         #region RemoveAssignedFacet > Rollback > UnassignFacet > Commit
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void CommitRemovedEmptyAssignedFacetFromEntityViewModelAfterRollback()
         {
             // ARRANGE
@@ -488,7 +488,7 @@
         }
 
         [TestMethod]
-        [TestCategory("RemoveEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("RemoveEntityFacet"), TestCategory("EditEntity")]
         public void CommitRemovedAssignedFacetWothPropertyFromEntityViewModelAfterRollback()
         {
             // ARRANGE

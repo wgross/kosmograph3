@@ -83,6 +83,7 @@
     <Compile Include="Facet\CreateNewPropertyDefinitionAtNewFacetTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtEntityFacetTest.cs" />
     <Compile Include="Facet\RemoveFacetAsAssignedFacetTest.cs" />
+    <Compile Include="Facet\EditExistingFacetViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetViewModelTest.cs" />

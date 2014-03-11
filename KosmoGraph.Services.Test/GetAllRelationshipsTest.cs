@@ -19,7 +19,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingRelationship")]
+        [TestCategory("EditRelationship")]
         public void GetAllRelationshipsFromDb()
         {
             // ARRANGE

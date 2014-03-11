@@ -57,7 +57,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity")]
+        [TestCategory("EditEntity")]
         public void UpdateEntityNameInDb()
         {
             // ARRANGE

@@ -115,7 +115,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingEntity > AssignFacet
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CreateNewEmptyEntityFacetViewModelAtExistingEntityViewModel()
         {
             // ARRANGE
@@ -163,7 +163,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CreateNewEntityFacetViewModelWithPropertyAtExistingEntityViewModel()
         {
             // ARRANGE
@@ -313,7 +313,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingEntity > AssignFacet > UnassignFacet
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CreateNewEmptyEntityFacetViewModelAtExistingEntityButRemoveFromEntityAgain()
         {
             // ARRANGE
@@ -363,7 +363,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CreateNewEntityFacetViewModelWithPropertyAtExistingEntityButRemoveFromEntityAgain()
         {
             // ARRANGE
@@ -530,7 +530,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingEntity > AssignFacet > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CommitNewEmptyEntityFacetViewModelAtExistingEntityCreatesNewAssignedEntityFacet()
         {
             // ARRANGE
@@ -590,7 +590,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void CommitNewEntityFacetViewModelWithPropertyAtExistingEntityCreatesNewAssignedEntityFacet()
         {
             // ARRANGE
@@ -754,7 +754,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingEntity > AssignFacet > Rollback
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void RollbackNewEmptyEntityFacetViewModelAtExistingEntityInitializesAgain()
         {
             // ARRANGE
@@ -803,7 +803,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void RollbackNewEntityFacetViewModelWithPropertyAtExistingEntityInitializesAgain()
         {
             // ARRANGE
@@ -979,7 +979,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingEntity > AssignFacet > Commit > AssignFacet > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void RollbackNewEmptyEntityFacetViewModelAtExistingEntityAllowsEditAgainTillCommit()
         {
             // ARRANGE
@@ -1041,7 +1041,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntityFacet"), TestCategory("UpdateExistingEntity")]
+        [TestCategory("CreateNewEntityFacet"), TestCategory("EditEntity")]
         public void RollbackNewEntityFacetViewModelWithPropertyAtExistingEntityAllowsEditAgainTillCommit()
         {
             // ARRANGE

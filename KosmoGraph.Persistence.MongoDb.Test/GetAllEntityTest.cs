@@ -18,7 +18,7 @@
         private readonly string databaseName = "kosmograph";
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity"),TestCategory("CreateNewRelationship")]
+        [TestCategory("EditEntity"),TestCategory("CreateNewRelationship")]
         public void EnumerateAllEntitysFromDb()
         {
             // ARRANGE
@@ -41,7 +41,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingEntity"), TestCategory("CreateNewRelationship")]
+        [TestCategory("EditEntity"), TestCategory("CreateNewRelationship")]
         public void EnumerateAllEntitysFromEmptyDb()
         {
             // ARRANGE

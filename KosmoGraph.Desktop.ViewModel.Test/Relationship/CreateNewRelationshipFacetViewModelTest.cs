@@ -135,7 +135,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingRelationship > AssignFacet
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"),TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"),TestCategory("EditRelationship")]
         public void CreateNewEmptyRelationshipFacetViewModelAtExistingRelationship()
         {
             // ARRANGE
@@ -198,7 +198,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void CreateNewRelationshipFacetViewModelWithPropertyAtExistingRelationshipViewModel()
         {
             // ARRANGE
@@ -387,7 +387,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingRelationship > AssignFacet > UnassignFacet
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void CreateNewEmptyRelationshipFacetViewModelAtExistingRelationshipButRemoveFromRelationshipAgain()
         {
             // ARRANGE
@@ -453,7 +453,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void CreateNewRelationshipFacetViewModelWithPropertyAtExistingRelationshipViewModelButRemoveFromRelatinshipAgain()
         {
             // ARRANGE
@@ -679,7 +679,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingRelationship > AssignFacet > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitNewEmptyRelationshipFacetViewModelAtExistingRelatinshipCreatesNewAssignedRelationshipFacet()
         {
             // ARRANGE
@@ -756,7 +756,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void CommitNewRelationshipFacetViewModelWithPropertyAtExistingRelatinshipCreatesNewAssignedRelationshipFacet()
         {
             // ARRANGE
@@ -959,7 +959,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingRelationship > AssignFacet > Rollback
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackNewEmptyRelationshipFacetViewModelAtExistingRelationshipInitializesAgain()
         {
             // ARRANGE
@@ -1027,7 +1027,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackNewRelationshipFacetViewModelWithPropertyAtExistingRelatinshipInitializesAgain()
         {
             // ARRANGE
@@ -1261,7 +1261,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         #region UpdateExistingRelationship > AssignFacet > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackNewEmptyRelationshipFacetViewModelAtExistingRelationshipAllowsEditTillCommitAgain()
         {
             // ARRANGE
@@ -1340,7 +1340,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         }
 
         [TestMethod]
-        [TestCategory("CreateNewRelationshipFacet"), TestCategory("UpdateExistingRelationship")]
+        [TestCategory("CreateNewRelationshipFacet"), TestCategory("EditRelationship")]
         public void RollbackNewRelationshipFacetViewModelWithPropertyAtExistingRelationshipAllowsEditTillCommitAgain()
         {
             // ARRANGE
