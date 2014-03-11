@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Entity\CreateNewEntityFacetViewModelTest.cs" />
     <Compile Include="Entity\RemoveAssignedEntityFacetTest.cs" />
+    <Compile Include="Entity\RemoveEntityFroViewModelTest.cs" />
     <Compile Include="Entity\UpdateExistingEntityViewModelTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtRelationshipFacetTest.cs" />
     <Compile Include="Facet\RemovePropertyDefinitionFromEntityFacetTest.cs" />

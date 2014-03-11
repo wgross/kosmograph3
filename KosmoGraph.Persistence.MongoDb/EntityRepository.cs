@@ -99,9 +99,12 @@ using System.Threading.Tasks;
             return e1;
         }
 
-        public void Remove(Entity e1)
+        public bool Remove(Entity e1)
         {
-            this.entityCollection.Value.Remove(Query<Entity>.EQ(e => e.Id, e1.Id));
+            return this.entityCollection
+                .Value
+                .Remove(Query<Entity>.EQ(e => e.Id, e1.Id))
+                .Ok;
         }
 
         public IEnumerable<Entity> GetAll()

@@ -230,6 +230,11 @@
             return new EditExistingRelationshipViewModel(relationshipViewModel, this.EntityRelationshipService);
         }
 
+        public EditExistingFacetViewModel EditFacet(FacetViewModel facetViewModel)
+        {
+            return new EditExistingFacetViewModel(facetViewModel, this.FacetService);
+        }
+
         #endregion 
 
         public void ClearSelectedItems()
@@ -322,6 +327,8 @@
 
         #endregion 
 
+        #region Remove Model items
+        
         public void Remove(FacetViewModel facetToRemove)
         {
             this.FacetService
@@ -338,11 +345,20 @@
             // remove from retationships
         }
 
-        public EditExistingFacetViewModel EditFacet(FacetViewModel facetViewModel)
+        public void Remove(EntityViewModel entityToRemove)
         {
-            return new EditExistingFacetViewModel(facetViewModel, this.FacetService);
+            this.EntityRelationshipService
+               .RemoveEntity(entityToRemove.ModelItem)
+               .EndWith(ok => this.RemoveEntityFromViewModelItems(entityToRemove));
         }
 
+        private void RemoveEntityFromViewModelItems(EntityViewModel entityToRemove)
+        {
+            this.Entities.Remove(entityToRemove);
+        }
+
+        #endregion 
+        
         internal void UpdateAssignedFacets(FacetViewModel facetViewModel)
         {
             this.Entities.ForEach(e => e.UpdatePropertyValuesOfAssignedFacet(facetViewModel));

@@ -46,24 +46,25 @@
             return Task.Factory.StartNew(() => this.entityRepository.Update(updatedEntity));
         }
 
-        public bool RemoveEntity(Entity entity)
+        public Task<bool> RemoveEntity(Entity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            log.Debug("Removing entity '{0}' and its relationships", entity.Id);
+            return Task.Factory.StartNew(() =>
+            {
+                log.Debug("Removing entity '{0}' and its relationships", entity.Id);
 
-            // send request to Db directly ?
-            this.relationshipRepository.RemoveByEntityIdentity(entity.Id);
+                this.entityRepository.Remove(entity);
 
-            log.Info("Removed entities '{0}' relationships", entity.Id);
+                log.Info("Removed entity '{0}'", entity.Id);
 
+                this.relationshipRepository.RemoveByEntityIdentity(entity.Id);
 
-            this.entityRepository.Remove(entity);
+                log.Info("Removed entities '{0}' relationships", entity.Id);
 
-            log.Info("Removed entity '{0}' and its relationships", entity.Id);
-
-            return true;
+                return true;
+            });
         }
 
         public void AddFacetToEntity(Entity toEntity, Facet addFacet, Action<AssignedFacet> setProperties, Action<Entity> continueWith)

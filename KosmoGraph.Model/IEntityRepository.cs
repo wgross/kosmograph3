@@ -9,7 +9,7 @@
     {
         Entity Insert(Entity e);
         Entity Update(Entity e);
-        void Remove(Entity e);
+        bool Remove(Entity e);
 
         Entity FindByIdentity(Guid id);
 

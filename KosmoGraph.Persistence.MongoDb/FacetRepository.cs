@@ -84,7 +84,6 @@ using System.Threading.Tasks;
                 .Value
                 .Remove(Query<Facet>.EQ(e => e.Id, facet.Id))
                 .Ok;
-
         }
 
         #endregion 

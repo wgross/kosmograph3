@@ -47,6 +47,8 @@ using System.Threading.Tasks;
         Task<Entity> UpdateEntity(Entity updatedEntity);
 
         Task<IEnumerable<Entity>> GetAllEntities();
+
+        Task<bool> RemoveEntity(Entity entity);
     }
 
     public interface IManageRelationships
