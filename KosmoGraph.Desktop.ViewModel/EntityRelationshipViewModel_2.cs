@@ -239,7 +239,8 @@
 
         public void ClearSelectedItems()
         {
-            throw new NotImplementedException();
+            this.Items.ForEach(i => i.IsSelected = false);
+            this.Facets.ForEach(f => f.IsItemSelected = false);
         }
 
         #region Add model items
