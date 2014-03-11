@@ -59,7 +59,6 @@
                 .Union(this.Relationships));
         }
 
-      
         private IManageEntitiesAndRelationships EntityRelationshipService { get; set; }
 
         private IManageFacets FacetService { get; set; }

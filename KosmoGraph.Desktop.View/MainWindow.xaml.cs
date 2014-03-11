@@ -1,4 +1,4 @@
-﻿namespace KosmoGraph.Desktop
+﻿namespace KosmoGraph.Desktop.View
 {
     using KosmoGraph.Desktop.ViewModel;
     using KosmoGraph.Desktop.Dialog;
@@ -18,6 +18,8 @@
     using System.Windows.Shapes;
     using System.Collections.ObjectModel;
     using System.ComponentModel.Composition;
+    using KosmoGraph.Services;
+    using KosmoGraph.Persistence.MongoDb;
     
     [Export]
     public partial class MainWindow : Window
@@ -288,13 +290,7 @@
 
         private void CreateNewModel(EntityRelationshipViewModel model)
         {
-            this.Model = EntityRelationshipViewModel.CreateNew();
-            
-            //var e = this.Model.CreateNewEntity("new");
-            //e.Top = this.ActualHeight / 2;
-            //e.Left = this.ActualWidth / 2;
-            
-            //this.Model.Add(e);
+            this.Model = new EntityRelationshipViewModelFactory().CreateNewDefault();
         }
 
         #endregion 

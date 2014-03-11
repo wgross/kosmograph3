@@ -68,6 +68,7 @@
     <Compile Include="Common\EditFacetedViewModelBase.cs" />
     <Compile Include="Common\Edit\EditAssignedFacetViewModelBase.cs" />
     <Compile Include="Common\Edit\EditExistingAssignedFacetViewModel.cs" />
+    <Compile Include="EntityRelationshipViewModelFactory.cs" />
     <Compile Include="Entity\Edit\EditAssignedEntityTagViewModel.cs" />
     <Compile Include="EditAssignedRelationshipTagViewModel.cs" />
     <Compile Include="Property\Edit\EditExistingPropertyValueViewModel.cs" />

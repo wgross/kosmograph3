@@ -89,6 +89,7 @@
     <Compile Include="ExecuteRoutedEventArgsWithType.cs" />
     <Compile Include="KosmoGraphBootstrapper.cs" />
     <Compile Include="KosmoGraphBootstrapperLogger.cs" />
+    <Compile Include="ViewModel\EntityRelationshipViewModelFactoryExtensions.cs" />
     <Compile Include="ViewModel\Layout\LayoutEdgeExtensions.cs" />
     <Compile Include="ViewModel\Layout\LayoutNodeExtensions.cs" />
     <Compile Include="ViewModel\Layout\SpringEmbedderLayout.cs" />

@@ -1,5 +1,4 @@
-﻿
-namespace KosmoGraph.Desktop
+﻿namespace KosmoGraph.Desktop.View
 {
     using Microsoft.Practices.Prism;
     using Microsoft.Practices.Prism.Logging;
