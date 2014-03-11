@@ -49,7 +49,7 @@
         #region CreateNewFacet > CreateNewPropertyDefinition
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition"),]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition"),]
         public void CreateNewPropertyAtNewFacetViewModel()
         {
             // ARRANGE
@@ -89,7 +89,7 @@
         #region CreateNewFacet > CreateNewPropertyDefinition > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition")]
         public void CommitEditNewFacetViewModelWithPropertyCreatesNewFacet()
         {
             // ARRANGE
@@ -136,7 +136,7 @@
         #region CreateNewFacet > CreateNewPropertyDefinition > Rollback
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition")]
         public void RollbackEditNewFacetViewModelWithPropertyInitializesAgain()
         {
             // ARRANGE
@@ -167,7 +167,7 @@
         #region CreateNewFacet > CreateNewPropertyDefinition > Rollback > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition")]
         public void RollbackEditNewFacetViewModelWithPropertyAllowsEditingAgainTillCommit()
         {
             // ARRANGE

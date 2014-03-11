@@ -25,23 +25,35 @@
         public void UpdatePropertyValues()
         {
             this.Properties.Clear();
-            this.ModelItem
-               .Properties
-               .ToList() // work on snapshot
-               .ForEach(pv =>
-               {
-                   var propertyDefinition = this.Facet.Properties.FirstOrDefault(pd => pd.ModelItem.Id == pv.DefinitionId);
-                   if(propertyDefinition==null)
-                   {
-                       // property definition is doesn't exist anymore
-                       this.ModelItem.Properties.Remove(pv);
-                   }
-                   else
-                   {
-                        // property definietin exists -> create view model
-                        this.Properties.Add(propertyDefinition.CreatePropertyValue(pv));
-                   }
-               });
+
+            // rebuild property values from model item
+
+            this.ModelItem.Properties.ToList().ForEach(pv =>
+            {
+                var propertyDefinition = this.Facet.Properties.FirstOrDefault(pd => pd.ModelItem.Id == pv.DefinitionId);
+                if(propertyDefinition==null)
+                {
+                    // property definition is doesn't exist anymore
+                    this.ModelItem.Properties.Remove(pv);
+                }
+                else
+                {
+                    // property definietin exists -> create view model
+                    this.Properties.Add(propertyDefinition.CreatePropertyValue(pv));
+                }
+            });
+
+            // add newly created properties from Facet
+
+            this.Facet.Properties.ForEach(pd =>
+            {
+                // add property value foreach property definetions if not already added
+
+                if(!this.Properties.Any(pv => pv.Definition.ModelItem.Id == pd.ModelItem.Id))
+                {
+                    this.Properties.Add(pd.CreateNewPropertyValue(this.ModelItem));
+                }
+            });
         }
 
         //void PropertyDefinitions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
         override protected void AddPropertyDefinitionExecuted()
         {
-            //this.Properties.Add(new EditPropertyDefinitionViewModel(this.Edited.CreateNewPropertyDefinition(string.Format("Edited {0}", this.Properties.Count + 1))));
+            this.Properties.Add(new EditNewPropertyDefinitionViewModel());
         }
 
         #region Commit Editor
@@ -54,7 +54,16 @@ using System.Threading.Tasks;
                 if (!this.Properties.Any(edit_pd => edit_pd.Name == pd.Name))
                     this.Edited.Remove(pd);
             });
+
+            // add new properties
+
+            this.Properties.OfType<EditNewPropertyDefinitionViewModel>().ForEach(pd =>
+            {
+                this.Edited.Add(this.Edited.CreateNewPropertyDefinition(pd.Name));
+            });
             
+            // send edited facet to application layer
+
             this.facets
                 .UpdateFacet(this.Edited.ModelItem)
                 .EndWith(succeeded:f => this.Edited.Model.UpdateAssignedFacets(this.Edited));

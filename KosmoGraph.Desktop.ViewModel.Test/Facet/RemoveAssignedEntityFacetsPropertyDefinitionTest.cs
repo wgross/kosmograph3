@@ -64,7 +64,7 @@
         #region RemovePropertyDefinition
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void RemovePropertyDefinitionFromExistingAssignedEntityFacet()
         {
             // ARRANGE
@@ -100,7 +100,7 @@
         #region RemovePropertyDefinition > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void CommitRemovedPropertyDefinitionFromExistingAssignedEntityFacet()
         {
             // ARRANGE
@@ -142,7 +142,7 @@
         #region RemovePropertyDefinition > Rollback
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void RollbackRemovedPropertyDefinitionFromExistingEntityFacet()
         {
             // ARRANGE

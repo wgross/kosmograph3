@@ -51,7 +51,7 @@
         #region RemovePropertyDefinition
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void RemovePropertyDefinitionFromExistingUnusedFacet()
         {
             // ARRANGE
@@ -79,7 +79,7 @@
         #region RemovePropertyDefinition > Commit
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void CommitRemovedPropertyDefinitionFromExistingUnusedFacet()
         {
             // ARRANGE
@@ -118,7 +118,7 @@
         #region RemovePropertyDefinition > Rollback
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"), TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"), TestCategory("RemovePropertyDefinition")]
         public void RollbackRemovedPropertyDefinitionFromExistingUnusedFacet()
         {
             // ARRANGE

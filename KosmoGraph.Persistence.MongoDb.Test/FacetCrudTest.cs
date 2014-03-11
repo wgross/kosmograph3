@@ -110,7 +110,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet")]
+        [TestCategory("EditFacet")]
         public void UpdateFacetNameInMongoDb()
         {
             // ARRANGE
@@ -135,7 +135,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet")]
+        [TestCategory("EditFacet")]
         public void UpdateFacetPropertyNameInMongoDb()
         {
             // ARRANGE
@@ -167,7 +167,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"),TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"),TestCategory("RemovePropertyDefinition")]
         public void UpdateFacetRemovePropertyInMongoDb()
         {
             // ARRANGE
@@ -240,7 +240,7 @@
         }
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"), TestCategory("UpdateExistingFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("EditFacet")]
         public void DontInsertFacetWithDuplicateNameInMongoDb()
         {
             // ARRANGE

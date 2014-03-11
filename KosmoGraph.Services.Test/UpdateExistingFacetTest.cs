@@ -18,7 +18,7 @@
         }
 
         [TestMethod]
-        [TestCategory("UpdateExistingFacet"),TestCategory("RemovePropertyDefinition")]
+        [TestCategory("EditFacet"),TestCategory("RemovePropertyDefinition")]
         public void UpdateExistingFacetInDb()
         {
             // ARRANGE
