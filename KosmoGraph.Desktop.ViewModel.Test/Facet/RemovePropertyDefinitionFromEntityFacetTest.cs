@@ -11,7 +11,7 @@
     using System.Collections.Generic;
 
     [TestClass]
-    public class RemoveAssignedEntityFacetsPropertyDefinitionTest
+    public class RemovePropertyDefinitionFromEntityFacetTest
     {
         private IEnumerable<Facet> facets;
         private Mock<IManageFacets> fsvc;

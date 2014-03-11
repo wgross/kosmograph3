@@ -76,12 +76,13 @@
     <Compile Include="Entity\RemoveAssignedEntityFacetTest.cs" />
     <Compile Include="Entity\UpdateExistingEntityViewModelTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtRelationshipFacetTest.cs" />
-    <Compile Include="Facet\RemoveAssignedEntityFacetsPropertyDefinitionTest.cs" />
+    <Compile Include="Facet\RemovePropertyDefinitionFromEntityFacetTest.cs" />
     <Compile Include="Facet\RemoveUnassignedFacetsPropertyDefinitionTest.cs" />
     <Compile Include="Facet\RemoveAssignedRelationshipFacetsPropertyDefinitionTest.cs" />
-    <Compile Include="Facet\RemoveFacetViewModelTest.cs" />
+    <Compile Include="Facet\RemoveFacetFromTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtNewFacetTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtEntityFacetTest.cs" />
+    <Compile Include="Facet\RemoveFacetAsAssignedFacetTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetViewModelTest.cs" />
