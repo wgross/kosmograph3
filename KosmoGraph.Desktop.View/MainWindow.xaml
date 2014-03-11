@@ -1,0 +1,178 @@
+﻿<Window x:Class="KosmoGraph.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view="clr-namespace:KosmoGraph.Desktop.View"
+        xmlns:kd="clr-namespace:KosmoGraph.Desktop"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.CommandBindings>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
+            Executed="CreateEntityExecuted"
+            CanExecute="CreateEntityCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationship}"
+            Executed="CreateRelationshipExecuted"
+            CanExecute="CreateRelationshipCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
+            Executed="CreateRelationshipWithEntityExecuted"
+            CanExecute="CreateRelationshipWithEntityCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+            Executed="CreateTagExecuted"
+            CanExecute="CreateTagCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.EditEntity}"
+            Executed="EditEntityExecuted"
+            CanExecute="EditEntityCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.EditRelationship}"
+            Executed="EditRelationshipExecuted"
+            CanExecute="EditRelationshipCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.EditTag}"
+            Executed="EditTagExecuted"
+            CanExecute="EditFacetCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteEntity}"
+            Executed="DeleteEntityExecuted"
+            CanExecute="DeleteEntityCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteRelationship}"
+            Executed="DeleteRelationshipExecuted"
+            CanExecute="DeleteRelationshipCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteTag}"
+            Executed="DeleteTagExecuted"
+            CanExecute="DeleteTagCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.SaveModelAs}"
+            Executed="SaveModelAsExecuted"
+            CanExecute="SaveModelAsCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
+            Executed="SaveModelExecuted"
+            CanExecute="SaveModelCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
+            Executed="CreateNewModelFromStoreExecuted"
+            CanExecute="CreateNewModelFromStoreCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
+            Executed="CreateNewModelExecuted"
+            CanExecute="CreateNewModelCanExecute"/>
+        <CommandBinding 
+            Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
+            Executed="LayoutModelExecuted"
+            CanExecute="LayoutModelCanExecute"/>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Resources/CommonResources.xaml" />
+                <ResourceDictionary Source="./Resources/EntityRelationshipResources.xaml" />
+                <ResourceDictionary Source="./Resources/DialogResources.xaml" />                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid 
+        Background="{StaticResource backgroundBrush}"
+        Name="rootPanel">
+        <DockPanel
+            LastChildFill="True">
+           
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition
+                    Width="150"
+                    MinWidth="150"/>
+            </Grid.ColumnDefinitions>
+            <DockPanel
+                Grid.Column="0"
+                LastChildFill="True"
+                Margin="0,0,7,0">
+                <Border
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource labelBorderStyle}">
+                    <Menu
+                        Style="{StaticResource menuStyle}">
+                        <MenuItem
+                            Header="Graph"
+                            Style="{StaticResource menuItemStyle}">
+                            <MenuItem Header="New"
+                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
+                                Style="{StaticResource menuItemStyle}"/>
+                            <MenuItem Header="Open..."
+                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
+                                Style="{StaticResource menuItemStyle}"/>
+                            <MenuItem Header="Save As..."
+                                Command="{x:Static kd:EntityRelationshipModelCommands.SaveModelAs}"
+                                CommandParameter="{Binding .}"
+                                Style="{StaticResource menuItemStyle}"/>
+                            <MenuItem Header="Save"
+                                Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
+                                CommandParameter="{Binding .}"
+                                Style="{StaticResource menuItemStyle}"/>
+                        </MenuItem>
+                    </Menu>
+                </Border>
+                    <Button Style="{StaticResource buttonStyle}"
+                            DockPanel.Dock="Bottom"
+                            Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
+                            CommandParameter="{Binding .}">Layout</Button>
+                    
+                <view:EntityRelationshipControl x:Name="entityRelationshipView">
+                    <view:EntityRelationshipControl>
+                        <view:EntityRelationshipControl.InputBindings>
+                            <KeyBinding
+                                Key="Insert"
+                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"/>
+                        </view:EntityRelationshipControl.InputBindings>
+                    </view:EntityRelationshipControl>
+                </view:EntityRelationshipControl>
+            </DockPanel>
+            <GridSplitter 
+                IsTabStop="False"
+                Margin="0,5,0,5"
+                Width="2"
+                Grid.Column="0"/>
+            <DockPanel
+                    Grid.Column="1"
+                    LastChildFill="True"
+                    Margin="5,0,0,0">
+                <Border
+                    DockPanel.Dock="Top"
+                    Style="{StaticResource labelBorderStyle}">
+                    <DockPanel
+                        LastChildFill="False">
+                        <Label
+                            DockPanel.Dock="Left"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource tagListBoxLabelStyle}"/>
+                        <Button
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource createTagButtonStyle}"
+                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+                            CommandParameter="{Binding .}"/>
+                    </DockPanel>
+                </Border>
+                <ListBox Name="tagListBox"
+                    ItemsSource="{Binding Tags}"
+                    MouseDoubleClick="tagListBox_MouseDoubleClick"
+                    ItemContainerStyle="{StaticResource tagInTagList}"
+                    Style="{StaticResource listBoxStyle}">
+                    <ListBox.InputBindings>
+                        <KeyBinding
+                            Key="Insert"
+                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+                            CommandParameter="{Binding Tags}"/>
+                    </ListBox.InputBindings>
+                </ListBox>
+            </DockPanel>
+        </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

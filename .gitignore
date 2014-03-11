@@ -1,22 +1,37 @@
-# Ignore hg repository
+# Ignore mercurial repository
+
 .hg
 /.hgignore
 
 # Ignore compiler output
+
 **/bin
 **/obj
 *.pdb
+*.exe
+*.manifest
+*.resources
+*.baml
+*.g.cs
 
 #Ignore Nuget package repository
+
 /packages
 
 # Ignore VS files
+
 *.user
 *.suo
 *.mdf
 *.ldf
+*.cache
+*.csproj.FileListAbsolute.txt
+*.mdf
+*.vsmdi
+/TestResults
 
 # Misc
+
 *.orig
 *.bak
 

@@ -1,0 +1,438 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="clr-namespace:KosmoGraph.Desktop.View"
+    xmlns:kdvm="clr-namespace:KosmoGraph.Desktop.ViewModel;assembly=KosmoGraph.Desktop.ViewModel">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="./CommonResources.xaml" />
+        <ResourceDictionary Source="./EntityRelationshipResources.Tag.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <!--Entity Relaionship Diagram-->
+    
+    <Style x:Key="textBlockGroupedPropertyValueStyle"
+           TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource textBlockStyle}">
+        <Setter Property="FontSize"
+                Value="9"/>
+        <Setter Property="FontWeight"
+                Value="Light"/>
+    </Style>
+        
+    <Style x:Key="groupedPropertyValueListBoxStyle"
+        TargetType="{x:Type ListBox}"
+        BasedOn="{StaticResource listBoxStyle}">
+        <Setter Property="ItemContainerStyle"
+            Value="{StaticResource unselectableListBoxItemStyle}"/>
+    </Style>
+    
+    <Style x:Key="entityRelationshipControlLabelStyle"
+            BasedOn="{StaticResource labelStyle}"
+            TargetType="{x:Type Label}">
+        <Setter
+            Property="Content"
+            Value="_Entities and their Relationships"/>
+    </Style>
+
+    <Style x:Key="entityInDiagramStyle"
+        TargetType="{x:Type ContentPresenter}">
+        <Setter Property="Canvas.Top"
+            Value="{Binding Top}" />
+        <Setter Property="Canvas.Left"
+            Value="{Binding Left}" />
+        <Setter Property="Canvas.ZIndex"
+            Value="2"/>
+        <Setter Property="SnapsToDevicePixels"
+            Value="True" />
+        <Setter Property="Border.BorderBrush"
+            Value="{StaticResource activeForegroundBrush}"/>
+        <Setter Property="TextElement.Foreground"
+            Value="{StaticResource activeForegroundBrush}"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip
+                    Style="{StaticResource toolTipStyle}">
+                    <ToolTip.Resources>
+                        <CollectionViewSource 
+                            x:Key="groupedPropertiesCollection"
+                            Source="{Binding Properties}">
+                            <CollectionViewSource.GroupDescriptions>
+                                <PropertyGroupDescription 
+                                    PropertyName="Definition.Tag.Name" />
+                            </CollectionViewSource.GroupDescriptions>
+                        </CollectionViewSource>
+                    </ToolTip.Resources>
+                    <StackPanel>
+                        <TextBlock
+                            Text="{Binding Name}"/>
+                        <ListBox
+                            ItemsSource="{Binding Source={StaticResource groupedPropertiesCollection}}"
+                            Style="{StaticResource groupedPropertyValueListBoxStyle}">
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock 
+                                                Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                Text="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type kdvm:PropertyValueViewModel}">
+                                    <DockPanel
+                                        LastChildFill="True">
+                                        <TextBlock
+                                            DockPanel.Dock="Left"
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            FontSize="9"
+                                            FontWeight="Light"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Definition.Name,StringFormat={}{0}:}"/>
+                                        <TextBlock
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>     
+                </ToolTip>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate
+                    DataType="{x:Type kdvm:EntityViewModel}">
+                    <Grid 
+                        x:Name="selectedGrid"
+                        view:AttachedActualSizeBindingBehaviour.Observe="True"
+                        view:AttachedActualSizeBindingBehaviour.ObservedActualWidth="{Binding ActualWidth, Mode=OneWayToSource}"
+                        view:AttachedActualSizeBindingBehaviour.ObservedActualHeight="{Binding ActualHeight, Mode=OneWayToSource}">
+                        <view:DragEntityThumb 
+                            x:Name="PART_DragThumb"
+                            Cursor="SizeAll" />
+                        <Border 
+                            Padding="5" 
+                            BorderBrush="{TemplateBinding  Border.BorderBrush}" 
+                            BorderThickness="1"
+                            Background="{StaticResource backgroundBrush}"
+                            IsHitTestVisible="False">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <CollectionViewSource 
+                                        x:Key="groupedVisiblePropertiesCollection"
+                                        Source="{Binding VisibleProperties}">
+                                        <CollectionViewSource.GroupDescriptions>
+                                            <PropertyGroupDescription 
+                                                PropertyName="Definition.Tag.Name" />
+                                        </CollectionViewSource.GroupDescriptions>
+                                    </CollectionViewSource>
+                                </StackPanel.Resources>
+                                <TextBlock
+                                    Foreground="{TemplateBinding TextElement.Foreground}"
+                                    Text="{Binding Name}"
+                                    Background="{x:Null}"
+                                    IsHitTestVisible="False"/>
+                                <ListBox
+                                    Foreground="{TemplateBinding TextElement.Foreground}"
+                                    ItemsSource="{Binding Source={StaticResource groupedVisiblePropertiesCollection}}"
+                                    Style="{StaticResource groupedPropertyValueListBoxStyle}">
+                                    <ListBox.GroupStyle>
+                                        <GroupStyle>
+                                            <GroupStyle.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock 
+                                                        Foreground="{TemplateBinding TextElement.Foreground}"
+                                                        Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                        Text="{Binding Path=Name}"/>
+                                                </DataTemplate>
+                                            </GroupStyle.HeaderTemplate>
+                                        </GroupStyle>
+                                    </ListBox.GroupStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type kdvm:PropertyValueViewModel}">
+                                            <DockPanel
+                                                LastChildFill="True">
+                                                <TextBlock
+                                                    DockPanel.Dock="Left"
+                                                    Foreground="{TemplateBinding TextElement.Foreground}"
+                                                    FontSize="9"
+                                                    FontWeight="Light"
+                                                    Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                    Text="{Binding Definition.Name,StringFormat={}{0}:}"/>
+                                                <TextBlock
+                                                    Foreground="{TemplateBinding TextElement.Foreground}"
+                                                    Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                    Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </Border>
+                        <Grid
+                            x:Name="PART_ConnectorDecorator"
+                            Margin="-3"
+                            Visibility="Hidden">
+                            <view:ConnectorControl
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"></view:ConnectorControl>
+                        </Grid>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsSelected}"
+                            Value="true">
+                            <!-- change foreground color if entity is selected -->
+                            <Setter
+                                Property="Border.BorderBrush"
+                                Value="{StaticResource activeSelectedForegroundBrush}"/>
+                            <Setter
+                                Property="TextElement.Foreground"
+                                Value="{StaticResource activeSelectedForegroundBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsVisible}"
+                            Value="false">
+                            <!-- change foreground color if entity is invisible -->
+                            <Setter
+                                Property="Border.BorderBrush"
+                                Value="{StaticResource inactiveForegroundBrush}"/>
+                            <Setter
+                                Property="TextElement.Foreground"
+                                Value="{StaticResource inactiveForegroundBrush}"/>
+                        </DataTrigger>
+                        <Trigger 
+                            Property="IsMouseOver"
+                            Value="true">
+                            <!-- make connector visible if mouse is over entity -->
+                            <Setter 
+                                TargetName="PART_ConnectorDecorator"
+                                Property="Visibility"
+                                Value="Visible" />
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="relationshipInDiagramStyle"
+        TargetType="{x:Type ContentPresenter}">
+        <!--
+        A connection occupies in the diagram the size of the rectangle between the the two connection points 
+        -->
+        <Setter Property="MinWidth"
+            Value="{Binding Area.Width}" />
+        <Setter Property="MinHeight"
+            Value="{Binding Area.Height}" />
+        <Setter Property="Canvas.Top"
+            Value="{Binding Area.Top}" />
+        <Setter Property="Canvas.Left"
+            Value="{Binding Area.Left}" />
+        <Setter Property="Canvas.ZIndex"
+            Value="1"/>
+        <Setter Property="Shape.Stroke"
+            Value="{StaticResource activeForegroundBrush}"/>
+        <Setter Property="TextElement.Foreground"
+            Value="{StaticResource activeForegroundBrush}"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip
+                    Style="{StaticResource toolTipStyle}">
+                    <ToolTip.Resources>
+                        <CollectionViewSource 
+                            x:Key="groupedPropertiesCollection"
+                            Source="{Binding Properties}">
+                            <CollectionViewSource.GroupDescriptions>
+                                <PropertyGroupDescription 
+                                    PropertyName="Definition.Tag.Name" />
+                            </CollectionViewSource.GroupDescriptions>
+                        </CollectionViewSource>
+                    </ToolTip.Resources>
+                    <StackPanel>
+                        <ListBox
+                            ItemsSource="{Binding Source={StaticResource groupedPropertiesCollection}}"
+                            Style="{StaticResource groupedPropertyValueListBoxStyle}">
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock 
+                                                Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                Text="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type kdvm:PropertyValueViewModel}">
+                                    <DockPanel
+                                        LastChildFill="True">
+                                        <TextBlock
+                                            DockPanel.Dock="Left"
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            FontSize="9"
+                                            FontWeight="Light"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Definition.Name,StringFormat={}{0}:}"/>
+                                        <TextBlock
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </ToolTip>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid
+                        MinHeight="10"
+                        MinWidth="10">
+                        <Grid.Resources>
+                            <CollectionViewSource x:Key="groupedVisiblePropertiesCollection"
+                                                    Source="{Binding VisibleProperties}">
+                                <CollectionViewSource.GroupDescriptions>
+                                    <PropertyGroupDescription PropertyName="Definition.Tag.Name" />
+                                </CollectionViewSource.GroupDescriptions>
+                            </CollectionViewSource>
+                        </Grid.Resources>
+                        <!--
+                        A connection is presented as a polyline on a canvas of the size of the occupied area
+                        -->
+                        <Canvas 
+                            Margin="0"
+                            x:Name="selectedGrid"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                            <Polyline x:Name="poly"
+                                Stroke="{TemplateBinding Shape.Stroke}"
+                                Points="{Binding Path=ConnectionPoints, Converter={x:Static view:RelationshipPathConverter.Singleton}}"
+                                StrokeThickness="1" />
+                        </Canvas>  
+                        <view:PublishDesiredSizeListBox Style="{StaticResource groupedPropertyValueListBoxStyle}"
+                                                        DesiredContentSize="{Binding MinSize,Mode=OneWayToSource}"
+                                                        Foreground="{TemplateBinding TextElement.Foreground}"
+                                                        HorizontalAlignment="Center"
+                                                        ItemsSource="{Binding Source={StaticResource groupedVisiblePropertiesCollection}}"
+                                                        Visibility="{Binding HasVisibleProperties,Converter={x:Static view:BooleanToVisibilityConverter.True2Visible}}"
+                                                        VerticalAlignment="Center"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                        view:AttachedActualSizeBindingBehaviour.Observe="True"
+                                                        view:AttachedActualSizeBindingBehaviour.ObservedActualWidth="{Binding ListBoxActualWidth, Mode=OneWayToSource}"
+                                                        view:AttachedActualSizeBindingBehaviour.ObservedActualHeight="{Binding ListBoxActualHeight, Mode=OneWayToSource}">
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock 
+                                                Foreground="{TemplateBinding TextElement.Foreground}"
+                                                Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                                Text="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type kdvm:PropertyValueViewModel}">
+                                    <DockPanel
+                                        LastChildFill="True">
+                                        <TextBlock
+                                            DockPanel.Dock="Left"
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            FontSize="9"
+                                            FontWeight="Light"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Definition.Name,StringFormat={}{0}:}"/>
+                                        <TextBlock
+                                            Foreground="{TemplateBinding TextElement.Foreground}"
+                                            Style="{StaticResource textBlockGroupedPropertyValueStyle}"
+                                            Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </view:PublishDesiredSizeListBox>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}"
+                            Value="true">
+                            <Setter Property="Shape.Stroke"
+                                Value="{StaticResource activeSelectedForegroundBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsVisible}"
+                            Value="false">
+                            <Setter
+                                Property="Shape.Stroke"
+                                Value="{StaticResource inactiveForegroundBrush}"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type view:DragEntityThumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type view:DragEntityThumb}">
+                    <Rectangle Fill="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type view:ConnectorControl}">
+        <Setter Property="Width"
+                Value="10" />
+        <Setter Property="Height"
+                Value="10" />
+        <Setter Property="Cursor"
+                Value="Cross" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type view:ConnectorControl}">
+                    <Canvas
+                        Width="10"
+                        Height="10"
+                        ToolTip="Drag to create a Relatonship">
+                        <!-- 
+                        transparent extra space makes connector easier to hit 
+                        -->
+                        <Rectangle 
+                            Canvas.Top="0"
+                            Canvas.Left="0"
+                            Width="10"
+                            Height="10"
+                            Fill="Transparent"/>
+                        <Rectangle 
+                            Canvas.Top="0"
+                            Canvas.Left="4"
+                            Width="6"
+                            Height="6"
+                            StrokeThickness="1"
+                            Stroke="{StaticResource foregroundBrush}" />
+                        <Line
+                            X1="0" Y1="9"
+                            X2="5" Y2="4"
+                            Stroke="{StaticResource foregroundBrush}"
+                            StrokeThickness="1"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

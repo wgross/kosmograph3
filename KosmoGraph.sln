@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Persistence", "K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Desktop.ViewModel.Test", "KosmoGraph.Desktop.ViewModel.Test\KosmoGraph.Desktop.ViewModel.Test.csproj", "{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KosmoGraph.Desktop.View", "KosmoGraph.Desktop.View\KosmoGraph.Desktop.View.csproj", "{6B10E80A-9BE4-44A5-8874-780088832F29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AD5FC02-6E1C-47F3-8CCD-B4369A269314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B10E80A-9BE4-44A5-8874-780088832F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B10E80A-9BE4-44A5-8874-780088832F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B10E80A-9BE4-44A5-8874-780088832F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B10E80A-9BE4-44A5-8874-780088832F29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
