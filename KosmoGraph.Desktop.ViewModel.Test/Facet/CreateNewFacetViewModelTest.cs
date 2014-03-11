@@ -88,42 +88,6 @@
         }
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
-        public void ModifyPropertiesAllowsEditNewFacetViewModelCommit()
-        {
-            // ARRANGE
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
-
-            // ACT
-
-            f1edit.Name = "f1";
-            f1edit.AddPropertyDefinition.Execute();
-            
-            // ASSERT
-            // Facet has new property definition, this allows commit
-
-            Assert.AreEqual("f1", f1edit.Name);
-            Assert.AreEqual(1, f1edit.Properties.Count());
-            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Properties.First().Name);
-            
-            Assert.IsTrue(f1edit.Commit.CanExecute());
-            Assert.IsTrue(f1edit.Rollback.CanExecute());
-            Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
-            Assert.IsTrue(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.First()));
-            
-            Assert.AreEqual(1, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
-
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-        }
-
-        [TestMethod]
         [TestCategory("CreateNewFacet"),TestCategory("RemovePropertyDefinition")]
         public void RemoveNewPropertyDefinitionFromNewFacet()
         {
@@ -207,57 +171,7 @@
             fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
-        [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
-        public void CommitEditNewFacetViewModelWithPropertyCreatesNewFacet()
-        {
-            // ARRANGE
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets -> no facets in model
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
-
-            fsvc // expect facet creation
-                .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
-
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
-            
-            f1edit.Name = "f1";
-            f1edit.AddPropertyDefinition.Execute();
-            f1edit.Properties.First().Name = "f1pd1";
-
-            // ACT
-
-            f1edit.Commit.Execute();
-
-            // ASSERT
-            // commit create a new facet and adds it to the main view model
-
-            Assert.AreEqual("f1", f1edit.Name);
-            Assert.AreEqual(1, f1edit.Properties.Count());
-            Assert.AreEqual("f1pd1", f1edit.Properties.First().Name);
-            Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.IsFalse(f1edit.AddPropertyDefinition.CanExecute());
-            Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.First()));
-
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(1, vm.Items.Count);
-
-            Assert.AreSame(vm.Items.First(), vm.Facets.First());
-            Assert.AreEqual("f1", vm.Facets.First().Name);
-            Assert.AreEqual(1, vm.Facets.First().Properties.Count());
-            Assert.AreEqual("f1pd1", vm.Facets.First().Properties.First().Name);
-            
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
-        }
-
+       
         [TestMethod]
         [TestCategory("CreateNewFacet")]
         public void CommitEditNewFacetViewModelTwiceCreatesOneNewFacet()
@@ -336,35 +250,6 @@
             fsvc.VerifyAll();
         }
 
-        [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
-        public void RollbackEditNewFacetViewModelWithPropertyInitializesAgain()
-        {
-            // ARRANGE
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
-
-            f1edit.AddPropertyDefinition.Execute();
-
-            // ACT
-
-            f1edit.Rollback.Execute();
-
-            // ASSERT
-
-            Assert.AreEqual(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetViewModelNameDefault, f1edit.Name);
-            Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.AreEqual(0, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
-
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-        }
-
         #endregion 
 
         #region CreateNewEntity > Modify > Rollback > Commit
@@ -408,58 +293,6 @@
 
             Assert.AreSame(vm.Items.First(), vm.Facets.First());
             Assert.AreEqual("f1", vm.Facets.First().Name);
-
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
-        }
-
-        [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("CreateNewPropertyDefinition")]
-        public void RollbackEditNewFacetViewModelWithPropertyAllowsEditingAgainTillCommit()
-        {
-            // ARRANGE
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets -> no facets in model
-              .Setup(_ => _.GetAllFacets())
-              .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
-
-            fsvc // expect facet creation
-                .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
-
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
-
-            f1edit.Name = "f1";
-            f1edit.AddPropertyDefinition.Execute();
-            f1edit.Properties.First().Name = "f1pd1";
-            f1edit.Rollback.Execute();
-
-            // ACT
-
-            f1edit.Name = "f1";
-            f1edit.AddPropertyDefinition.Execute();
-            f1edit.Properties.First().Name = "f1pd1";
-            f1edit.Commit.Execute();
-
-            // ASSERT
-
-            Assert.AreEqual("f1", f1edit.Name);
-            Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.AreEqual(1, f1edit.Properties.Count());
-            Assert.AreEqual("f1pd1", f1edit.Properties.First().Name);
-
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(1, vm.Items.Count);
-
-            Assert.AreSame(vm.Items.First(), vm.Facets.First());
-            Assert.AreEqual("f1", vm.Facets.First().Name);
-            Assert.AreEqual(1, vm.Facets.First().Properties.Count());
-            Assert.AreEqual("f1pd1", vm.Facets.First().Properties.First().Name);
 
             ersvc.VerifyAll();
             fsvc.VerifyAll();

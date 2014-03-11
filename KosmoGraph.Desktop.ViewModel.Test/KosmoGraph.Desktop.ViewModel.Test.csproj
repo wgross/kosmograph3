@@ -79,6 +79,7 @@
     <Compile Include="Facet\RemoveUnassignedFacetsPropertyDefinitionTest.cs" />
     <Compile Include="Facet\RemoveAssignedRelationshipFacetsPropertyDefinitionTest.cs" />
     <Compile Include="Facet\RemoveFacetViewModelTest.cs" />
+    <Compile Include="Facet\CreateNewPropertyDefinitionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetViewModelTest.cs" />

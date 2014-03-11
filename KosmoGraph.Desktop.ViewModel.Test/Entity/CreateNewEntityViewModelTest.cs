@@ -1,4 +1,4 @@
-﻿namespace Kosmograph.Desktop.Test.ViewModel
+﻿namespace Kosmograph.Desktop.ViewModel.Test
 {
     using System;
     using System.Linq;

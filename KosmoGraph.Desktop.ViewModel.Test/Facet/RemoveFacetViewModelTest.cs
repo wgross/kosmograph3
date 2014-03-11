@@ -1,4 +1,4 @@
-﻿namespace KosmoGraph.Desktop.ViewModel.Test.Facet
+﻿namespace KosmoGraph.Desktop.ViewModel.Test
 {
     using System;
     using System.Linq;
