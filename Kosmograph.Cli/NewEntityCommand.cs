@@ -6,7 +6,7 @@
 
     [Cmdlet(VerbsCommon.New,"Entity")]
     [OutputType(typeof(Entity))]
-    public sealed  class NewEntityCommand : Cmdlet
+    public sealed  class NewEntityCommand : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty()]

@@ -114,5 +114,14 @@ using System.Threading.Tasks;
         }
 
         #endregion 
+
+        public Entity FindByName(string name)
+        {
+            if(string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+            
+            return this.entityCollection.Value.Find(Query.EQ("name", name)).FirstOrDefault();
+        }
+
     }
 }
