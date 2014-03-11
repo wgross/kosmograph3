@@ -355,6 +355,11 @@
         private void RemoveEntityFromViewModelItems(EntityViewModel entityToRemove)
         {
             this.Entities.Remove(entityToRemove);
+            this.Relationships.ToList().ForEach(r => // work on snapshot becasuse of deletion
+            {
+                if (r.From.Entity == entityToRemove || r.To.Entity == entityToRemove)
+                    this.Relationships.Remove(r);
+            });
         }
 
         #endregion 

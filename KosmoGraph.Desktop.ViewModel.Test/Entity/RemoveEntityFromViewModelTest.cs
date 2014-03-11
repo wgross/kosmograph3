@@ -57,7 +57,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
         [TestMethod]
         [TestCategory("RemoveEntity")]
-        public void RemoveEntityFromViewmModel()
+        public void RemoveUnusedEntityFromViewModel()
         {
             // ARRANGE
 
