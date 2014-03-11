@@ -17,7 +17,7 @@
             db.DropCollection("relationship");
         }
 
-        private readonly string databaseName = "kosmograph";
+        private readonly string databaseName = "kosmograph_test";
 
         [TestMethod]
         [TestCategory("EditRelationship")]

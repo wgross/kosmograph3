@@ -15,7 +15,7 @@
             new MongoClient().GetServer().GetDatabase(this.databaseName).DropCollection("entity");
         }
 
-        private readonly string databaseName = "kosmograph";
+        private readonly string databaseName = "kosmograph_test";
         
         [TestMethod]
         public void AssignEmptyFacetToEntityAndInsertInDb()

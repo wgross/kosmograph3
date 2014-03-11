@@ -16,7 +16,7 @@
             new MongoClient().GetServer().GetDatabase(this.databaseName).DropCollection("facet");
         }
 
-        private readonly string databaseName = "kosmograph";
+        private readonly string databaseName = "kosmograph_test";
 
         [TestMethod]
         [TestCategory("CreateNewFacet")]

@@ -18,7 +18,7 @@
             db.DropCollection("entity");
         }
 
-        private readonly string databaseName = "kosmograph";
+        private readonly string databaseName = "kosmograph_test";
 
         #region Find relatinship by From or To entity
 
