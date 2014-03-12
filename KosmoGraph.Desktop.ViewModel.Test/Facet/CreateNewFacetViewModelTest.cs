@@ -195,10 +195,14 @@
             
             f1edit.Name = "f1";
             f1edit.Commit.Execute();
+
+            TestDispatcher.DoEvents();
             
             // ACT
 
             f1edit.Commit.Execute();
+
+            TestDispatcher.DoEvents();
            
             // ASSERT
             // commit twice creatze no new facet
@@ -282,6 +286,8 @@
 
             f1edit.Name = "f1";
             f1edit.Commit.Execute();
+
+            TestDispatcher.DoEvents();
 
             // ASSERT
 

@@ -107,6 +107,7 @@
             // ACT
 
             f1edit.Commit.Execute();
+            TestDispatcher.DoEvents();
 
             // ASSERT
             // commit create a new facet and adds it to the main view model
@@ -189,6 +190,8 @@
             f1edit.AddPropertyDefinition.Execute();
             f1edit.Properties.Single().Name = "pd1";
             f1edit.Commit.Execute();
+            
+            TestDispatcher.DoEvents();
 
             // ASSERT
 
