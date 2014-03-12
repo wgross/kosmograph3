@@ -277,88 +277,89 @@
 
         #endregion 
 
-        #region Handle Create New Model command
+        #region //Handle Create New Model command
 
-        private void CreateNewModelCanExecute(object sender, CanExecuteRoutedEventArgs args)
-        {
-            args.CanExecute = true;
-        }
+        //private void CreateNewModelCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        //{
+        //    args.CanExecute = true;
+        //}
 
-        private void CreateNewModelExecuted(object sender, ExecutedRoutedEventArgs args)
-        {
-            this.CreateNewModel(args.Parameter as EntityRelationshipViewModel);
-        }
+        //private void CreateNewModelExecuted(object sender, ExecutedRoutedEventArgs args)
+        //{
+        //    this.CreateNewModel(args.Parameter as EntityRelationshipViewModel);
+        //}
 
-        private void CreateNewModel(EntityRelationshipViewModel model)
-        {
-            string selectedDatabase;
-            var result = new KosmoGraphDialogService()
-                .SelectModelDatabase(this.rootPanel, "kosmograph", out selectedDatabase, null);
+        //private void CreateNewModel(EntityRelationshipViewModel model)
+        //{
+        //    //string selectedDatabase;
+        //    //var result = new KosmoGraphDialogService()
+        //    //    .SelectModelDatabase(this.rootPanel, "kosmograph", out selectedDatabase, null);
             
-            if(result.HasValue && result.Value)
-                this.Model = new EntityRelationshipViewModelFactory().CreateNewFromDatabaseName(selectedDatabase);
-        }
+        //    //if(result.HasValue && result.Value)
+        //    //    this.Model = new EntityRelationshipViewModelFactory().CreateNewFromDatabaseName(selectedDatabase);
+        //}
 
         #endregion 
 
-        #region Handle Save As command
+        #region //Handle Save As command
 
-        private void SaveModelAsCanExecute(object sender, CanExecuteRoutedEventArgs args)
-        {
-            var model = args.Parameter as EntityRelationshipViewModel;
+        //private void SaveModelAsCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        //{
+        //    var model = args.Parameter as EntityRelationshipViewModel;
 
-            //args.CanExecute = (model != null && model.ModelStore is XmlModelDatabase);
-        }
+        //    //args.CanExecute = (model != null && model.ModelStore is XmlModelDatabase);
+        //}
 
-        private void SaveModelAsExecuted(object sender, ExecutedRoutedEventArgs args)
-        {
-            if (args.Parameter is EntityRelationshipViewModel)
-            {
-                this.SaveModelAs(args.Parameter as EntityRelationshipViewModel);
-            }
-        }
+        //private void SaveModelAsExecuted(object sender, ExecutedRoutedEventArgs args)
+        //{
+        //    if (args.Parameter is EntityRelationshipViewModel)
+        //    {
+        //        this.SaveModelAs(args.Parameter as EntityRelationshipViewModel);
+        //    }
+        //}
 
-        private void SaveModelAs(EntityRelationshipViewModel model)
-        {
-            //string fileName;
-            //var result = new DialogService().GetModelFileNameToSave(((XmlModelDatabase)(model.ModelStore)).FileName, out fileName);
-            //if(result.GetValueOrDefault())
-            //    if(!string.IsNullOrWhiteSpace(fileName))
-            //        ((XmlModelDatabase)(model.ModelStore)).StoreAs(fileName);
-        }
+        //private void SaveModelAs(EntityRelationshipViewModel model)
+        //{
+        //    //string fileName;
+        //    //var result = new DialogService().GetModelFileNameToSave(((XmlModelDatabase)(model.ModelStore)).FileName, out fileName);
+        //    //if(result.GetValueOrDefault())
+        //    //    if(!string.IsNullOrWhiteSpace(fileName))
+        //    //        ((XmlModelDatabase)(model.ModelStore)).StoreAs(fileName);
+        //}
+
         #endregion
 
-        #region Handle Sav As command
+        #region //Handle Save command
 
-        private void SaveModelCanExecute(object sender, CanExecuteRoutedEventArgs args)
-        {
-            if (args.Parameter is EntityRelationshipViewModel)
-            {
-                var model = args.Parameter as EntityRelationshipViewModel;
+        //private void SaveModelCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        //{
+        //    if (args.Parameter is EntityRelationshipViewModel)
+        //    {
+        //        var model = args.Parameter as EntityRelationshipViewModel;
 
-                args.CanExecute = false;//(
-                    //model.ModelStore != null 
-                    //&& 
-                    //model.ModelStore is XmlModelDatabase 
-                    //&&
-                    //!string.IsNullOrEmpty(((XmlModelDatabase)(model.ModelStore)).FileName)
-                //);
-            }
-            else args.CanExecute = false;
-        }
+        //        args.CanExecute = false;//(
+        //            //model.ModelStore != null 
+        //            //&& 
+        //            //model.ModelStore is XmlModelDatabase 
+        //            //&&
+        //            //!string.IsNullOrEmpty(((XmlModelDatabase)(model.ModelStore)).FileName)
+        //        //);
+        //    }
+        //    else args.CanExecute = false;
+        //}
 
-        private void SaveModelExecuted(object sender, ExecutedRoutedEventArgs args)
-        {
-            if (args.Parameter is EntityRelationshipViewModel)
-            {
-                this.SaveModel(args.Parameter as EntityRelationshipViewModel);
-            }
-        }
+        //private void SaveModelExecuted(object sender, ExecutedRoutedEventArgs args)
+        //{
+        //    if (args.Parameter is EntityRelationshipViewModel)
+        //    {
+        //        this.SaveModel(args.Parameter as EntityRelationshipViewModel);
+        //    }
+        //}
 
-        private void SaveModel(EntityRelationshipViewModel model)
-        {
-            //model.ModelStore.Store();
-        }
+        //private void SaveModel(EntityRelationshipViewModel model)
+        //{
+        //    //model.ModelStore.Store();
+        //}
         #endregion
 
         #region Handle Create New Model From Store command
@@ -375,12 +376,12 @@
 
         private void CreateNewModelFromStore()
         {
-            //EntityRelationshipViewModel model=null;
-            //string fileName;
-            //var result = new DialogService().GetModelFileNameToOpen(out fileName);
-            //if (result.GetValueOrDefault())
-            //    if (!string.IsNullOrWhiteSpace(fileName))
-            //        model = EntityRelationshipViewModel.CreateNewFromStore(new XmlModelDatabase(fileName));
+            string selectedDatabase;
+            var result = new KosmoGraphDialogService()
+                .SelectModelDatabase(this.rootPanel, "kosmograph", out selectedDatabase, null);
+
+            if (result.HasValue && result.Value)
+                this.Model = new EntityRelationshipViewModelFactory().CreateNewFromDatabaseName(selectedDatabase);
 
             //if(model!=null)
             //    this.Model = model;

@@ -5,64 +5,51 @@
         xmlns:kd="clr-namespace:KosmoGraph.Desktop"
         Title="MainWindow" Height="350" Width="525">
     <Window.CommandBindings>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
             Executed="CreateEntityExecuted"
             CanExecute="CreateEntityCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationship}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationship}"
             Executed="CreateRelationshipExecuted"
             CanExecute="CreateRelationshipCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
             Executed="CreateRelationshipWithEntityExecuted"
             CanExecute="CreateRelationshipWithEntityCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
             Executed="CreateTagExecuted"
             CanExecute="CreateTagCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.EditEntity}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditEntity}"
             Executed="EditEntityExecuted"
             CanExecute="EditEntityCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.EditRelationship}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditRelationship}"
             Executed="EditRelationshipExecuted"
             CanExecute="EditRelationshipCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.EditTag}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditTag}"
             Executed="EditTagExecuted"
             CanExecute="EditFacetCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteEntity}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteEntity}"
             Executed="DeleteEntityExecuted"
             CanExecute="DeleteEntityCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteRelationship}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteRelationship}"
             Executed="DeleteRelationshipExecuted"
             CanExecute="DeleteRelationshipCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.DeleteTag}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteTag}"
             Executed="DeleteTagExecuted"
             CanExecute="DeleteTagCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.SaveModelAs}"
-            Executed="SaveModelAsExecuted"
-            CanExecute="SaveModelAsCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
-            Executed="SaveModelExecuted"
-            CanExecute="SaveModelCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
             Executed="CreateNewModelFromStoreExecuted"
             CanExecute="CreateNewModelFromStoreCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
+        <!--
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.SaveModelAs}"
+            Executed="SaveModelAsExecuted"
+            CanExecute="SaveModelAsCanExecute"/>
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
+            Executed="SaveModelExecuted"
+            CanExecute="SaveModelCanExecute"/>
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
             Executed="CreateNewModelExecuted"
             CanExecute="CreateNewModelCanExecute"/>
-        <CommandBinding 
-            Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
+        -->
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
             Executed="LayoutModelExecuted"
             CanExecute="LayoutModelCanExecute"/>
     </Window.CommandBindings>
@@ -97,13 +84,13 @@
                     Style="{StaticResource labelBorderStyle}">
                     <Menu
                         Style="{StaticResource menuStyle}">
-                        <MenuItem
-                            Header="Graph"
-                            Style="{StaticResource menuItemStyle}">
-                            <MenuItem Header="New"
+                            <MenuItem Header="Open..."
+                                Style="{StaticResource menuItemStyle}"
+                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}">
+                            <!--<MenuItem Header="New"
                                 Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
                                 Style="{StaticResource menuItemStyle}"/>
-                            <MenuItem Header="Open..."
+                            <MenuItem Header="Open Database..."
                                 Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
                                 Style="{StaticResource menuItemStyle}"/>
                             <MenuItem Header="Save As..."
@@ -113,7 +100,7 @@
                             <MenuItem Header="Save"
                                 Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
                                 CommandParameter="{Binding .}"
-                                Style="{StaticResource menuItemStyle}"/>
+                                Style="{StaticResource menuItemStyle}"/>-->
                         </MenuItem>
                     </Menu>
                 </Border>
@@ -121,7 +108,6 @@
                             DockPanel.Dock="Bottom"
                             Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
                             CommandParameter="{Binding .}">Layout</Button>
-                    
                 <view:EntityRelationshipControl x:Name="entityRelationshipView">
                     <view:EntityRelationshipControl>
                         <view:EntityRelationshipControl.InputBindings>
