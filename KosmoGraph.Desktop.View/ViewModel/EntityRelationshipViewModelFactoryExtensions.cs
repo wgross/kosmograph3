@@ -6,14 +6,14 @@
 
     public static class EntityRelationshipViewModelFactoryExtensions
     {
-        public static EntityRelationshipViewModel CreateNewDefault(this EntityRelationshipViewModelFactory thisEntityRelationshipViewModelFactory)
+        public static EntityRelationshipViewModel CreateNewFromDatabaseName(this EntityRelationshipViewModelFactory thisEntityRelationshipViewModelFactory, string databaseName)
         {
             return thisEntityRelationshipViewModelFactory.CreateNew(
                 new EntityRelationshipService(
-                        new EntityRepository("kosmograph"),
-                        new RelationshipRepository("kosmograph")),
+                        new EntityRepository(databaseName),
+                        new RelationshipRepository(databaseName)),
                 new FacetService(
-                        new FacetRepository("kosmograph")));
+                        new FacetRepository(databaseName)));
 
             //var e = this.Model.CreateNewEntity("new");
             //e.Top = this.ActualHeight / 2;

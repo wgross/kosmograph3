@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-    public static class DialogServiceExtensions
+    public static class PanelDialogExtensions
     {
-        public static bool? ShowDialog(this Grid grid, object viewModel, params DialogAction[] dialogActions)
+        public static bool? ShowDialog(this Panel grid, object viewModel, params DialogAction[] dialogActions)
         {
             return grid.ShowDialog(new[] { viewModel }, dialogActions);
         }
 
-        public static bool? ShowDialog(this Grid grid, object[] viewModels, params DialogAction[] dialogActions)
+        public static bool? ShowDialog(this Panel grid, object[] viewModels, params DialogAction[] dialogActions)
         {
-            var dlg = new DialogControl
+            var dlg = new DialogContainerControl
             {
-                ViewModel = new DialogViewModel
+                ViewModel = new DialogContainerViewModel
                 {
                     DialogContent = new ObservableCollection<object>(viewModels),
                     DialogActions = dialogActions

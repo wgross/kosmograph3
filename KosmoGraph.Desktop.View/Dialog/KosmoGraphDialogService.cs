@@ -1,27 +1,27 @@
 ﻿namespace KosmoGraph.Desktop.Dialog
 {
-    using Microsoft.Win32;
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Windows.Controls;
-    
+    using KosmoGraph.Desktop.Dialog.ViewModel;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Controls;
 
-    public class DialogService
+    public sealed class KosmoGraphDialogService
     {
-        public bool? ShowDialog( Grid grid, object viewModel, params DialogAction[] dialogActions)
+        public bool? ShowDialog(Panel grid, object viewModel, params DialogAction[] dialogActions)
         {
             return grid.ShowDialog(new[] { viewModel }, dialogActions);
         }
 
-        public bool? ShowDialog( Grid grid, object[] viewModels, params DialogAction[] dialogActions)
+        public bool? ShowDialog(Panel grid, object[] viewModels, params DialogAction[] dialogActions)
         {
-            var dlg = new DialogControl
+            var dlg = new DialogContainerControl
             {
-                ViewModel = new DialogViewModel
+                ViewModel = new DialogContainerViewModel
                 {
                     DialogContent = new ObservableCollection<object>(viewModels),
                     DialogActions = dialogActions
@@ -40,7 +40,7 @@
             }
         }
 
-        public bool? GetModelFileNameToOpen( out string fileName )
+        public bool? GetModelFileNameToOpen(out string fileName)
         {
             fileName = string.Empty;
 
@@ -54,9 +54,9 @@
             };
 
             var result = dlg.ShowDialog();
-            if( result!= null && result.Value)
-                fileName =dlg.FileName;
-            
+            if (result != null && result.Value)
+                fileName = dlg.FileName;
+
             return result;
         }
 
@@ -74,15 +74,35 @@
                 //InitialDirectory = ".",
                 Title = "CopyTo model as file",
                 //ValidateNames = true,
-                OverwritePrompt=true,
+                OverwritePrompt = true,
             };
 
-            if(string.IsNullOrWhiteSpace(Path.GetExtension(fileName)))
-                fileName = fileName+".kgml";
-            
+            if (string.IsNullOrWhiteSpace(Path.GetExtension(fileName)))
+                fileName = fileName + ".kgml";
+
             var result = dlg.ShowDialog();
             if (result != null && result.Value)
                 fileName = dlg.FileName;
+
+            return result;
+        }
+
+        public bool? SelectModelDatabase(Panel atPanel, string defaultDatabaseName, out string selectedDatabaseName, params DialogAction[] dialogActions)
+        {
+            var selectModelDatabaseViewModel = new SelectModelDatabaseViewModel
+            {
+                Title = "Connect to database",
+                DatabaseName = "kosmograph"
+            };
+
+            selectedDatabaseName = null;
+
+            var result = atPanel.ShowDialog(selectModelDatabaseViewModel,
+                DialogActionBuilder.Cancel("cancel", delegate { /*just do nothing*/}),
+                DialogActionBuilder.Ok("OPEN", delegate { } ));
+
+            if (result.HasValue && result.Value)
+                selectedDatabaseName = selectModelDatabaseViewModel.DatabaseName;
 
             return result;
         }

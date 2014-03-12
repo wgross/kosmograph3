@@ -90,14 +90,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Dialog\DialogCommands.cs" />
-    <Compile Include="Dialog\DialogControl.xaml.cs">
-      <DependentUpon>DialogControl.xaml</DependentUpon>
+    <Compile Include="Dialog\Core\DialogContainerCommands.cs" />
+    <Compile Include="Dialog\Core\DialogContainerControl.xaml.cs">
+      <DependentUpon>DialogContainerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialog\DialogService.cs" />
-    <Compile Include="Dialog\DialogServiceExtensions.cs" />
-    <Compile Include="Dialog\DialogViewModel.cs" />
-    <Compile Include="Dialog\MessageDialogViewModel.cs" />
+    <Compile Include="Dialog\DialogAction.cs" />
+    <Compile Include="Dialog\KosmoGraphDialogService.cs" />
+    <Compile Include="Dialog\Core\PanelDialogExtensions.cs" />
+    <Compile Include="Dialog\Core\DialogContainerViewModel.cs" />
+    <Compile Include="Dialog\ViewModel\MessageDialogViewModel.cs" />
+    <Compile Include="Dialog\ViewModel\SelectDatabaseViewModel.cs" />
     <Compile Include="EntityRelationshipModelCommands.cs" />
     <Compile Include="ExecuteRoutedEventArgsWithType.cs" />
     <Compile Include="KosmoGraphBootstrapper.cs" />
@@ -121,7 +123,7 @@
     <Compile Include="View\RelationshipPathConverter.cs" />
     <Compile Include="View\AttachedActualSizeBindingBehaviour.cs" />
     <Compile Include="View\RubberbandSelectionAdorner.cs" />
-    <Page Include="Dialog\DialogControl.xaml">
+    <Page Include="Dialog\Core\DialogContainerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,6 +211,7 @@
       <Name>KosmoGraph.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

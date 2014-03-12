@@ -17,28 +17,34 @@
     using System.Windows.Threading;
 
     /// <summary>
-    /// Interaction logic for DialogControl.xaml
+    /// The dialog control handles the interaction with in the dialog containers buttons
+    /// The command are executable if at leats on of the Delegate Command are executable
     /// </summary>
-    public partial class DialogControl : UserControl
+    public partial class DialogContainerControl : UserControl
     {
-        public DialogControl()
+        #region Constraction and initialization of this instance 
+
+        public DialogContainerControl()
         {
             this.InitializeComponent();
             this.CommandBindings.Add( new CommandBinding(DialogCommands.Ok, this.OkExecuted, this.OkCanExecute));
             this.CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, this.CancelExecuted, this.CancelCanExecute));
         }
 
-        public DialogViewModel ViewModel
+        #endregion 
+
+        public DialogContainerViewModel ViewModel
         {
             get
             {
-                return this.DataContext as DialogViewModel;
+                return this.DataContext as DialogContainerViewModel;
             }
             set
             {
                 this.DataContext = value;
             }
         }
+
         #region Show dialog modal
 
         public bool? DialogResult

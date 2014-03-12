@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:kdd="clr-namespace:KosmoGraph.Desktop.Dialog"
                     xmlns:kdv="clr-namespace:KosmoGraph.Desktop.View"
-                    xmlns:kdvm="clr-namespace:KosmoGraph.Desktop.ViewModel;assembly=KosmoGraph.Desktop.ViewModel">
+                    xmlns:kdvm="clr-namespace:KosmoGraph.Desktop.ViewModel;assembly=KosmoGraph.Desktop.ViewModel"
+                    xmlns:kddvm="clr-namespace:KosmoGraph.Desktop.Dialog.ViewModel">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./CommonResources.xaml" />
@@ -65,9 +66,7 @@
     
     <!-- Labels in dialogs -->
 
-    <Style x:Key="nameLabelStyle" 
-           BasedOn="{StaticResource labelStyle}"
-           TargetType="{x:Type Label}">
+    <Style x:Key="nameLabelStyle" BasedOn="{StaticResource labelStyle}" TargetType="{x:Type Label}">
         <Setter
             Property="Content"
             Value="_Name"/>
@@ -121,6 +120,10 @@
             Property="ToolTip"
             Value="Edit property definition"/>
     </Style>
+    
+    <Style x:Key="databaseNameLabelStyle" BasedOn="{StaticResource nameLabelStyle}" TargetType="{x:Type Label}">
+        <Setter Property="Content" Value="Database _Name"/>
+    </Style>
 
     <!-- TextBlock in dialogs -->
     
@@ -137,9 +140,7 @@
 
     <!-- TextBoxes in Dialogs-->
     
-    <Style x:Key="nameTextBoxStyle" 
-           BasedOn="{StaticResource textBoxStyle}"
-           TargetType="{x:Type TextBox}">
+    <Style x:Key="nameTextBoxStyle" BasedOn="{StaticResource textBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter
             Property="Margin"
             Value="0,0,0,5"/>
@@ -152,6 +153,8 @@
             Property="HorizontalAlignment"
             Value="Stretch"/>
     </Style>
+
+    <Style x:Key="databaseNameTextBoxStyle" BasedOn="{StaticResource nameTextBoxStyle}" TargetType="{x:Type TextBox}"/>
 
     <!-- ListBoxes in dialogs -->
     
@@ -534,6 +537,20 @@
                     </DockPanel>
                 </DockPanel>
             </DockPanel>
+        </StackPanel>
+    </DataTemplate>
+   
+    <DataTemplate DataType="{x:Type kddvm:SelectModelDatabaseViewModel}">
+        <StackPanel>
+            <Border Style="{StaticResource dialogTitleBorderStyle}">
+                <TextBlock Style="{StaticResource dialogTitle}"
+                   Text="{Binding Title}"/>
+            </Border>
+            <Label Style="{StaticResource databaseNameLabelStyle}"
+                   Target="databaseNameTextBox"/>
+            <TextBox Name ="databaseNameTextBox" 
+                     Style="{StaticResource databaseNameTextBoxStyle}"
+                     Text="{Binding DatabaseName}"/>
         </StackPanel>
     </DataTemplate>
     

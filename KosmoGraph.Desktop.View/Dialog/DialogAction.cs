@@ -1,24 +1,27 @@
 ﻿namespace KosmoGraph.Desktop.Dialog
 {
     using Microsoft.Practices.Prism.Commands;
-    using Microsoft.Practices.Prism.ViewModel;
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    public class DialogAction
+    public sealed class DialogActionBuilder
     {
+        public static DialogAction Ok(string title, Action<object> onOk)
+        {
+            return Ok(title, new DelegateCommand<object>(onOk));
+        }
+
         public static DialogAction Ok(string title, ICommand contentCommand)
         {
             return new DialogAction
             {
-                IsDefault=true,
-                IsCancel=false,
-                Name=title,
+                IsDefault = true,
+                IsCancel = false,
+                Name = title,
                 Command = DialogCommands.Ok,
                 ContentCommand = contentCommand
             };
@@ -36,6 +39,11 @@
             return Ok(title, compositeCommand);
         }
 
+        public static DialogAction Cancel(string title, bool isDefaultCancel, Action<object> onCancel)
+        {
+            return Cancel(title, isDefaultCancel, new DelegateCommand<object>(onCancel));
+        }
+
         public static DialogAction Cancel(string title, bool isDefaultCancel, ICommand contentCommand)
         {
             return new DialogAction
@@ -48,18 +56,23 @@
             };
         }
 
+        public static DialogAction Cancel(string title, Action<object> onCancel)
+        {
+            return Cancel(title, new DelegateCommand<object>(onCancel));
+        }
+
         public static DialogAction Cancel(string title, ICommand contentCommand)
         {
             return new DialogAction
             {
-                IsCancel=true,
-                IsDefault=false,
-                Name=title,
+                IsCancel = true,
+                IsDefault = false,
+                Name = title,
                 Command = DialogCommands.Cancel,
                 ContentCommand = contentCommand
             };
         }
-       
+
         public static DialogAction Cancel(string title, params ICommand[] contentCommands)
         {
             if (contentCommands == null)
@@ -71,64 +84,18 @@
 
             return Cancel(title, compositeCommand);
         }
+    }
 
+    public class DialogAction
+    { 
         public bool IsDefault { get; set; }
-        
-        public bool IsCancel { get;set;}
 
-        public string Name {get; set;}
+        public bool IsCancel { get; set; }
+
+        public string Name { get; set; }
 
         public ICommand Command { get; set; }
 
         public ICommand ContentCommand { get; set; }
-    }
-
-    public sealed class DialogViewModel : NotificationObject
-    {
-        #region Dialog Size
-
-        #endregion 
-
-        #region Dialog is populated with this data element
-
-        public ObservableCollection<object> DialogContent
-        {
-            get
-            {
-                return this.dialogContent;
-            }
-            set
-            {
-                if (object.ReferenceEquals(this.dialogContent, value))
-                    return;
-                this.dialogContent = value;
-                this.RaisePropertyChanged(() => this.DialogContent);
-            }
-        }
-
-        private ObservableCollection<object> dialogContent;
-
-        #endregion 
-
-        #region Dialog provides dialog actions
-
-        public IEnumerable<DialogAction> DialogActions
-        {
-            get
-            {
-                return this.dialogActions;
-            }
-            set
-            {
-                if (object.ReferenceEquals(value, this.dialogActions))
-                    return;
-                this.dialogActions = value;
-                this.RaisePropertyChanged(() => this.DialogActions);
-            }
-        }
-
-        private IEnumerable<DialogAction> dialogActions;
-
-        #endregion
     }
 }

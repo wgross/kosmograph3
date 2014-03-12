@@ -1,7 +1,7 @@
 ﻿namespace KosmoGraph.Desktop.View
 {
     using KosmoGraph.Desktop.ViewModel;
-    using KosmoGraph.Desktop.Dialog;
+    using KosmoGraph.Desktop.Dialog.ViewModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,6 +20,7 @@
     using System.ComponentModel.Composition;
     using KosmoGraph.Services;
     using KosmoGraph.Persistence.MongoDb;
+    using KosmoGraph.Desktop.Dialog;
     
     [Export]
     public partial class MainWindow : Window
@@ -81,8 +82,8 @@
         {
             //var relationshipDialogViewModel = new EditRelationshipViewModel(args.Parameter as RelationshipViewModel);
             //var committed = this.rootPanel.ShowDialog(relationshipDialogViewModel,
-            //   DialogAction.Ok("ok", relationshipDialogViewModel.Commit),
-            //   DialogAction.Cancel("cancel", relationshipDialogViewModel.Rollback));
+            //   DialogActionBuilder.Ok("ok", relationshipDialogViewModel.Commit),
+            //   DialogActionBuilder.Cancel("cancel", relationshipDialogViewModel.Rollback));
 
             //if (committed.HasValue && committed.Value)
             //{
@@ -149,8 +150,8 @@
             entityDialogViewModel.EnableCommit = true;
 
             var committed = this.rootPanel.ShowDialog(new object[]{entityDialogViewModel, relationshipDialogViewModel},
-                DialogAction.Ok("ok", entityDialogViewModel.Commit, relationshipDialogViewModel.Commit), 
-                DialogAction.Cancel("cancel", entityDialogViewModel.Rollback, relationshipDialogViewModel.Rollback));
+                DialogActionBuilder.Ok("ok", entityDialogViewModel.Commit, relationshipDialogViewModel.Commit), 
+                DialogActionBuilder.Cancel("cancel", entityDialogViewModel.Rollback, relationshipDialogViewModel.Rollback));
            
             //if (committed.HasValue && committed.Value)
             //{
@@ -179,9 +180,9 @@
             //var dialogViewModel = new EditEntityViewModel(entity);
 
             //return this.rootPanel.ShowDialog(dialogViewModel, 
-            //    DialogAction.Cancel("delete entity", false, EntityRelationshipModelCommands.DeleteEntity),
-            //    DialogAction.Ok("ok", dialogViewModel.Commit), 
-            //    DialogAction.Cancel("cancel", dialogViewModel.Rollback));
+            //    DialogActionBuilder.Cancel("delete entity", false, EntityRelationshipModelCommands.DeleteEntity),
+            //    DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
+            //    DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
         #endregion 
 
@@ -197,9 +198,9 @@
             //var dialogViewModel = new EditRelationshipViewModel(args.Parameter as RelationshipViewModel);
             
             //this.rootPanel.ShowDialog(dialogViewModel, 
-            //    DialogAction.Cancel("delete relationship",false, EntityRelationshipModelCommands.DeleteRelationship),
-            //    DialogAction.Ok("ok", dialogViewModel.Commit), 
-            //    DialogAction.Cancel("cancel", dialogViewModel.Rollback));
+            //    DialogActionBuilder.Cancel("delete relationship",false, EntityRelationshipModelCommands.DeleteRelationship),
+            //    DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
+            //    DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
 
         #endregion 
@@ -221,9 +222,9 @@
             var dialogViewModel = this.model.EditFacet(facetViewModel);
 
             return this.rootPanel.ShowDialog(dialogViewModel,
-                DialogAction.Cancel("delete tag", false, EntityRelationshipModelCommands.DeleteTag),
-                DialogAction.Ok("ok", dialogViewModel.Commit), 
-                DialogAction.Cancel("cancel", dialogViewModel.Rollback));
+                DialogActionBuilder.Cancel("delete tag", false, EntityRelationshipModelCommands.DeleteTag),
+                DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
+                DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
 
         #endregion 
@@ -290,7 +291,12 @@
 
         private void CreateNewModel(EntityRelationshipViewModel model)
         {
-            this.Model = new EntityRelationshipViewModelFactory().CreateNewDefault();
+            string selectedDatabase;
+            var result = new KosmoGraphDialogService()
+                .SelectModelDatabase(this.rootPanel, "kosmograph", out selectedDatabase, null);
+            
+            if(result.HasValue && result.Value)
+                this.Model = new EntityRelationshipViewModelFactory().CreateNewFromDatabaseName(selectedDatabase);
         }
 
         #endregion 
