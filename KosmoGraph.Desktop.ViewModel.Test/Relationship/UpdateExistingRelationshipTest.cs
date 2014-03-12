@@ -92,7 +92,7 @@
             Assert.AreEqual(1, vm.Facets.Count());
             Assert.AreEqual(2, vm.Entities.Count());
             Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual(4, vm.Items.Count);
+            Assert.AreEqual(3, vm.Items.Count);
             
             ersvc.VerifyAll();
             ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
@@ -178,7 +178,7 @@
             Assert.AreEqual(2, vm.Entities.Count());
             Assert.AreEqual(1, vm.Relationships.Count());
             Assert.AreEqual("pv1", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(4, vm.Items.Count);
+            Assert.AreEqual(3, vm.Items.Count);
 
             Assert.AreEqual("pv1", relationships.First().AssignedFacets.First().Properties.First().Value);
 
@@ -272,7 +272,7 @@
             Assert.AreEqual(2, vm.Entities.Count());
             Assert.AreEqual(1, vm.Relationships.Count());
             Assert.AreEqual("pv1-changed", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(4, vm.Items.Count);
+            Assert.AreEqual(3, vm.Items.Count);
 
             Assert.AreEqual("pv1-changed", relationships.First().AssignedFacets.First().Properties.First().Value);
 
@@ -363,7 +363,7 @@
             Assert.AreEqual(2, vm.Entities.Count());
             Assert.AreEqual(1, vm.Relationships.Count());
             Assert.AreEqual("pv1", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(4, vm.Items.Count);
+            Assert.AreEqual(3, vm.Items.Count);
 
             Assert.AreEqual("pv1", relationships.First().AssignedFacets.First().Properties.First().Value);
 
@@ -459,7 +459,7 @@
             Assert.AreEqual(2, vm.Entities.Count());
             Assert.AreEqual(1, vm.Relationships.Count());
             Assert.AreEqual("pv1-changed", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(4, vm.Items.Count);
+            Assert.AreEqual(3, vm.Items.Count);
 
             Assert.AreEqual("pv1-changed", relationships.First().AssignedFacets.First().Properties.First().Value);
 

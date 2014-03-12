@@ -62,9 +62,8 @@
                 log.Info("Retrieved '{0}' relationships from service.", this.Relationships.Count);
             }).Wait();
 
-            this.Items = new ObservableCollection<ModelItemViewModelBase>(this.Facets
+            this.Items = new ObservableCollection<ModelItemViewModelBase>(this.Entities
                 .Cast<ModelItemViewModelBase>()
-                .Union(this.Entities)
                 .Union(this.Relationships));
         }
 

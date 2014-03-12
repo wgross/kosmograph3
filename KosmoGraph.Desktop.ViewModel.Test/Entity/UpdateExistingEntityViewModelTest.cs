@@ -164,7 +164,7 @@
             Assert.AreEqual(1, vm.Entities.Single().AssignedFacets.Count());
             Assert.AreEqual(1, vm.Entities.Single().AssignedFacets.Single().Properties.Count());
             Assert.AreEqual("pv1", vm.Entities.Single().AssignedFacets.Single().Properties.Single().Value);
-            Assert.AreEqual(2, vm.Items.Count);
+            Assert.AreEqual(1, vm.Items.Count);
 
             Assert.AreEqual("pv1", entities.Single().AssignedFacets.Single().Properties.Single().Value);
             
@@ -236,7 +236,7 @@
             Assert.AreEqual(1, e1edit.Properties.Count());
             
             Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(2, vm.Items.Count());
+            Assert.AreEqual(1, vm.Items.Count());
             Assert.AreEqual("e1-changed", vm.Entities.Single().Name);
 
             Assert.AreEqual("e1-changed", entities.Single().Name);
@@ -307,7 +307,7 @@
             Assert.AreEqual(1, e1edit.Properties.Count());
 
             Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(2, vm.Items.Count());
+            Assert.AreEqual(1, vm.Items.Count());
             Assert.AreEqual("e1", vm.Entities.Single().Name);
 
             Assert.AreEqual("e1", entities.Single().Name);
@@ -384,7 +384,7 @@
             Assert.AreEqual(1, e1edit.Properties.Count());
 
             Assert.AreEqual(1, vm.Entities.Count());
-            Assert.AreEqual(2, vm.Items.Count());
+            Assert.AreEqual(1, vm.Items.Count());
             Assert.AreEqual("e1-changed", vm.Entities.Single().Name);
 
             Assert.AreEqual("e1-changed", entities.Single().Name);
