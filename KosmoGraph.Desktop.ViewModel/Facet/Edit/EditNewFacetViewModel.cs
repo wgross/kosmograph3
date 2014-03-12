@@ -9,6 +9,8 @@ namespace KosmoGraph.Desktop.ViewModel
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Threading;
 
     public class EditNewFacetViewModel : EditFacetViewModelBase
     {
@@ -92,7 +94,7 @@ namespace KosmoGraph.Desktop.ViewModel
                 .EndWith(
                     succeeded:f => 
                     {
-                        this.model.Add(f);
+                        Dispatcher.CurrentDispatcher.BeginInvoke((Action)delegate { this.model.Add(f); });
                     },
                     failed: ex => 
                     {

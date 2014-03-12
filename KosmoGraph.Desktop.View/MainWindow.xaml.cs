@@ -117,15 +117,21 @@
 
         #endregion 
 
-        #region Handle CreateTag command
+        #region Handle CreateNewFacet command
 
-        private void CreateTagCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        private void CreateNewFacetCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
 
-        private void CreateTagExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void CreateNewFacetExecuted(object sender, ExecutedRoutedEventArgs args)
         {
+            var dialogViewModel = this.Model.CreateNewFacet();
+
+            new KosmoGraphDialogService().ShowDialog(this.rootPanel, dialogViewModel,
+                DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback),
+                DialogActionBuilder.Ok("create facet", dialogViewModel.Commit));
+
             //var newTag = this.Model.CreateNewTag("Tag" + (this.Model.Tags.Count()+1));
 
             //if (this.EditFacet(newTag).GetValueOrDefault(false))

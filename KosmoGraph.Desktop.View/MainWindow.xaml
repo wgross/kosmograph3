@@ -15,8 +15,8 @@
             Executed="CreateRelationshipWithEntityExecuted"
             CanExecute="CreateRelationshipWithEntityCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
-            Executed="CreateTagExecuted"
-            CanExecute="CreateTagCanExecute"/>
+            Executed="CreateNewFacetExecuted"
+            CanExecute="CreateNewFacetCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditEntity}"
             Executed="EditEntityExecuted"
             CanExecute="EditEntityCanExecute"/>

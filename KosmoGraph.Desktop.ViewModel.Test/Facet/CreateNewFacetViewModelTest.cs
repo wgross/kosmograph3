@@ -152,6 +152,7 @@
             // ACT
 
             f1edit.Commit.Execute();
+            TestDispatcher.DoEvents();
             
             // ASSERT
             // commit createx a new facet and adds it to the main view model
