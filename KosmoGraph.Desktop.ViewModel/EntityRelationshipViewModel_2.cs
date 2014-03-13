@@ -79,16 +79,16 @@
 
         void Facets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    e.NewItems.ForEach(i => this.Items.Add((ModelItemViewModelBase)i));
-                    break;
+            //switch (e.Action)
+            //{
+            //    case NotifyCollectionChangedAction.Add:
+            //        e.NewItems.ForEach(i => this.Items.Add((ModelItemViewModelBase)i));
+            //        break;
 
-                case NotifyCollectionChangedAction.Remove:
-                    e.OldItems.ForEach(i => this.Items.Remove((ModelItemViewModelBase)i));
-                    break;
-            }
+            //    case NotifyCollectionChangedAction.Remove:
+            //        e.OldItems.ForEach(i => this.Items.Remove((ModelItemViewModelBase)i));
+            //        break;
+            //}
         }
 
         #endregion

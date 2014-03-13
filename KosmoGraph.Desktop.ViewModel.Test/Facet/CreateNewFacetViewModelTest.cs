@@ -15,12 +15,43 @@
     [TestClass]
     public class CreateNewFacetViewModelTest
     {
+        private IEnumerable<Facet> facets;
+        private Mock<IManageFacets> fsvc;
+        private IEnumerable<Entity> entities;
+        private IEnumerable<Relationship> relationships;
+        private Mock<IManageEntitiesAndRelationships> ersvc;
+        private EntityRelationshipViewModel vm;
+
         [TestInitialize]
         public void BeforeEachTest()
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
             SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
+
+            this.facets = Enumerable.Empty<Facet>();
+
+            this.fsvc = new Mock<IManageFacets>();
+            
+            this.fsvc // expect retrieval of all facets
+               .Setup(_ => _.GetAllFacets())
+               .Returns(Task.FromResult(this.facets));
+
+            this.entities = Enumerable.Empty<Entity>();
+            
+            this.relationships = Enumerable.Empty<Relationship>();
+            
+            this.ersvc = new Mock<IManageEntitiesAndRelationships>();
+            
+            this.ersvc // expect retrueval of all entities
+                .Setup(_ => _.GetAllEntities())
+                .Returns(Task.FromResult(this.entities));
+            
+            this.ersvc
+                .Setup(_ => _.GetAllRelationships())
+                .Returns(Task.FromResult(this.relationships));
+
+            this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
         #region CreateNewFacet
@@ -31,13 +62,10 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            
+         
             // ACT
             
-            EditNewFacetViewModel f1edit = vm.CreateNewFacet();
+            EditNewFacetViewModel f1edit = this.vm.CreateNewFacet();
 
             // ASSERT
             // new fact is member of Facets list and Items list
@@ -47,11 +75,11 @@
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
             Assert.AreEqual(0, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
             
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion
@@ -64,9 +92,6 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
             var f1edit = vm.CreateNewFacet();
 
             // ACT
@@ -82,11 +107,11 @@
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
             Assert.AreEqual(0, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         [TestMethod]
@@ -95,9 +120,6 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
             var f1edit = vm.CreateNewFacet();
 
             f1edit.Name = "f1";
@@ -119,11 +141,11 @@
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
 
             Assert.AreEqual(0, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion 
@@ -136,24 +158,18 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            
-            fsvc // expect retrieval of all facets -> no facets in model
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
-
-            fsvc // expect facet creation
+            this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
                 .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
 
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
             var f1edit = vm.CreateNewFacet();
+
             f1edit.Name = "f1";
            
             // ACT
 
             f1edit.Commit.Execute();
+
             TestDispatcher.DoEvents();
             
             // ASSERT
@@ -163,15 +179,14 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
             
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(1, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            Assert.AreSame(vm.Items.First(), vm.Facets.First());
-            Assert.AreEqual("f1", vm.Facets.First().Name);
+            Assert.AreEqual("f1", this.vm.Facets.First().Name);
             
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
        
@@ -181,20 +196,11 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            
-            fsvc // expect retrieval of all facets -> no facets in model
-              .Setup(_ => _.GetAllFacets())
-              .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
-            
             fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
                 .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
 
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
-            
+            var f1edit = this.vm.CreateNewFacet();
             f1edit.Name = "f1";
             f1edit.Commit.Execute();
 
@@ -213,15 +219,14 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
             
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(1, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            Assert.AreSame(vm.Items.First(), vm.Facets.First());
-            Assert.AreEqual("f1", vm.Facets.First().Name);
+            Assert.AreEqual("f1", this.vm.Facets.First().Name);
             
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
         #endregion
@@ -234,10 +239,7 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var f1edit = vm.CreateNewFacet();
+             var f1edit = vm.CreateNewFacet();
             
             f1edit.Name = "f1";
             
@@ -250,11 +252,11 @@
             Assert.AreEqual(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetViewModelNameDefault, f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
-            Assert.AreEqual(0, vm.Facets.Count());
-            Assert.AreEqual(0, vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
         }
 
         #endregion 
@@ -267,18 +269,10 @@
         {
             // ARRANGE
 
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets -> no facets in model
-              .Setup(_ => _.GetAllFacets())
-              .Returns(Task.FromResult(Enumerable.Empty<Facet>()));
-
             fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
                 .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
 
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
             var f1edit = vm.CreateNewFacet();
 
             f1edit.Name = "f1";
@@ -297,14 +291,13 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(1, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            Assert.AreSame(vm.Items.First(), vm.Facets.First());
-            Assert.AreEqual("f1", vm.Facets.First().Name);
+            Assert.AreEqual("f1", this.vm.Facets.First().Name);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
             fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
@@ -339,8 +332,8 @@
         //    Assert.AreEqual(f1, added1);
         //    Assert.AreEqual(f1, added2);
 
-        //    ersvc.VerifyAll();
-        //    fsvc.VerifyAll();
+        //    this.ersvc.VerifyAll();
+        //    this.fsvc.VerifyAll();
         //}
 
         //[TestMethod]
@@ -364,8 +357,8 @@
 
         //    ExceptionAssert.Throws<InvalidOperationException>(delegate { vm.Add(vm.CreateNewFacet("f1")); });
 
-        //    ersvc.VerifyAll();
-        //    fsvc.VerifyAll();
+        //    this.ersvc.VerifyAll();
+        //    this.fsvc.VerifyAll();
         //    fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once());
         //}
 
@@ -393,8 +386,8 @@
         //    Assert.AreEqual(0, vm2.Tags.Count());
         //    Assert.AreEqual(0, vm2.Items.Count);
 
-        //    ersvc.VerifyAll();
-        //    fsvc.VerifyAll();
+        //    this.ersvc.VerifyAll();
+        //    this.fsvc.VerifyAll();
         //}
     }
 }

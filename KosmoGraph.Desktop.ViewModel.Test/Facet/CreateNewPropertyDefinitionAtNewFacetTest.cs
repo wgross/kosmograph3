@@ -122,9 +122,8 @@
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.Single()));
 
             Assert.AreEqual(1, this.vm.Facets.Count());
-            Assert.AreEqual(1, this.vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            Assert.AreSame(this.vm.Items.Single(), vm.Facets.Single());
             Assert.AreEqual("f1", this.vm.Facets.Single().Name);
             Assert.AreEqual(1, this.vm.Facets.Single().Properties.Count());
             Assert.AreEqual("pd1", this.vm.Facets.Single().Properties.Single().Name);
@@ -203,9 +202,8 @@
             Assert.AreEqual("pd1", f1edit.Properties.Single().Name);
 
             Assert.AreEqual(1, this.vm.Facets.Count());
-            Assert.AreEqual(1, this.vm.Items.Count);
+            Assert.AreEqual(0, this.vm.Items.Count);
 
-            Assert.AreSame(this.vm.Items.Single(), this.vm.Facets.Single());
             Assert.AreEqual("f1", this.vm.Facets.Single().Name);
             Assert.AreEqual(1, this.vm.Facets.Single().Properties.Count());
             Assert.AreEqual("pd1", this.vm.Facets.Single().Properties.Single().Name);
