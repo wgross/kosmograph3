@@ -77,6 +77,8 @@
 
             Assert.IsTrue(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
+            Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
+            Assert.IsTrue(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.Single()));
             Assert.AreEqual(1, f1edit.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.ModelItem.Properties.Count());
@@ -114,12 +116,14 @@
             // ACT
 
             f1edit.Commit.Execute();
-            
 
             // ASSERT
 
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
+            Assert.IsFalse(f1edit.AddPropertyDefinition.CanExecute());
+            Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.Single()));
+            
             Assert.AreEqual(1, f1edit.Properties.Count());
             Assert.AreEqual(1, f1edit.Edited.Properties.Count());
             Assert.AreEqual(1, f1edit.Edited.ModelItem.Properties.Count());
@@ -159,6 +163,8 @@
 
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
+            Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
+            Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.ModelItem.Properties.Count());

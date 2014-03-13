@@ -105,12 +105,12 @@ using System.Threading.Tasks;
     
         protected override bool CanExecuteAddPropertyDefinition()
         {
-            throw new NotImplementedException();
+            return (!this.hasAlreadyCommitted);
         }
 
         protected override bool CanExecuteRemovePropertyDefinition(IEditPropertyDefinition propertyDefinitionToRemove)
         {
-            throw new NotImplementedException();
+            return this.Properties.Contains(propertyDefinitionToRemove) && (!this.hasAlreadyCommitted);
         }
     }
 }
