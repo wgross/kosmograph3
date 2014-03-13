@@ -3,17 +3,21 @@ namespace KosmoGraph.Desktop.ViewModel
 {
     using KosmoGraph.Desktop.ViewModel.Properties;
     using KosmoGraph.Services;
+    using NLog;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
 
     public class EditNewFacetViewModel : EditFacetViewModelBase
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region Construction and initialization of this instance
 
         public EditNewFacetViewModel(EntityRelationshipViewModel withViewModel, IManageFacets withFacets)
@@ -47,16 +51,16 @@ namespace KosmoGraph.Desktop.ViewModel
             });
         }
 
-        #endregion 
+        #endregion
 
         #region Remove PropertyDefinition from Facet
 
         protected override bool CanExecuteRemovePropertyDefinition(IEditPropertyDefinition propertyDefinitionToRemove)
         {
-            return propertyDefinitionToRemove !=null && !this.hasAlreadyCommitted;
+            return propertyDefinitionToRemove != null && !this.hasAlreadyCommitted;
         }
 
-        #endregion 
+        #endregion
 
         #region Commit Editor
 
@@ -66,6 +70,9 @@ namespace KosmoGraph.Desktop.ViewModel
                 return;
 
             this.hasAlreadyCommitted = true;
+
+            var scheduleAtUiThread = TaskScheduler.FromCurrentSynchronizationContext();
+
             this.facets
                 .CreateNewFacet(f =>
                 {
@@ -77,7 +84,7 @@ namespace KosmoGraph.Desktop.ViewModel
                             pd.Name = pdvm.Name;
                         }));
                     }
-                    
+
                     //// add new property definitions to tag
                     //// this can be done without comparison because Add doesnt add twice the same tag
                     //foreach (var addedPropertyDefinition in this.Properties)
@@ -92,25 +99,33 @@ namespace KosmoGraph.Desktop.ViewModel
                     //        this.Edited.Remove(commitedPropertyDefinition);
                 })
                 .EndWith(
-                    succeeded:f => 
+                    succeeded: f =>
                     {
-                        Dispatcher.CurrentDispatcher.BeginInvoke((Action)delegate { this.model.Add(f); });
+                        try
+                        {
+                            this.model.Add(f);
+                        }
+                        catch (Exception ex)
+                        {
+                            log.ErrorException("Cought excption:", ex);
+                        }
                     },
-                    failed: ex => 
+                    failed: ex =>
                     {
-                        this.hasAlreadyCommitted=false;
+                        this.hasAlreadyCommitted = false;
                         return true; // handled ?!
-                    });
+                    },
+                    scheduleAt: scheduleAtUiThread);
         }
 
         override protected bool CanExecuteCommit()
         {
-            if(this.HasError)
+            if (this.HasError)
                 return false;
 
             if (this.hasAlreadyCommitted)
                 return false;
-            
+
             return (
                     !(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
                     ||
@@ -136,6 +151,6 @@ namespace KosmoGraph.Desktop.ViewModel
             return true;
         }
 
-        #endregion 
+        #endregion
     }
 }

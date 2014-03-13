@@ -9,6 +9,7 @@
     using KosmoGraph.Model;
     using KosmoGraph.Test;
     using System.Threading.Tasks;
+    using System.Threading;
 
     [TestClass]
     public class CreateNewPropertyDefinitionAtNewFacetTest
@@ -25,6 +26,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = Enumerable.Empty<Facet>();

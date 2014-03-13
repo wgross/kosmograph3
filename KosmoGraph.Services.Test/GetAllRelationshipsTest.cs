@@ -16,6 +16,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            System.Threading.SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         [TestMethod]

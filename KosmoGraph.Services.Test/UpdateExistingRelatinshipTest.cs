@@ -6,6 +6,7 @@
     using KosmoGraph.Test;
     using KosmoGraph.Model;
     using Moq;
+    using System.Threading;
 
     [TestClass]
     public class UpdateExistingRelatinshipTest
@@ -15,6 +16,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         [TestMethod]

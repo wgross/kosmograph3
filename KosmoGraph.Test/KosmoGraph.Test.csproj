@@ -48,6 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImmediateExecutionSynchronizationContext.cs" />
     <Compile Include="TestDispatcher.cs" />
     <Compile Include="ExceptionAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

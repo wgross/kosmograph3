@@ -6,6 +6,7 @@
     using Moq;
     using KosmoGraph.Model;
     using KosmoGraph.Test;
+    using System.Threading;
 
     [TestClass]
     public class RemoveFacetTest
@@ -15,6 +16,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         [TestMethod]

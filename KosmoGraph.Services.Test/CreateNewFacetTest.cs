@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KosmoGraph.Model;
 using Moq;
 using KosmoGraph.Test;
+using System.Threading;
 
 namespace KosmoGraph.Services.Test
 {
@@ -14,6 +15,7 @@ namespace KosmoGraph.Services.Test
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         [TestMethod]

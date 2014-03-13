@@ -10,6 +10,7 @@
     using KosmoGraph.Services;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Threading;
 
     [TestClass]
     public class EditExistingFacetViewModelTest
@@ -26,6 +27,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = new[]

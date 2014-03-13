@@ -4,10 +4,19 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using KosmoGraph.Model;
     using Moq;
+    using System.Threading;
+    using KosmoGraph.Test;
 
     [TestClass]
     public class GetEntitiesByRelationshipTest
     {
+        [TestInitialize]
+        public void BeforeEachTest()
+        {
+            // install sync Task Scheduler
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
+        }
+
         [TestMethod]
         [TestCategory("CreateNewRelationship")]
         public void FindEntitiesConnectedByRelationship()

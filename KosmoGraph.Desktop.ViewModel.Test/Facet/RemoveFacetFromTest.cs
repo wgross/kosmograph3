@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
     using KosmoGraph.Test;
     using System.Collections.Generic;
+    using System.Threading;
 
     [TestClass]
     public class RemoveFacetViewModelTest
@@ -25,6 +26,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = new[]

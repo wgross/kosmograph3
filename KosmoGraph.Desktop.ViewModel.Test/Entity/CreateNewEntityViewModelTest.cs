@@ -11,6 +11,7 @@
     using System.Linq.Expressions;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Threading;
 
     [TestClass]
     public class CreateNewEntityViewModelTest
@@ -24,6 +25,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
             
             // There is only a view model
 

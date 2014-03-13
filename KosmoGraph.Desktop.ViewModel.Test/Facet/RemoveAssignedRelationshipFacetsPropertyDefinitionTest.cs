@@ -9,6 +9,7 @@
     using KosmoGraph.Services;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using System.Threading;
 
     [TestClass]
     public class RemovePropertyDefinitionFromRelationshipFacetTest
@@ -25,6 +26,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = new[]

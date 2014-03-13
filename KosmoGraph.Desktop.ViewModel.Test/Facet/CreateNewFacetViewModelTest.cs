@@ -10,6 +10,7 @@
     using KosmoGraph.Services;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Threading;
 
     [TestClass]
     public class CreateNewFacetViewModelTest
@@ -19,6 +20,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         #region CreateNewFacet

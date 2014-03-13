@@ -10,6 +10,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using KosmoGraph.Test;
+    using System.Threading;
 
     [TestClass]
     public class CreateNewRelationshipFacetViewModelTest
@@ -19,6 +20,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         #region CreateNewRelationship > AssignFacet

@@ -6,6 +6,7 @@
     using KosmoGraph.Model;
     using Moq;
     using KosmoGraph.Test;
+    using System.Threading;
 
     [TestClass]
     public class CreateNewEntityFacetTest
@@ -15,6 +16,7 @@
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
         }
 
         [TestMethod]

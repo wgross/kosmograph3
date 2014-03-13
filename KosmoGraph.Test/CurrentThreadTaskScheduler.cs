@@ -42,6 +42,7 @@
 
         /// <summary>Gets the maximum degree of parallelism for this scheduler.</summary>
         public override int MaximumConcurrencyLevel { get { return 1; } }
+
     }
 
     [TestClass]

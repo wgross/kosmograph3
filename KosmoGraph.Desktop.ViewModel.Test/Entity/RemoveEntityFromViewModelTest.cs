@@ -11,6 +11,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
     using KosmoGraph.Services;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Threading;
 
 
     [TestClass]
@@ -28,6 +29,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = Enumerable.Empty<Facet>();

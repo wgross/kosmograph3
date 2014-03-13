@@ -10,6 +10,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
     using KosmoGraph.Services;
     using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading;
 
     [TestClass]
     public class RemoveFacetAsEntityFacetTest
@@ -26,6 +27,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
 
             // provide a facet with a property definition
             this.facets = new[]
