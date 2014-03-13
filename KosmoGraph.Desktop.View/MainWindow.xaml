@@ -14,7 +14,7 @@
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
             Executed="CreateRelationshipWithEntityExecuted"
             CanExecute="CreateRelationshipWithEntityCanExecute"/>
-        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
             Executed="CreateNewFacetExecuted"
             CanExecute="CreateNewFacetCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditEntity}"
@@ -24,7 +24,7 @@
             Executed="EditRelationshipExecuted"
             CanExecute="EditRelationshipCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.EditTag}"
-            Executed="EditTagExecuted"
+            Executed="EditFacetExecuted"
             CanExecute="EditFacetCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteEntity}"
             Executed="DeleteEntityExecuted"
@@ -32,7 +32,7 @@
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteRelationship}"
             Executed="DeleteRelationshipExecuted"
             CanExecute="DeleteRelationshipCanExecute"/>
-        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteTag}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteFacet}"
             Executed="DeleteTagExecuted"
             CanExecute="DeleteTagCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
@@ -135,26 +135,26 @@
                         <Label
                             DockPanel.Dock="Left"
                             HorizontalAlignment="Right"
-                            Style="{StaticResource tagListBoxLabelStyle}"/>
+                            Style="{StaticResource facetListBoxLabelStyle}"/>
                         <Button
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Style="{StaticResource createTagButtonStyle}"
-                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
+                            Style="{StaticResource createFacetButtonStyle}"
+                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
                             CommandParameter="{Binding .}"/>
                     </DockPanel>
                 </Border>
-                <ListBox Name="tagListBox"
-                    ItemsSource="{Binding Tags}"
-                    MouseDoubleClick="tagListBox_MouseDoubleClick"
-                    ItemContainerStyle="{StaticResource tagInTagList}"
+                <ListBox Name="facetListBox"
+                    ItemsSource="{Binding Facets}"
+                    MouseDoubleClick="facetListBox_MouseDoubleClick"
+                    ItemContainerStyle="{StaticResource facetInTagList}"
                     Style="{StaticResource listBoxStyle}">
                     <ListBox.InputBindings>
                         <KeyBinding
                             Key="Insert"
-                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateTag}"
-                            CommandParameter="{Binding Tags}"/>
+                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
+                            CommandParameter="{Binding Facets}"/>
                     </ListBox.InputBindings>
                 </ListBox>
             </DockPanel>

@@ -8,22 +8,22 @@
     
     <!--Tag list on the right-->
 
-    <Style x:Key="createTagButtonStyle"
+    <Style x:Key="createFacetButtonStyle"
            TargetType="{x:Type Button}"
            BasedOn="{StaticResource buttonStyle}">
         <Setter Property="Content"
-                Value="Add Tag"/>
+                Value="Add Facet"/>
     </Style>
 
-    <Style x:Key="tagListBoxLabelStyle"
+    <Style x:Key="facetListBoxLabelStyle"
             BasedOn="{StaticResource labelStyle}"
             TargetType="{x:Type Label}">
         <Setter
             Property="Content"
-            Value="_Tags"/>
+            Value="_Facets"/>
     </Style>
 
-    <Style x:Key="tagInTagList"
+    <Style x:Key="facetInTagList"
            BasedOn="{StaticResource unselectableListBoxItemStyle}"
            TargetType="{x:Type ListBoxItem}">
         <Setter

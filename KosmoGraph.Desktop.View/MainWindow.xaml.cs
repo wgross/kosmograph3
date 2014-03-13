@@ -211,24 +211,24 @@
 
         #endregion 
 
-        #region Handle EditTag command
+        #region Handle EditFacet command
 
         private void EditFacetCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
 
-        private void EditTagExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void EditFacetExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             this.EditFacet(args.Parameter as FacetViewModel);
         }
 
         private bool? EditFacet(FacetViewModel facetViewModel)
         {
-            var dialogViewModel = this.model.EditFacet(facetViewModel);
+            var dialogViewModel = this.Model.EditFacet(facetViewModel);
 
             return this.rootPanel.ShowDialog(dialogViewModel,
-                DialogActionBuilder.Cancel("delete tag", false, EntityRelationshipModelCommands.DeleteTag),
+                DialogActionBuilder.Cancel("delete facet", false, EntityRelationshipModelCommands.DeleteFacet),
                 DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
                 DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
@@ -420,14 +420,14 @@
 
         #region Handle listbox item double click
 
-        private void tagListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void facetListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             
-            if (this.tagListBox.SelectedItems.Count == 0)
+            if (this.facetListBox.SelectedItems.Count == 0)
                 return;
 
             e.Handled = true;
-            EntityRelationshipModelCommands.EditTag.Execute(this.tagListBox.SelectedItems[0] as FacetViewModel, this.tagListBox);
+            EntityRelationshipModelCommands.EditTag.Execute(this.facetListBox.SelectedItems[0] as FacetViewModel, this.facetListBox);
         }
 
         #endregion 

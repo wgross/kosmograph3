@@ -15,7 +15,7 @@
 
         public static RoutedCommand CreateRelationshipWithEntity = new RoutedCommand();
 
-        public static RoutedCommand CreateTag = new RoutedCommand();
+        public static RoutedCommand CreateFacet = new RoutedCommand();
 
         public static RoutedCommand EditEntity = new RoutedCommand();
 
@@ -27,7 +27,7 @@
 
         public static RoutedCommand DeleteRelationship = new RoutedCommand();
 
-        public static RoutedCommand DeleteTag = new RoutedCommand();
+        public static RoutedCommand DeleteFacet = new RoutedCommand();
 
         public static RoutedCommand CreateNewModel = new RoutedCommand();
 
