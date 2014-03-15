@@ -102,6 +102,7 @@
     <Compile Include="TestRelationshipViewModelLayout.cs" />
     <Compile Include="TestSelectionOfItem.cs" />
     <Compile Include="TestTagVisibility.cs" />
+    <Compile Include="CreateEntityRelationshipViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KosmoGraph.Desktop.ViewModel\KosmoGraph.Desktop.ViewModel.csproj">

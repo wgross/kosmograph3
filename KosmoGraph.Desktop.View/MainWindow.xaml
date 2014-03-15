@@ -79,9 +79,9 @@
                 Grid.Column="0"
                 LastChildFill="True"
                 Margin="0,0,7,0">
-                <Border
-                    DockPanel.Dock="Top"
-                    Style="{StaticResource labelBorderStyle}">
+                <!-- on top of the main windows is the menue bar -->
+                <Border Style="{StaticResource labelBorderStyle}"   
+                    DockPanel.Dock="Top">
                     <Menu
                         Style="{StaticResource menuStyle}">
                             <MenuItem Header="Open..."
@@ -118,10 +118,11 @@
                     </view:EntityRelationshipControl>
                 </view:EntityRelationshipControl>
             </DockPanel>
+            <!-- a Splitter separates the entity-relationship diagram on the left from the facet list on the right-->
             <GridSplitter 
                 IsTabStop="False"
                 Margin="0,5,0,5"
-                Width="2"
+                Width="1"
                 Grid.Column="0"/>
             <DockPanel
                     Grid.Column="1"
@@ -130,17 +131,19 @@
                 <Border
                     DockPanel.Dock="Top"
                     Style="{StaticResource labelBorderStyle}">
+                    <!-- 
+                    On top ofthe facet list is a label for the list and a button which allows the 
+                    creation of a new facet
+                    -->
                     <DockPanel
                         LastChildFill="False">
-                        <Label
+                        <Label Style="{StaticResource facetListBoxLabelStyle}"
                             DockPanel.Dock="Left"
-                            HorizontalAlignment="Right"
-                            Style="{StaticResource facetListBoxLabelStyle}"/>
-                        <Button
+                            HorizontalAlignment="Right"/>
+                        <Button Style="{StaticResource createFacetButtonStyle}"
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource createFacetButtonStyle}"
+                            VerticalAlignment="Center"    
                             Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
                             CommandParameter="{Binding .}"/>
                     </DockPanel>

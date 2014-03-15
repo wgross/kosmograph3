@@ -8,6 +8,7 @@
     using KosmoGraph.Model;
     using System.Threading.Tasks;
     using KosmoGraph.Test;
+    using System.Collections.Generic;
 
     [TestClass]
     public class RemoveAssignedRelationshipFacetTest

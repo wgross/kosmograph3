@@ -8,15 +8,72 @@
     using KosmoGraph.Services;
     using System.Threading.Tasks;
     using KosmoGraph.Test;
+    using System.Threading;
+    using System.Collections.Generic;
 
     [TestClass]
     public class UpdateExistingRelationshipViewModelTest
     {
+        private IEnumerable<Facet> facets;
+        private Mock<IManageFacets> fsvc;
+        private IEnumerable<Entity> entities;
+        private IEnumerable<Relationship> relationships;
+        private Mock<IManageEntitiesAndRelationships> ersvc;
+        private EntityRelationshipViewModel vm;
+
         [TestInitialize]
         public void BeforeEachTest()
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
+            SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
+
+            this.facets = new[]
+            {
+                Facet.Factory.CreateNew(f => 
+                {
+                    f.Name = "f1";
+                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
+                })
+            };
+
+
+            this.fsvc = new Mock<IManageFacets>();
+
+            this.fsvc // expect retrieval of all facets
+                .Setup(_ => _.GetAllFacets())
+                .Returns(Task.FromResult(this.facets));
+
+            this.entities = new[] 
+            {
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
+            };
+
+            this.relationships = new[]
+            {
+                Relationship.Factory.CreateNew(r =>
+                {
+                    r.FromId = this.entities.ElementAt(0).Id;
+                    r.ToId = this.entities.ElementAt(1).Id;
+                    r.Add(r.CreateNewAssignedFacet(this.facets.First(), f =>
+                    {
+                        f.Properties.Single().Value = "pv1";
+                    }));
+                })
+            };
+
+            this.ersvc = new Mock<IManageEntitiesAndRelationships>();
+
+            ersvc // expects retrueval aof all entities
+                .Setup(_ => _.GetAllEntities())
+                .Returns(Task.FromResult(this.entities));
+
+            ersvc // expect retrieval of existig relationships
+                .Setup(_ => _.GetAllRelationships())
+                .Returns(Task.FromResult(this.relationships));
+
+            this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
         #region UpdateExistingRelationship
@@ -27,81 +84,39 @@
         {
             // ARRANGE
 
-            var facets = new[]
-            {
-                Facet.Factory.CreateNew(f => 
-                {
-                    f.Name = "f1";
-                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
-                })
-            };
-
-            var fsvc = new Mock<IManageFacets>();
-            
-            fsvc // expect retrieval of all facets
-                .Setup(_=>_.GetAllFacets())
-                .Returns(Task.FromResult(facets.AsEnumerable()));
-
-            var entities = new[] 
-            {
-                Entity.Factory.CreateNew(e=>e.Name = "e1"),
-                Entity.Factory.CreateNew(e=>e.Name = "e2"),
-            };
-
-            var relationships = new []
-            {
-                Relationship.Factory.CreateNew(r =>
-                {
-                    r.FromId = entities.ElementAt(0).Id;
-                    r.ToId = entities.ElementAt(1).Id;
-                    r.Add(r.CreateNewAssignedFacet(facets.First(), f =>
-                    {
-                        f.Properties.First().Value = "pv1";
-                    }));
-                })
-            };
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expects retrueval aof all entities
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(entities.AsEnumerable()));
-
-            ersvc // expect retrieval of existig relationships
-                .Setup(_ => _.GetAllRelationships())
-                .Returns(Task.FromResult(relationships.AsEnumerable()));
-
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            
             // ACT
 
-            EditExistingRelationshipViewModel r1edit = vm.EditRelationship(vm.Relationships.Single());
+            EditExistingRelationshipViewModel r1edit = this.vm.EditRelationship(this.vm.Relationships.Single());
 
             // ASSERT
 
-            Assert.AreSame(relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreSame(this.relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.Edited.From.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.Edited.To.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.From);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.To);
             Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsTrue(r1edit.Rollback.CanExecute());
             Assert.AreEqual(1, r1edit.AssignedFacets.Count());
-            Assert.AreSame(facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
+            Assert.AreSame(this.facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
             Assert.AreEqual(1, r1edit.Properties.Count());
-            Assert.AreEqual(facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
+            Assert.AreEqual(this.facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
             Assert.AreEqual("pv1", r1edit.Properties.First().Value);
             Assert.AreEqual(0, r1edit.UnassignedFacets.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(2, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual(3, vm.Items.Count);
-            
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
-            ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(2, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Relationships.Count());
+            Assert.AreEqual(3, this.vm.Items.Count);
+
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
         #region UpdateExistingRelationship > Modify
 
@@ -111,52 +126,7 @@
         {
             // ARRANGE
 
-            var facets = new[]
-            {
-                Facet.Factory.CreateNew(f => 
-                {
-                    f.Name = "f1";
-                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
-                })
-            };
-
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(facets.AsEnumerable()));
-
-            var entities = new[] 
-            {
-                Entity.Factory.CreateNew(e=>e.Name = "e1"),
-                Entity.Factory.CreateNew(e=>e.Name = "e2"),
-            };
-
-            var relationships = new[]
-            {
-                Relationship.Factory.CreateNew(r =>
-                {
-                    r.FromId = entities.ElementAt(0).Id;
-                    r.ToId = entities.ElementAt(1).Id;
-                    r.Add(r.CreateNewAssignedFacet(facets.First(), f =>
-                    {
-                        f.Properties.First().Value = "pv1";
-                    }));
-                })
-            };
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expects retrieval of all entities
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(entities.AsEnumerable()));
-
-            ersvc // expect retrieval of existing relationships
-                .Setup(_ => _.GetAllRelationships())
-                .Returns(Task.FromResult(relationships.AsEnumerable()));
-
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var r1edit = vm.EditRelationship(vm.Relationships.Single());
+            var r1edit = this.vm.EditRelationship(this.vm.Relationships.Single());
 
             // ACT
 
@@ -164,29 +134,33 @@
 
             // ASSERT
 
-            Assert.AreSame(relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreSame(this.relationships.Single(), r1edit.Edited.ModelItem);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.Edited.From.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.Edited.To.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.From);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.To);
             Assert.IsTrue(r1edit.Commit.CanExecute());
             Assert.IsTrue(r1edit.Rollback.CanExecute());
             Assert.AreEqual(1, r1edit.AssignedFacets.Count());
-            Assert.AreSame(facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
+            Assert.AreSame(this.facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
             Assert.AreEqual(1, r1edit.Properties.Count());
-            Assert.AreEqual(facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
+            Assert.AreEqual(this.facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
             Assert.AreEqual("pv1-changed", r1edit.Properties.First().Value);
             Assert.AreEqual(0, r1edit.UnassignedFacets.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(2, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual("pv1", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(3, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(2, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Relationships.Count());
+            Assert.AreEqual("pv1", this.vm.Relationships.Single().Properties.First().Value);
+            Assert.AreEqual(3, this.vm.Items.Count);
 
-            Assert.AreEqual("pv1", relationships.First().AssignedFacets.First().Properties.First().Value);
+            Assert.AreEqual("pv1", this.relationships.Single().AssignedFacets.First().Properties.First().Value);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
-            ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
@@ -199,56 +173,11 @@
         {
             // ARRANGE
 
-            var facets = new[]
-            {
-                Facet.Factory.CreateNew(f => 
-                {
-                    f.Name = "f1";
-                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
-                })
-            };
-
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(facets.AsEnumerable()));
-
-            var entities = new[] 
-            {
-                Entity.Factory.CreateNew(e=>e.Name = "e1"),
-                Entity.Factory.CreateNew(e=>e.Name = "e2"),
-            };
-
-            var relationships = new[]
-            {
-                Relationship.Factory.CreateNew(r =>
-                {
-                    r.FromId = entities.ElementAt(0).Id;
-                    r.ToId = entities.ElementAt(1).Id;
-                    r.Add(r.CreateNewAssignedFacet(facets.First(), f =>
-                    {
-                        f.Properties.First().Value = "pv1";
-                    }));
-                })
-            };
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expects retrieval of all entities
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(entities.AsEnumerable()));
-
-            ersvc // expect retrieval of existing relationships
-                .Setup(_ => _.GetAllRelationships())
-                .Returns(Task.FromResult(relationships.AsEnumerable()));
-
             ersvc // expect update of relationship
-               .Setup(_ => _.UpdateRelationship(relationships.First()))
+               .Setup(_ => _.UpdateRelationship(this.relationships.Single()))
                .Returns<Relationship>(r => Task.FromResult(r));
 
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var r1edit = vm.EditRelationship(vm.Relationships.Single());
+            var r1edit = this.vm.EditRelationship(this.vm.Relationships.Single());
 
             r1edit.Properties.First().Value = "pv1-changed";
 
@@ -258,30 +187,34 @@
 
             // ASSERT
 
-            Assert.AreSame(relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreSame(this.relationships.Single(), r1edit.Edited.ModelItem);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.Edited.From.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.Edited.To.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.From);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.To);
             Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsFalse(r1edit.Rollback.CanExecute());
             Assert.AreEqual(1, r1edit.AssignedFacets.Count());
-            Assert.AreSame(facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
+            Assert.AreSame(this.facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
             Assert.AreEqual(1, r1edit.Properties.Count());
-            Assert.AreEqual(facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
+            Assert.AreEqual(this.facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
             Assert.AreEqual("pv1-changed", r1edit.Properties.First().Value);
             Assert.AreEqual(0, r1edit.UnassignedFacets.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(2, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual("pv1-changed", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(3, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(2, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Relationships.Count());
+            Assert.AreEqual("pv1-changed", this.vm.Relationships.Single().Properties.First().Value);
+            Assert.AreEqual(3, this.vm.Items.Count);
 
-            Assert.AreEqual("pv1-changed", relationships.First().AssignedFacets.First().Properties.First().Value);
+            Assert.AreEqual("pv1-changed", this.relationships.Single().AssignedFacets.First().Properties.First().Value);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
-            ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
-            ersvc.Verify(_ => _.UpdateRelationship(It.IsAny<Relationship>()), Times.Once);
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.ersvc.Verify(_ => _.UpdateRelationship(It.IsAny<Relationship>()), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
@@ -293,53 +226,8 @@
         public void RollbackEditExistingEntityViewModelInitializesAgain()
         {
             // ARRANGE
-
-            var facets = new[]
-            {
-                Facet.Factory.CreateNew(f => 
-                {
-                    f.Name = "f1";
-                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
-                })
-            };
-
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(facets.AsEnumerable()));
-
-            var entities = new[] 
-            {
-                Entity.Factory.CreateNew(e=>e.Name = "e1"),
-                Entity.Factory.CreateNew(e=>e.Name = "e2"),
-            };
-
-            var relationships = new[]
-            {
-                Relationship.Factory.CreateNew(r =>
-                {
-                    r.FromId = entities.ElementAt(0).Id;
-                    r.ToId = entities.ElementAt(1).Id;
-                    r.Add(r.CreateNewAssignedFacet(facets.First(), f =>
-                    {
-                        f.Properties.First().Value = "pv1";
-                    }));
-                })
-            };
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expects retrieval of all entities
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(entities.AsEnumerable()));
-
-            ersvc // expect retrieval of existing relationships
-                .Setup(_ => _.GetAllRelationships())
-                .Returns(Task.FromResult(relationships.AsEnumerable()));
-
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var r1edit = vm.EditRelationship(vm.Relationships.Single());
+            
+            var r1edit = this.vm.EditRelationship(this.vm.Relationships.Single());
 
             r1edit.Properties.First().Value = "pv1-changed";
 
@@ -349,29 +237,33 @@
 
             // ASSERT
 
-            Assert.AreSame(relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreSame(this.relationships.Single(), r1edit.Edited.ModelItem);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.Edited.From.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.Edited.To.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.From);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.To);
             Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsTrue(r1edit.Rollback.CanExecute());
             Assert.AreEqual(1, r1edit.AssignedFacets.Count());
-            Assert.AreSame(facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
+            Assert.AreSame(this.facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
             Assert.AreEqual(1, r1edit.Properties.Count());
-            Assert.AreEqual(facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
+            Assert.AreEqual(this.facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
             Assert.AreEqual("pv1", r1edit.Properties.First().Value);
             Assert.AreEqual(0, r1edit.UnassignedFacets.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(2, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual("pv1", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(3, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(2, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Relationships.Count());
+            Assert.AreEqual("pv1", this.vm.Relationships.Single().Properties.First().Value);
+            Assert.AreEqual(3, this.vm.Items.Count);
 
-            Assert.AreEqual("pv1", relationships.First().AssignedFacets.First().Properties.First().Value);
+            Assert.AreEqual("pv1", this.relationships.Single().AssignedFacets.First().Properties.First().Value);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
-            ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
@@ -384,56 +276,11 @@
         {
             // ARRANGE
 
-            var facets = new[]
-            {
-                Facet.Factory.CreateNew(f => 
-                {
-                    f.Name = "f1";
-                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
-                })
-            };
-
-            var fsvc = new Mock<IManageFacets>();
-
-            fsvc // expect retrieval of all facets
-                .Setup(_ => _.GetAllFacets())
-                .Returns(Task.FromResult(facets.AsEnumerable()));
-
-            var entities = new[] 
-            {
-                Entity.Factory.CreateNew(e=>e.Name = "e1"),
-                Entity.Factory.CreateNew(e=>e.Name = "e2"),
-            };
-
-            var relationships = new[]
-            {
-                Relationship.Factory.CreateNew(r =>
-                {
-                    r.FromId = entities.ElementAt(0).Id;
-                    r.ToId = entities.ElementAt(1).Id;
-                    r.Add(r.CreateNewAssignedFacet(facets.First(), f =>
-                    {
-                        f.Properties.First().Value = "pv1";
-                    }));
-                })
-            };
-
-            var ersvc = new Mock<IManageEntitiesAndRelationships>();
-
-            ersvc // expects retrieval of all entities
-                .Setup(_ => _.GetAllEntities())
-                .Returns(Task.FromResult(entities.AsEnumerable()));
-
-            ersvc // expect retrieval of existing relationships
-                .Setup(_ => _.GetAllRelationships())
-                .Returns(Task.FromResult(relationships.AsEnumerable()));
-
             ersvc // expect update of relationship
-                .Setup(_ => _.UpdateRelationship(relationships.First()))
+                .Setup(_ => _.UpdateRelationship(this.relationships.Single()))
                 .Returns<Relationship>(r => Task.FromResult(r));
 
-            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
-            var r1edit = vm.EditRelationship(vm.Relationships.Single());
+            var r1edit = this.vm.EditRelationship(this.vm.Relationships.Single());
 
             r1edit.Properties.First().Value = "pv1-changed";
             r1edit.Rollback.Execute();
@@ -445,30 +292,34 @@
 
             // ASSERT
 
-            Assert.AreSame(relationships.First(), r1edit.Edited.ModelItem);
+            Assert.AreSame(this.relationships.Single(), r1edit.Edited.ModelItem);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.Edited.From.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.Edited.To.Entity);
+            Assert.AreEqual(this.vm.Entities.ElementAt(0), r1edit.From);
+            Assert.AreEqual(this.vm.Entities.ElementAt(1), r1edit.To);
             Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsFalse(r1edit.Rollback.CanExecute());
             Assert.AreEqual(1, r1edit.AssignedFacets.Count());
-            Assert.AreSame(facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
+            Assert.AreSame(this.facets.First(), r1edit.AssignedFacets.First().Facet.ModelItem);
             Assert.AreEqual(1, r1edit.Properties.Count());
-            Assert.AreEqual(facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
+            Assert.AreEqual(this.facets.First().Properties.First().Id, r1edit.Edited.Properties.First().Definition.ModelItem.Id);
             Assert.AreEqual("pv1-changed", r1edit.Properties.First().Value);
             Assert.AreEqual(0, r1edit.UnassignedFacets.Count());
 
-            Assert.AreEqual(1, vm.Facets.Count());
-            Assert.AreEqual(2, vm.Entities.Count());
-            Assert.AreEqual(1, vm.Relationships.Count());
-            Assert.AreEqual("pv1-changed", vm.Relationships.Single().Properties.First().Value);
-            Assert.AreEqual(3, vm.Items.Count);
+            Assert.AreEqual(1, this.vm.Facets.Count());
+            Assert.AreEqual(2, this.vm.Entities.Count());
+            Assert.AreEqual(1, this.vm.Relationships.Count());
+            Assert.AreEqual("pv1-changed", this.vm.Relationships.Single().Properties.First().Value);
+            Assert.AreEqual(3, this.vm.Items.Count);
 
-            Assert.AreEqual("pv1-changed", relationships.First().AssignedFacets.First().Properties.First().Value);
+            Assert.AreEqual("pv1-changed", this.relationships.Single().AssignedFacets.First().Properties.First().Value);
 
-            ersvc.VerifyAll();
-            ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
-            ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
-            ersvc.Verify(_ => _.UpdateRelationship(It.IsAny<Relationship>()), Times.Once);
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.ersvc.Verify(_ => _.UpdateRelationship(It.IsAny<Relationship>()), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion

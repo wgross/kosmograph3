@@ -18,7 +18,7 @@ namespace KosmoGraph.Desktop.ViewModel
         #region Construction and initialization of this instance 
 
         public EditExistingRelationshipViewModel(RelationshipViewModel edited, IManageEntitiesAndRelationships withRelationships)
-            : base(Resources.EditRelationshipViewModelTitle)
+            : base(Resources.EditRelationshipViewModelTitle, edited.From.Entity, edited.To.Entity)
         {
             this.Edited = edited;
             this.relationships = withRelationships;

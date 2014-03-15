@@ -119,7 +119,7 @@
 
         private void CreateNewFacetCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = true;
+            args.CanExecute = this.Model != null;
         }
 
         private void CreateNewFacetExecuted(object sender, ExecutedRoutedEventArgs args)
@@ -193,17 +193,17 @@
 
         private void EditRelationshipCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = true;
+            args.CanExecute = this.Model != null && args.Parameter is RelationshipViewModel;
         }
 
         private void EditRelationshipExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            //var dialogViewModel = new EditRelationshipViewModel(args.Parameter as RelationshipViewModel);
-            
-            //this.rootPanel.ShowDialog(dialogViewModel, 
-            //    DialogActionBuilder.Cancel("delete relationship",false, EntityRelationshipModelCommands.DeleteRelationship),
-            //    DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
-            //    DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
+            var dialogViewModel = this.Model.EditRelationship(args.Parameter as RelationshipViewModel);
+
+            this.rootPanel.ShowDialog(dialogViewModel,
+                DialogActionBuilder.Cancel("delete relationship", false, EntityRelationshipModelCommands.DeleteRelationship),
+                DialogActionBuilder.Ok("ok", dialogViewModel.Commit),
+                DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
 
         #endregion 
