@@ -92,6 +92,7 @@
             Assert.IsTrue(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.AreEqual(1, f1edit.Properties.Count());
+            Assert.AreEqual(string.Format(Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Properties.Single().Name);
             Assert.AreEqual(0, f1edit.Edited.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.ModelItem.Properties.Count());
 
@@ -135,8 +136,11 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
             Assert.AreEqual(1, f1edit.Properties.Count());
+            Assert.AreEqual(string.Format(Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Properties.Single().Name);
             Assert.AreEqual(1, f1edit.Edited.Properties.Count());
+            Assert.AreEqual(string.Format(Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Edited.Properties.Single().Name);
             Assert.AreEqual(1, f1edit.Edited.ModelItem.Properties.Count());
+            Assert.AreEqual(string.Format(Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Edited.ModelItem.Properties.Single().Name);
 
             Assert.AreEqual(1, this.vm.Relationships.Single().Properties.Count());
             Assert.AreEqual(1, this.vm.Relationships.Single().AssignedFacets.Single().Properties.Count());
@@ -153,7 +157,7 @@
 
         #endregion 
 
-        #region EditFacet > AddPropertyDefinition > Commit
+        #region EditFacet > AddPropertyDefinition > Rollback
 
         [TestMethod]
         [TestCategory("EditFacet"), TestCategory("AddPropertyDefinition")]
