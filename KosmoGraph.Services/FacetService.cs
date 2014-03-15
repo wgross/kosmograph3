@@ -33,22 +33,22 @@
             if (string.IsNullOrEmpty(tmp.Name))
                 throw new ArgumentNullException("name");
 
-            return Task.Factory.StartNew(() => this.facetRepository.Insert(tmp));
+            return Task.Run(() => this.facetRepository.Insert(tmp));
         }
 
         public Task<IEnumerable<Facet>> GetAllFacets()
         {
-            return Task.Factory.StartNew(() => this.facetRepository.GetAll());
+            return Task.Run(() => this.facetRepository.GetAll());
         }
 
         public Task<bool> RemoveFacet(Facet toRemove)
         {
-            return Task.Factory.StartNew(() => this.facetRepository.Remove(toRemove));
+            return Task.Run(() => this.facetRepository.Remove(toRemove));
         }
 
         public Task<Facet> UpdateFacet(Facet updatedFacet)
         {
-            return Task.Factory.StartNew(() => this.facetRepository.Update(updatedFacet));
+            return Task.Run(() => this.facetRepository.Update(updatedFacet));
         }
 
         #endregion

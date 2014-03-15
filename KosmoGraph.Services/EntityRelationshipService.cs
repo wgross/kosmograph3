@@ -35,7 +35,7 @@
             if (string.IsNullOrEmpty(tmp.Name))
                 throw new ArgumentNullException("name");
 
-            return Task.Factory.StartNew(() => this.entityRepository.Insert(tmp));
+            return Task.Run(() => this.entityRepository.Insert(tmp));
         }
 
         public Task<Entity> UpdateEntity(Entity updatedEntity)
@@ -43,7 +43,7 @@
             if (string.IsNullOrEmpty(updatedEntity.Name))
                 throw new ArgumentNullException("name");
 
-            return Task.Factory.StartNew(() => this.entityRepository.Update(updatedEntity));
+            return Task.Run(() => this.entityRepository.Update(updatedEntity));
         }
 
         public Task<bool> RemoveEntity(Entity entity)
@@ -51,7 +51,7 @@
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            return Task.Factory.StartNew(() =>
+            return Task.Run(() =>
             {
                 log.Debug("Removing entity '{0}' and its relationships", entity.Id);
 
@@ -98,7 +98,7 @@
 
         public Task<IEnumerable<Entity>> GetAllEntities()
         {
-            return Task.Factory.StartNew(() => this.entityRepository.GetAll());
+            return Task.Run(() => this.entityRepository.GetAll());
         }
 
         #endregion
@@ -124,7 +124,7 @@
 
             relationship.SetDestination(destinationEntity);
 
-            return Task.Factory.StartNew<CompletePartialRelationshipResult>(() =>
+            return Task.Run<CompletePartialRelationshipResult>(() =>
             {
                 // retrieve entities in parallel
                 var getEntitiesInBackground = this.GetEntitiesByRelationship(relationship);
@@ -144,12 +144,12 @@
 
         public Task<Relationship> UpdateRelationship(Relationship updatedRelationship)
         {
-            return Task.Factory.StartNew(() => this.relationshipRepository.Update(updatedRelationship));
+            return Task.Run(() => this.relationshipRepository.Update(updatedRelationship));
         }
 
         public Task<IEnumerable<Relationship>> GetAllRelationships()
         {
-            return Task.Factory.StartNew(() => this.relationshipRepository.GetAll());
+            return Task.Run(() => this.relationshipRepository.GetAll());
         }
 
         public Task<bool> RemoveRelationship(Relationship toRemove)

@@ -55,7 +55,7 @@
             Task target;
             try
             {
-                target = Task.Factory.StartNew(() =>
+                target = Task.Run(() =>
                 {
                     throw new InvalidOperationException();
                 });
@@ -77,7 +77,7 @@
             Task target;
             try
             {
-                target = Task.Factory.StartNew(() =>
+                target = Task.Run(() =>
                 {
                     throw new InvalidOperationException();
                 });
@@ -99,7 +99,7 @@
             Task target;
             try
             {
-                target = Task.Factory.StartNew(() =>
+                target = Task.Run(() =>
                 {
                     count++;
                     throw new InvalidOperationException();

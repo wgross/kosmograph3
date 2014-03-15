@@ -74,7 +74,7 @@ using System.Threading.Tasks;
         {
             try
             {
-                //Task.Factory.StartNew(delegate
+                //Task.Run(delegate
                 //{
                 this.entityCollection.Value.Insert(e1).Log(log, string.Format("Inserting entity '{0}'", e1.Id));
                 //})
