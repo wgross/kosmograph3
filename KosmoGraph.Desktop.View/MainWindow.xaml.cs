@@ -51,8 +51,6 @@
             }
         }
 
-        private EntityRelationshipViewModel model;
-
         #endregion
 
         #region Handle CreateEntity command
@@ -182,13 +180,12 @@
 
         private bool? EditEntity(EntityViewModel entity)
         {
-            return false;
-            //var dialogViewModel = new EditEntityViewModel(entity);
+            var dialogViewModel = this.Model.EditEntity(entity);
 
-            //return this.rootPanel.ShowDialog(dialogViewModel, 
-            //    DialogActionBuilder.Cancel("delete entity", false, EntityRelationshipModelCommands.DeleteEntity),
-            //    DialogActionBuilder.Ok("ok", dialogViewModel.Commit), 
-            //    DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
+            return this.rootPanel.ShowDialog(dialogViewModel,
+                DialogActionBuilder.Cancel("delete entity", false, EntityRelationshipModelCommands.DeleteEntity),
+                DialogActionBuilder.Ok("ok", dialogViewModel.Commit),
+                DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback));
         }
         #endregion 
 
@@ -237,22 +234,22 @@
 
         #region Handle DeleteTag command
 
-        private void DeleteTagCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        private void DeleteFacetCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
 
-        private void DeleteTagExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void DeleteFacetExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            //if (args.Parameter is ObservableCollection<object>) // called from within dialog
-            //{
-            //    var first = ((ObservableCollection<object>)args.Parameter).FirstOrDefault() as EditFacetViewModel;
-            //    if (first != null)
-            //        this.DeleteTag(first.Edited);
-            //}
+            if (args.Parameter is IEnumerable<object>) // called from within dialog
+            {
+                var first = ((IEnumerable<object>)args.Parameter).FirstOrDefault() as EditExistingFacetViewModel;
+                if (first != null)
+                    this.DeleteFacet(first.Edited);
+            }
         }
 
-        private void DeleteTag(FacetViewModel facet)
+        private void DeleteFacet(FacetViewModel facet)
         {
             facet.Model.Remove(facet);
         }

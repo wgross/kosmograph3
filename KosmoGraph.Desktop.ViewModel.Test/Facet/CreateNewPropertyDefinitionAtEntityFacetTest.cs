@@ -79,7 +79,9 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsTrue(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.Single()));
+
             Assert.AreEqual(1, f1edit.Properties.Count());
+            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Properties.Single().Name);
             Assert.AreEqual(0, f1edit.Edited.Properties.Count());
             Assert.AreEqual(0, f1edit.Edited.ModelItem.Properties.Count());
 
@@ -125,9 +127,12 @@
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(f1edit.Properties.Single()));
             
             Assert.AreEqual(1, f1edit.Properties.Count());
+            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Properties.Single().Name);            
             Assert.AreEqual(1, f1edit.Edited.Properties.Count());
+            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Edited.Properties.Single().Name);            
             Assert.AreEqual(1, f1edit.Edited.ModelItem.Properties.Count());
-
+            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetNewPropertyNameDefault, 1), f1edit.Edited.ModelItem.Properties.Single().Name);            
+            
             Assert.AreEqual(1, this.vm.Entities.Single().Properties.Count());
             Assert.AreEqual(1, this.vm.Entities.Single().AssignedFacets.Single().Properties.Count());
 

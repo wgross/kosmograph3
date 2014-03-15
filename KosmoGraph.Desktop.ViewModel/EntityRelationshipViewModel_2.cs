@@ -10,6 +10,7 @@
     using System.Collections.Specialized;
     using System.Text;
     using NLog;
+    using System.Threading.Tasks;
 
     public class EntityRelationshipViewModel
     {
@@ -349,9 +350,10 @@
 
         public void Remove(FacetViewModel facetToRemove)
         {
+            var scheduleAtUiThread = TaskScheduler.FromCurrentSynchronizationContext();
             this.FacetService
                 .RemoveFacet(facetToRemove.ModelItem)
-                .EndWith(ok => this.RemoveFacetFromViewModelItems(facetToRemove));
+                .EndWith(succeeded:ok => this.RemoveFacetFromViewModelItems(facetToRemove));
         }
 
         private void RemoveFacetFromViewModelItems(FacetViewModel facetToRemove)

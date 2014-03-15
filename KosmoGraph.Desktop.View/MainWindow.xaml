@@ -33,8 +33,8 @@
             Executed="DeleteRelationshipExecuted"
             CanExecute="DeleteRelationshipCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.DeleteFacet}"
-            Executed="DeleteTagExecuted"
-            CanExecute="DeleteTagCanExecute"/>
+            Executed="DeleteFacetExecuted"
+            CanExecute="DeleteFacetCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
             Executed="CreateNewModelFromStoreExecuted"
             CanExecute="CreateNewModelFromStoreCanExecute"/>

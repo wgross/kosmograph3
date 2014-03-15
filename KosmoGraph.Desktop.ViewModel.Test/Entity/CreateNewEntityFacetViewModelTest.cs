@@ -13,14 +13,39 @@ namespace KosmoGraph.Desktop.ViewModel.Test
     using System.Threading.Tasks;
 
     [TestClass]
-    public class CreateNewEntityFacetViewModelTest
+    public class CreateNewEntityFacetAtNewEntityViewModelTest
     {
+        private IEnumerable<Facet> facets;
+        private Mock<IManageFacets> fsvc;
+        private IEnumerable<Entity> entities;
+        private IEnumerable<Relationship> relationships;
+        private Mock<IManageEntitiesAndRelationships> ersvc;
+        private EntityRelationshipViewModel vm;
+
         [TestInitialize]
         public void BeforeEachTest()
         {
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
             SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
+
+            // create facet
+            this.facets = new[]
+            {
+                FacetFactory.CreateNew(f => f.Name = "f1")
+            };
+
+            this.fsvc = new Mock<IManageFacets>();
+
+            this.fsvc // expect Facet retrieval
+                .Setup(_ => _.GetAllFacets())
+                .Returns(Task.FromResult(this.facets));
+
+            this.ersvc = new Mock<IManageEntitiesAndRelationships>();
+            
+
+            this.vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
+
         }
 
         #region CreateNewEntity > AssignFacet

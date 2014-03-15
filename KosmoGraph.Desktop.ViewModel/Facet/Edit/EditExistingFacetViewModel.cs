@@ -31,10 +31,22 @@ using System.Threading.Tasks;
 
         #endregion 
 
+        #region Add Property Definition 
+
+        protected override bool CanExecuteAddPropertyDefinition()
+        {
+            return (!this.hasAlreadyCommitted);
+        }
+
         override protected void AddPropertyDefinitionExecuted()
         {
-            this.Properties.Add(new EditNewPropertyDefinitionViewModel());
+            this.Properties.Add(new EditNewPropertyDefinitionViewModel
+            {
+                Name = string.Format(Resources.EditNewFacetNewPropertyNameDefault, this.Properties.Count() + 1)
+            });
         }
+
+        #endregion 
 
         #region Commit Editor
 
@@ -103,11 +115,7 @@ using System.Threading.Tasks;
 
         #endregion 
     
-        protected override bool CanExecuteAddPropertyDefinition()
-        {
-            return (!this.hasAlreadyCommitted);
-        }
-
+        
         protected override bool CanExecuteRemovePropertyDefinition(IEditPropertyDefinition propertyDefinitionToRemove)
         {
             return this.Properties.Contains(propertyDefinitionToRemove) && (!this.hasAlreadyCommitted);
