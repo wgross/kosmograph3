@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CreateNewRelationshipTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoveRelationshipTest.cs" />
     <Compile Include="RemoveEntityTest.cs" />
     <Compile Include="RemoveRelationshipByEntityTest.cs" />
     <Compile Include="CreateNewEntityTest.cs" />

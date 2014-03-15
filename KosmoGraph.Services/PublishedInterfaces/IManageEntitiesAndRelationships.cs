@@ -57,14 +57,15 @@ using System.Threading.Tasks;
 
         Task<CompletePartialRelationshipResult> CompletePartialRelationship(Relationship relationship, Entity destinationEntity);
 
-        Task<Relationship> UpdateRelationship(Relationship updatedRelatinship);
+        Task<Relationship> UpdateRelationship(Relationship toUpdate);
 
         Task<IEnumerable<Relationship>> GetAllRelationships();
+
+        Task<bool> RemoveRelationship(Relationship toRemove);
     }
 
     public interface IManageEntitiesAndRelationships : IManageEntities, IManageRelationships
-    {
-        
+    {   
         Task<GetEntitiesByRelationshipResult> GetEntitiesByRelationship(Relationship relationship);
     }
 }

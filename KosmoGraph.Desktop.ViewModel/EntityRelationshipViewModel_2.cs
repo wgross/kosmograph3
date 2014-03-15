@@ -350,8 +350,7 @@
 
         public void Remove(FacetViewModel facetToRemove)
         {
-            var scheduleAtUiThread = TaskScheduler.FromCurrentSynchronizationContext();
-            this.FacetService
+           this.FacetService
                 .RemoveFacet(facetToRemove.ModelItem)
                 .EndWith(succeeded:ok => this.RemoveFacetFromViewModelItems(facetToRemove));
         }
@@ -361,8 +360,6 @@
             this.Facets.Remove(facetToRemove);
             this.Entities.ForEach(e => e.RemoveAssignedFacet(facetToRemove));
             this.Relationships.ForEach(e => e.RemoveAssignedFacet(facetToRemove));
-            // remove from entities
-            // remove from retationships
         }
 
         public void Remove(EntityViewModel entityToRemove)
@@ -380,6 +377,19 @@
                 if (r.From.Entity == entityToRemove || r.To.Entity == entityToRemove)
                     this.Relationships.Remove(r);
             });
+        }
+
+        public void Remove(RelationshipViewModel relationshipToRemove)
+        {
+            this.EntityRelationshipService
+                .RemoveRelationship(relationshipToRemove.ModelItem)
+                .EndWith(succeeded: ok => this.RemoveRelationhipFromViewModelItems(relationshipToRemove));
+        }
+
+        private void RemoveRelationhipFromViewModelItems(RelationshipViewModel toRemove)
+        {
+            this.Relationships.Remove(toRemove);
+            this.Items.Remove(toRemove);
         }
 
         #endregion

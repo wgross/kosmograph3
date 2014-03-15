@@ -152,6 +152,23 @@
             return Task.Factory.StartNew(() => this.relationshipRepository.GetAll());
         }
 
+        public Task<bool> RemoveRelationship(Relationship toRemove)
+        {
+            if (toRemove == null)
+                throw new ArgumentNullException("toRemove");
+
+            return Task.Run(() =>
+            {
+                log.Debug("Removing relationship '{0}'", toRemove.Identity);
+
+                this.relationshipRepository.Remove(toRemove);
+
+                log.Info("Removed relationship '{0}'", toRemove.Identity);
+
+                return true;
+            });
+        }
+
         #endregion
 
         #region Default fail/cancel handling
@@ -167,6 +184,11 @@
             return true; // mark exception as 'handled'
         }
 
+        #endregion
+
+        #region IManageRelationships Members
+
+        
         #endregion
     }
 }
