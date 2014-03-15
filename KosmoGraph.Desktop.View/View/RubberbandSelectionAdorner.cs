@@ -95,7 +95,9 @@
         private void UpdateSelection()
         {
             EntityRelationshipViewModel vm = (this.entityRelationshipCanvas.DataContext as EntityRelationshipViewModel);
-            
+            if (vm == null)
+                return;
+
             Rect rubberBand = new Rect(this.startPoint, this.endPoint.Value);
             
             ItemsControl itemsControl = GetParent<ItemsControl>(typeof(ItemsControl), entityRelationshipCanvas);

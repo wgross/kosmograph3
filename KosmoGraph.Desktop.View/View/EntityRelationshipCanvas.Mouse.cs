@@ -62,10 +62,9 @@
                     // drag operation we cache the start point
                     this.rubberbandSelectionStartPoint = e.GetPosition(this);
 
-                    EntityRelationshipViewModel vm = (this.DataContext as EntityRelationshipViewModel);
-                    
-                    if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                        vm.ClearSelectedItems();
+                    if(this.Model != null)
+                        if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+                            this.Model.ClearSelectedItems();
                     
                     e.Handled = true;
                 }
@@ -77,6 +76,8 @@
                 if (senderAsFrameworkElement == null)
                     return;
 
+                if (this.Model == null)
+                    return;
                 // editing of entity is triggered by the Drag thumb now
                 //if (senderAsFrameworkElement.DataContext is EntityViewModel)
                 //{
