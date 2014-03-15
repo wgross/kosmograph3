@@ -29,13 +29,13 @@
 
             var entities = new[]
             { 
-                EntityFactory.CreateNew(e=>e.Name="e1"), 
-                EntityFactory.CreateNew(e=>e.Name="e2")
+                Entity.Factory.CreateNew(e=>e.Name="e1"), 
+                Entity.Factory.CreateNew(e=>e.Name="e2")
             };
 
             var relationships = new[]
             { 
-                RelationshipFactory.CreateNew(r=>
+                Relationship.Factory.CreateNew(r=>
                 {
                     r.FromId = entities.ElementAt(0).Id; 
                     r.ToId = entities.ElementAt(1).Id;

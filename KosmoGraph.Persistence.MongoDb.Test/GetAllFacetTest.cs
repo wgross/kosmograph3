@@ -22,8 +22,8 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
-            var f2 = FacetFactory.CreateNew(f => f.Name = "f2");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
+            var f2 = Facet.Factory.CreateNew(f => f.Name = "f2");
             var facetRepository = new FacetRepository(this.databaseName);
 
             facetRepository.Insert(f1);

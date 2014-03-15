@@ -23,7 +23,7 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
 
             // ACT
@@ -41,7 +41,7 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
 
             entityRepository.Insert(e1);
@@ -62,7 +62,7 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
 
             entityRepository.Insert(e1);
@@ -87,7 +87,7 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
 
             entityRepository.Insert(e1);
@@ -106,7 +106,7 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
 
             entityRepository.Insert(e1);
@@ -128,13 +128,13 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
             var entityRepository = new EntityRepository(this.databaseName);
             entityRepository.Insert(e1);
 
             // ACT & ASSERT
 
-            ExceptionAssert.Throws<InvalidOperationException>(delegate { entityRepository.Insert(EntityFactory.CreateNew(e=> e.Name ="e1")); });
+            ExceptionAssert.Throws<InvalidOperationException>(delegate { entityRepository.Insert(Entity.Factory.CreateNew(e=> e.Name ="e1")); });
         }
     }
 }

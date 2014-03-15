@@ -22,8 +22,8 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             var af1 = e1.Add(e1.CreateNewAssignedFacet(f1));
             var entityRepository = new EntityRepository(this.databaseName);
@@ -47,8 +47,8 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             var af1 = e1.Add(e1.CreateNewAssignedFacet(f1));
             var entityRepository = new EntityRepository(this.databaseName);

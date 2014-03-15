@@ -13,8 +13,8 @@ namespace KosmoGraph.Services.Test
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
             
             var entityRepository = new Mock<IEntityRepository>();
             var relationshipRepository = new Mock<IRelationshipRepository>();

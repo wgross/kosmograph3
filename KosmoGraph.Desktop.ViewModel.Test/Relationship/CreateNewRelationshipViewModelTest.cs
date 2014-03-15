@@ -33,8 +33,8 @@
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -87,8 +87,8 @@
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -104,7 +104,7 @@
 
             ersvc // expect creation of partial relationship with source entity
                 .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
-                .Returns<Entity,Action<Relationship>>((e, a) => RelationshipFactory.CreateNewPartial(e));
+                .Returns<Entity,Action<Relationship>>((e, a) => Relationship.Factory.CreateNewPartial(e));
 
             ersvc
                 .Setup(_ => _.CompletePartialRelationship(It.Is<Relationship>(r => r.FromId == e1.ModelItem.Id), e2.ModelItem))
@@ -144,8 +144,8 @@
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -161,7 +161,7 @@
 
             ersvc // expect creation of partial relationship with source entity
                 .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
-                .Returns<Entity, Action<Relationship>>((e, a) => RelationshipFactory.CreateNewPartial(e));
+                .Returns<Entity, Action<Relationship>>((e, a) => Relationship.Factory.CreateNewPartial(e));
 
             ersvc
                 .Setup(_ => _.CompletePartialRelationship(It.Is<Relationship>(r => r.FromId == e1.ModelItem.Id), e2.ModelItem))
@@ -208,8 +208,8 @@
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -257,8 +257,8 @@
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -274,7 +274,7 @@
 
             ersvc // expect creation of partial relationship with source entity
                 .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
-                .Returns<Entity, Action<Relationship>>((e, a) => RelationshipFactory.CreateNewPartial(e));
+                .Returns<Entity, Action<Relationship>>((e, a) => Relationship.Factory.CreateNewPartial(e));
 
             ersvc
                 .Setup(_ => _.CompletePartialRelationship(It.Is<Relationship>(r => r.FromId == e1.ModelItem.Id), e2.ModelItem))

@@ -2,35 +2,37 @@
 {
     using System;
 
-    public sealed class RelationshipFactory
+    public sealed class RelationshipFactory : IModelItemFactory<Relationship>
     {
-        private static Relationship CreateNew()
-        {
-            return new Relationship() { Identity = Guid.NewGuid() };
-        }
+        #region IModelItemFactory<Relationship> Members
 
-        public static Relationship CreateNew(Action<Relationship> setup)
+        public Relationship CreateNew(Action<Relationship> initializeWith)
         {
-            var tmp = CreateNew();
-            (setup ?? delegate { })(tmp);
+            var tmp = new Relationship { Identity = Guid.NewGuid() };
+            (initializeWith ?? delegate { })(tmp);
             return tmp;
         }
 
-        public static Relationship CreateNewPartial(Entity fromEntity)
+        #endregion
+    }
+
+    public static class RelationshipFactoryExtensions
+    {
+        public static Relationship CreateNewPartial(this IModelItemFactory<Relationship> thisFactory, Entity fromEntity)
         {
-            return CreateNew(r => 
+            return thisFactory.CreateNew(r => 
             {
                 r.SetSource(fromEntity);
             });
         }
 
-        public static Relationship CreateNew(Entity fromEntity, Entity toEntity)
+        public static Relationship CreateNew(this IModelItemFactory<Relationship> thisFactory, Entity fromEntity, Entity toEntity)
         {
-            return CreateNew(r=>
+            return thisFactory.CreateNew(r=>
             {
                 r.SetSource(fromEntity);
                 r.SetDestination(toEntity);
             });
-        } 
+        }
     }
 }

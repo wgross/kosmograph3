@@ -98,7 +98,7 @@
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
+                .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = vm.CreateNewFacet();
             
@@ -176,7 +176,7 @@
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
+                .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = vm.CreateNewFacet();
 

@@ -23,7 +23,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             
             var facetRepository = new FacetRepository(this.databaseName);
@@ -46,7 +46,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             var facetRepository = new FacetRepository(this.databaseName);
@@ -72,7 +72,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             var facetRepository = new FacetRepository(this.databaseName);
@@ -101,7 +101,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             var facetRepository = new FacetRepository(this.databaseName);

@@ -160,7 +160,7 @@
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
+                .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = vm.CreateNewFacet();
 
@@ -198,7 +198,7 @@
 
             fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
+                .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = this.vm.CreateNewFacet();
             f1edit.Name = "f1";
@@ -271,7 +271,7 @@
 
             fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns((Action<Facet> a) => Task.FromResult(FacetFactory.CreateNew(a)));
+                .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = vm.CreateNewFacet();
 
@@ -314,7 +314,7 @@
 
         //    fsvc // expect facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-        //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+        //        .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
         //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var f1 = vm.CreateNewFacet("f1");
@@ -347,7 +347,7 @@
 
         //    fsvc // expect facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-        //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+        //        .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
         //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var f1 = vm.Add(vm.CreateNewFacet("f1"));
@@ -373,7 +373,7 @@
 
         //    fsvc // expects facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-        //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+        //        .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
         //    var vm1 = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var vm2 = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);

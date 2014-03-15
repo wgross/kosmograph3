@@ -32,7 +32,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             // provide a facet with a property definition
             this.facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -50,13 +50,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             this.entities = new[]
             {
-                EntityFactory.CreateNew(e =>
+                Entity.Factory.CreateNew(e =>
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
                     e.AssignedFacets.Single().Properties.Single().Value = "pv1";
                 }),
-                EntityFactory.CreateNew(e =>
+                Entity.Factory.CreateNew(e =>
                 {
                     e.Name = "e2";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -66,7 +66,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             this.relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;

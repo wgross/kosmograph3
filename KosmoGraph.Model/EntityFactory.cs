@@ -2,18 +2,17 @@
 {
     using System;
 
-    public sealed class EntityFactory
+    internal sealed class EntityFactory : IModelItemFactory<Entity>
     {
-        public static Entity CreateNew()
-        {
-            return new Entity();
-        }
+        #region IModelItemFactory<Entity> Members
 
-        public static Entity CreateNew(Action<Entity> setup)
+        public Entity CreateNew(Action<Entity> setup)
         {
             var tmp = new Entity();
             (setup ?? delegate { })(tmp);
             return tmp;
         }
+
+        #endregion 
     }
 }

@@ -22,9 +22,9 @@
         public void FindEntitiesConnectedByRelationship()
         {
             // ARRANGE
-            var e1 = EntityFactory.CreateNew(e => e.Name="e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name="e2");
-            var r1 = RelationshipFactory.CreateNew(r => 
+            var e1 = Entity.Factory.CreateNew(e => e.Name="e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name="e2");
+            var r1 = Relationship.Factory.CreateNew(r => 
             { 
                 r.FromId = e1.Id;
                 r.ToId = e2.Id;

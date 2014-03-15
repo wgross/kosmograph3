@@ -32,7 +32,7 @@
             // provide a facet with a property definition
             this.facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             this.fsvc = new Mock<IManageFacets>();

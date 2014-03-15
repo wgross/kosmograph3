@@ -28,7 +28,7 @@
 
         public Task<Facet> CreateNewFacet(Action<Facet> initializeWith)
         {
-            var tmp = FacetFactory.CreateNew(initializeWith ?? delegate { });
+            var tmp = Facet.Factory.CreateNew(initializeWith ?? delegate { });
 
             if (string.IsNullOrEmpty(tmp.Name))
                 throw new ArgumentNullException("name");

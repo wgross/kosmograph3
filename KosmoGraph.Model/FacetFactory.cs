@@ -2,18 +2,17 @@
 {
     using System;
 
-    public sealed class FacetFactory
+    internal sealed class FacetFactory : IModelItemFactory<Facet>
     {
-        public static Facet CreateNew()
-        {
-            return new Facet() { Id = Guid.NewGuid() };
-        }
+        #region IModelItemFactory<Facet> Members
 
-        public static Facet CreateNew(Action<Facet> setup)
+        public Facet CreateNew(Action<Facet> initializeWith)
         {
             var tmp = new Facet() { Id = Guid.NewGuid() };
-            (setup ?? delegate { })(tmp);
+            (initializeWith ?? delegate { })(tmp);
             return tmp;
         }
+
+        #endregion
     }
 }

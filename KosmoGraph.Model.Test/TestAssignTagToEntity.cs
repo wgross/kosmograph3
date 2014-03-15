@@ -15,8 +15,8 @@
         {
             // ARRAMGE
 
-            var t1 = FacetFactory.CreateNew();
-            var e1 = EntityFactory.CreateNew();
+            var t1 = Facet.Factory.CreateNew(delegate{});
+            var e1 = Entity.Factory.CreateNew(delegate {});
 
             // ACT 
             // create assign tag for entity but dont add it
@@ -38,8 +38,8 @@
         {
             // ARRAMGE
 
-            var t1 = FacetFactory.CreateNew();
-            var e1 = EntityFactory.CreateNew();
+            var t1 = Facet.Factory.CreateNew(delegate{});
+            var e1 = Entity.Factory.CreateNew(delegate {});
             var pd1 = t1.Add(t1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
            
             // ACT 
@@ -62,8 +62,8 @@
         {
             // ARRAMGE
 
-            var t1 = FacetFactory.CreateNew();
-            var e1 = EntityFactory.CreateNew();
+            var t1 = Facet.Factory.CreateNew(delegate{});
+            var e1 = Entity.Factory.CreateNew(delegate {});
             var pd1 = t1.Add(t1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             var at1 = e1.CreateNewAssignedFacet(t1, delegate { });
 
@@ -89,8 +89,8 @@
         {
             // ARRAMGE
 
-            var t1 = FacetFactory.CreateNew();
-            var e1 = EntityFactory.CreateNew();
+            var t1 = Facet.Factory.CreateNew(delegate{});
+            var e1 = Entity.Factory.CreateNew(delegate {});
             var at1 = e1.Add(e1.CreateNewAssignedFacet(t1, delegate { }));
 
             // ACT 
@@ -114,7 +114,7 @@
         {
             // ARRAMGE
 
-            var e1 = EntityFactory.CreateNew();
+            var e1 = Entity.Factory.CreateNew(delegate {});
 
             // ACT & ASSERT
             // get exception on assingning null as Tag
@@ -127,8 +127,8 @@
         {
             // ARRAMGE
 
-            var t1 = FacetFactory.CreateNew();
-            var e1 = EntityFactory.CreateNew();
+            var t1 = Facet.Factory.CreateNew(delegate{});
+            var e1 = Entity.Factory.CreateNew(delegate {});
 
             // ACT 
             // a missing initializer doesn't harm the creation

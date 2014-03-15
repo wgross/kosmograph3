@@ -39,7 +39,7 @@
             var svc = new EntityRelationshipService(entityRepository.Object, relationshipRepository.Object);
 
             var e1 = svc.CreateNewEntity(e => e.Name = "e1").Result;
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
 
             // ACT
 
@@ -80,7 +80,7 @@
             var svc = new EntityRelationshipService(entityRepository.Object, relationshipRepository.Object);
 
             var e1 = svc.CreateNewEntity(e => e.Name = "e1").Result;
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
 
             // ACT
 

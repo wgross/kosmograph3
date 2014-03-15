@@ -6,6 +6,8 @@
 
     public sealed class Entity : IHasAssignedFacets
     {
+        public static readonly IModelItemFactory<Entity> Factory = new EntityFactory();
+
         #region Construction and initialization of this instance
 
         public Entity()

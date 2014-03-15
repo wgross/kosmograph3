@@ -12,7 +12,7 @@
         {
             // ACT
 
-            Entity e1 = EntityFactory.CreateNew();
+            Entity e1 = Entity.Factory.CreateNew(delegate {});
 
             // ASSERT
             // create an entity must have an id
@@ -27,7 +27,7 @@
         {
             // ACT
 
-            Entity e1 = EntityFactory.CreateNew(e => e.Name = "e1");
+            Entity e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
 
             // ASSERT
             // initializer was applied

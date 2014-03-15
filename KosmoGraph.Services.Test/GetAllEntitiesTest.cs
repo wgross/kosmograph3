@@ -24,8 +24,8 @@
         {
             var entities = new[]
             { 
-                EntityFactory.CreateNew(e=>e.Name="e1"), 
-                EntityFactory.CreateNew(e=>e.Name="e2")
+                Entity.Factory.CreateNew(e=>e.Name="e1"), 
+                Entity.Factory.CreateNew(e=>e.Name="e2")
             };
 
             var entityRepository = new Mock<IEntityRepository>();

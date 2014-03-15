@@ -30,7 +30,7 @@
             // provide a facet with a property definition
             this.facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name ="pd1"));

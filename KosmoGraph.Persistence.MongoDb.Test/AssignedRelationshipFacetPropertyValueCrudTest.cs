@@ -22,10 +22,10 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             var af1 = r1.Add(r1.CreateNewAssignedFacet(f1, null));
 
@@ -50,10 +50,10 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
             var af1 = r1.Add(r1.CreateNewAssignedFacet(f1, null));
             var relationshipRepository = new RelationshipRepository(this.databaseName);

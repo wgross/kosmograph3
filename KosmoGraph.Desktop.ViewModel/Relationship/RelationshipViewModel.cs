@@ -42,7 +42,7 @@
         /// <param name="fromConnector"></param>
         /// <param name="toPoint"></param>
         internal RelationshipViewModel(EntityConnectorViewModel fromConnector, Point toPoint)
-            : this(fromConnector, RelationshipFactory.CreateNewPartial(fromConnector.Entity.ModelItem))
+            : this(fromConnector, Relationship.Factory.CreateNewPartial(fromConnector.Entity.ModelItem))
         {
             this.ToPoint = toPoint;
         }

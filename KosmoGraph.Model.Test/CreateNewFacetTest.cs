@@ -11,7 +11,7 @@
         {
             // ACT
 
-            Facet t1 = FacetFactory.CreateNew();
+            Facet t1 = Facet.Factory.CreateNew(delegate { });
 
             //ASSERT
             // create an entity must have an id

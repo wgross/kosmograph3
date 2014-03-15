@@ -32,7 +32,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => e.Name ="e1")
+                Entity.Factory.CreateNew(e => e.Name ="e1")
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -75,7 +75,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => e.Name ="e1")
+                Entity.Factory.CreateNew(e => e.Name ="e1")
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -115,7 +115,7 @@
 
             var facets = new []
             {
-                FacetFactory.CreateNew(f =>
+                Facet.Factory.CreateNew(f =>
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -130,7 +130,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name ="e1";
                     e.Add(e.CreateNewAssignedFacet(facets.Single(), f=>f.Properties.Single().Value = "pv1"));
@@ -184,7 +184,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name="f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name ="pd1"));
@@ -199,7 +199,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name ="e1";
                     e.Add(e.CreateNewAssignedFacet(facets.Single(), af => af.Properties.Single().Value = "pv1"));
@@ -259,7 +259,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name="f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name ="pd1"));
@@ -274,7 +274,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name ="e1";
                     e.Add(e.CreateNewAssignedFacet(facets.Single(), af => af.Properties.Single().Value = "pv1"));
@@ -329,7 +329,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name="f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name ="pd1"));
@@ -344,7 +344,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name ="e1";
                     e.Add(e.CreateNewAssignedFacet(facets.Single(), af => af.Properties.Single().Value = "pv1"));
@@ -406,13 +406,13 @@
         //    var ersvc = new Mock<IManageEntitiesAndRelationships>();
         //    ersvc // expects entity creation
         //        .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-        //        .Returns((Action<Entity> a) => EntityFactory.CreateNew(a));
+        //        .Returns((Action<Entity> a) => Entity.Factory.CreateNew(a));
 
 
         //    var fsvc = new Mock<IManageFacets>();
         //    fsvc // expects Facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-        //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+        //        .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
         //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var f1 = vm.Add(vm.CreateNewFacet("f1"));

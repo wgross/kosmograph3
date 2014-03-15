@@ -30,7 +30,7 @@
 
         public Task<Entity> CreateNewEntity(Action<Entity> initializeWith)
         {
-            var tmp = EntityFactory.CreateNew(initializeWith ?? delegate { });
+            var tmp = Entity.Factory.CreateNew(initializeWith ?? delegate { });
 
             if (string.IsNullOrEmpty(tmp.Name))
                 throw new ArgumentNullException("name");
@@ -107,7 +107,7 @@
 
         public Relationship CreatePartialRelationship(Entity fromEntity, Action<Relationship> initializeWith)
         {
-            var tmp = RelationshipFactory.CreateNewPartial(fromEntity);
+            var tmp = Relationship.Factory.CreateNewPartial(fromEntity);
             (initializeWith ?? delegate { })(tmp);
             return tmp;
         }

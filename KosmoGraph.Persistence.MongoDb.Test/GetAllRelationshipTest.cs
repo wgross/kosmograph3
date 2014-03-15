@@ -25,22 +25,22 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e3 = EntityFactory.CreateNew(e => e.Name = "e3");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e3 = Entity.Factory.CreateNew(e => e.Name = "e3");
             var entityRepository = new EntityRepository(this.databaseName);
             
             entityRepository.Insert(e1);
             entityRepository.Insert(e2);
             
             var relatinshipRepository = new RelationshipRepository(this.databaseName);
-            var r1 = RelationshipFactory.CreateNew(r => 
+            var r1 = Relationship.Factory.CreateNew(r => 
             {
                 r.FromId= e1.Id;
                 r.ToId = e2.Id;
             });
 
-            var r2 = RelationshipFactory.CreateNew(r =>
+            var r2 = Relationship.Factory.CreateNew(r =>
             {
                 r.FromId = e2.Id;
                 r.ToId = e3.Id;

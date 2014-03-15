@@ -6,6 +6,8 @@
 
     public class Relationship : IHasAssignedFacets
     {
+        public static readonly IModelItemFactory<Relationship> Factory = new RelationshipFactory();
+
         public Relationship()
         {
             this.AssignedFacets = new List<AssignedFacet>();

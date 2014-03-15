@@ -15,8 +15,8 @@
             // throws Argument null exceptin if a parameter is missing
 
             ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Entity)null, null); });
-            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew(EntityFactory.CreateNew(), null); });
-            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Entity)null, FacetFactory.CreateNew()); });
+            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew(Entity.Factory.CreateNew(delegate { }), null); });
+            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Entity)null, Facet.Factory.CreateNew(delegate{})); });
         }
 
         [TestMethod]
@@ -24,8 +24,8 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e=>e.Name = "e1");
-            var f1 = FacetFactory.CreateNew(f=>f.Name="f1");
+            var e1 = Entity.Factory.CreateNew(e=>e.Name = "e1");
+            var f1 = Facet.Factory.CreateNew(f=>f.Name="f1");
 
             // ACT
 
@@ -43,8 +43,8 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             // ACT

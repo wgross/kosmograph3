@@ -16,7 +16,7 @@
 
             ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Relationship)null, null); });
             ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew(new Relationship(), null); });
-            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Relationship)null, FacetFactory.CreateNew()); });
+            ExceptionAssert.Throws<ArgumentNullException>(delegate { AssignedFacetFactory.CreateNew((Relationship)null, Facet.Factory.CreateNew(delegate{})); });
         }
 
 
@@ -25,9 +25,9 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew();
-            var r1 = RelationshipFactory.CreateNewPartial(e1);
-            var f1 = FacetFactory.CreateNew();
+            var e1 = Entity.Factory.CreateNew(delegate {});
+            var r1 = Relationship.Factory.CreateNewPartial(e1);
+            var f1 = Facet.Factory.CreateNew(delegate{});
 
             // ACT
 
@@ -45,10 +45,10 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
-            var f1 = FacetFactory.CreateNew(f => f.Name="f1" );
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
+            var f1 = Facet.Factory.CreateNew(f => f.Name="f1" );
 
             // ACT
 

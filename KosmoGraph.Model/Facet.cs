@@ -6,6 +6,8 @@
 
     public class Facet : IHasName
     {
+        public static readonly IModelItemFactory<Facet> Factory = new FacetFactory();
+
         #region Construction and initialization of this instance 
 
         public Facet()

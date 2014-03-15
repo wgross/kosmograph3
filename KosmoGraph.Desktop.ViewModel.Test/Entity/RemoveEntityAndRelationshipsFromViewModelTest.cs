@@ -41,13 +41,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             this.entities = new []
             {
-                EntityFactory.CreateNew(e=>e.Name ="e1"),
-                EntityFactory.CreateNew(e=>e.Name ="e2")
+                Entity.Factory.CreateNew(e=>e.Name ="e1"),
+                Entity.Factory.CreateNew(e=>e.Name ="e2")
             };
 
             this.relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = this.entities.ElementAt(0).Id;
                     r.ToId = this.entities.ElementAt(1).Id;

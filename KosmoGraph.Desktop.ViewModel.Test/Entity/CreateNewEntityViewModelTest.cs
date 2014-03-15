@@ -113,7 +113,7 @@
 
             this.ersvc // expects entity creation
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-                .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
+                .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
 
             var e1edit = this.vm.CreateNewEntity();
             e1edit.Name = "e1";
@@ -149,7 +149,7 @@
 
             ersvc // expects entity creation
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-                .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
+                .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
 
             var e1edit = this.vm.CreateNewEntity();
 
@@ -221,7 +221,7 @@
 
             ersvc // expects entity creation
               .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-              .Returns((Action<Entity> a) => Task.FromResult(EntityFactory.CreateNew(a)));
+              .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
 
             var e1edit = this.vm.CreateNewEntity();
             
@@ -262,13 +262,13 @@
         //    var ersvc = new Mock<IManageEntitiesAndRelationships>();
         //    ersvc // expects entity creation
         //        .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-        //        .Returns((Action<Entity> a) => EntityFactory.CreateNew(a));
+        //        .Returns((Action<Entity> a) => Entity.Factory.CreateNew(a));
 
 
         //    var this.fsvc. = new Mock<IManageFacets>();
         //    this.fsvc. // expects Facet creation
         //        .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-        //        .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+        //        .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
         //    var vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         //    var f1 = this.vm.Add(this.vm.CreateNewFacet("f1"));

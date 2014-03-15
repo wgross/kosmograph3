@@ -10,8 +10,8 @@ using KosmoGraph.Test;
         [TestMethod]
         public void InitializationFailsOnNullEntity()
         {
-            ExceptionAssert.Throws<ArgumentNullException>( delegate { RelationshipFactory.CreateNewPartial(null);});
-            ExceptionAssert.Throws<ArgumentNullException>(delegate { RelationshipFactory.CreateNew(null,null); });
+            ExceptionAssert.Throws<ArgumentNullException>( delegate { Relationship.Factory.CreateNewPartial(null);});
+            ExceptionAssert.Throws<ArgumentNullException>(delegate { Relationship.Factory.CreateNew(null,null); });
         }
 
         [TestMethod]
@@ -19,8 +19,8 @@ using KosmoGraph.Test;
         {
             // ACT
 
-            Entity e1 = EntityFactory.CreateNew();
-            Relationship r1 = RelationshipFactory.CreateNewPartial(e1);
+            Entity e1 = Entity.Factory.CreateNew(delegate {});
+            Relationship r1 = Relationship.Factory.CreateNewPartial(e1);
 
             //ASSERT
             // create a relatoinship set an id and a from entity
@@ -37,9 +37,9 @@ using KosmoGraph.Test;
         {
             // ACT
 
-            Entity e1 = EntityFactory.CreateNew();
-            Entity e2 = EntityFactory.CreateNew();
-            Relationship r1 = RelationshipFactory.CreateNewPartial(e1);
+            Entity e1 = Entity.Factory.CreateNew(delegate {});
+            Entity e2 = Entity.Factory.CreateNew(delegate {});
+            Relationship r1 = Relationship.Factory.CreateNewPartial(e1);
 
             // ACT
 
@@ -61,9 +61,9 @@ using KosmoGraph.Test;
         {
             // ACT
 
-            Entity e1 = EntityFactory.CreateNew();
-            Entity e2 = EntityFactory.CreateNew();
-            Relationship r1 = RelationshipFactory.CreateNew(e1,e2);
+            Entity e1 = Entity.Factory.CreateNew(delegate {});
+            Entity e2 = Entity.Factory.CreateNew(delegate {});
+            Relationship r1 = Relationship.Factory.CreateNew(e1,e2);
 
             //ASSERT
             // create a relatoinship set an id and a from entity

@@ -27,13 +27,13 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => e.Name = "e1"),
-                EntityFactory.CreateNew(e => e.Name = "e2")
+                Entity.Factory.CreateNew(e => e.Name = "e1"),
+                Entity.Factory.CreateNew(e => e.Name = "e2")
             };
 
             var entityRepository = new Mock<IEntityRepository>();
 
-            var r1 =RelationshipFactory.CreateNew(r => 
+            var r1 =Relationship.Factory.CreateNew(r => 
             {
                 r.FromId = entities.ElementAt(0).Id;
                 r.ToId = entities.ElementAt(1).Id;

@@ -46,11 +46,12 @@
     <Compile Include="PublishedInterfaces\IHasName.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityFactory.cs" />
-    <Compile Include="IFacetRepository.cs" />
-    <Compile Include="IRelationshipRepository.cs" />
-    <Compile Include="IEntityRepository.cs" />
+    <Compile Include="PublishedInterfaces\IFacetRepository.cs" />
+    <Compile Include="PublishedInterfaces\IRelationshipRepository.cs" />
+    <Compile Include="PublishedInterfaces\IEntityRepository.cs" />
     <Compile Include="PropertyDefinitionFactory.cs" />
     <Compile Include="PropertyValueFactory.cs" />
+    <Compile Include="PublishedInterfaces\IModelItemFactory.cs" />
     <Compile Include="RelationshipFactory.cs" />
     <Compile Include="PropertyDefinition.cs" />
     <Compile Include="PropertyValue.cs" />

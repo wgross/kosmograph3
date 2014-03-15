@@ -30,7 +30,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             // provide a facet with a property definition
             this.facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             this.fsvc = new Mock<IManageFacets>();
@@ -40,17 +40,17 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             this.entities = new[]
             {
-                EntityFactory.CreateNew(e=>
+                Entity.Factory.CreateNew(e=>
                 {
                     e.Name ="e1";
                     e.Add(e.CreateNewAssignedFacet(this.facets.Single(), delegate{}));
                 }),
-                EntityFactory.CreateNew(e=>e.Name ="e2")
+                Entity.Factory.CreateNew(e=>e.Name ="e2")
             };
 
             this.relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = this.entities.ElementAt(0).Id;
                     r.ToId = this.entities.ElementAt(1).Id;

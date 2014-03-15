@@ -27,7 +27,7 @@
 
             var facets = new []
             {
-                FacetFactory.CreateNew(e => e.Name = "f1")
+                Facet.Factory.CreateNew(e => e.Name = "f1")
             };
             
             var facetRepository = new Mock<IFacetRepository>();

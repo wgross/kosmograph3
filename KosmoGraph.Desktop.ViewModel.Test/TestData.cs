@@ -13,7 +13,7 @@
 //        {
 //            return new[]
 //            {
-//                FacetFactory.CreateNew(f => f.Name = "f1")
+//                Facet.Factory.CreateNew(f => f.Name = "f1")
 //            };
 //        }
 
@@ -21,7 +21,7 @@
 //        {
 //            return new[]
 //            {
-//                FacetFactory.CreateNew(f => 
+//                Facet.Factory.CreateNew(f => 
 //                {
 //                    f.Name = "f1";
 //                    f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -33,7 +33,7 @@
 //        {
 //            return new[]
 //            {
-//                EntityFactory.CreateNew(e => 
+//                Entity.Factory.CreateNew(e => 
 //                {
 //                    e.Name = "e1";
 //                    e.Add(e.CreateNewAssignedFacet(f1_empty.First()));
@@ -45,7 +45,7 @@
 //        {
 //            return new[]
 //            {
-//                EntityFactory.CreateNew(e => 
+//                Entity.Factory.CreateNew(e => 
 //                {
 //                    e.Name = "e1";
 //                    e.Add(e.CreateNewAssignedFacet(f1_pd1.First()));

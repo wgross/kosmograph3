@@ -24,7 +24,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
 
             // ACT
@@ -42,7 +42,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => 
+            var f1 = Facet.Factory.CreateNew(f => 
             {
                 f.Name = "f1";
                 f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -65,7 +65,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(e => e.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(e => e.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
 
             facetRepository.Insert(f1);
@@ -87,7 +87,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f =>
+            var f1 = Facet.Factory.CreateNew(f =>
             {
                 f.Name = "f1";
                 f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -115,7 +115,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(e => e.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(e => e.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
 
             facetRepository.Insert(f1);
@@ -140,7 +140,7 @@
         {
             // ARRANGE
 
-             var f1 = FacetFactory.CreateNew(f =>
+             var f1 = Facet.Factory.CreateNew(f =>
             {
                 f.Name = "f1";
                 f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -172,7 +172,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f =>
+            var f1 = Facet.Factory.CreateNew(f =>
             {
                 f.Name = "f1";
                 f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -204,7 +204,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(e => e.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(e => e.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
 
             facetRepository.Insert(f1);
@@ -223,7 +223,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(e => e.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(e => e.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
 
             facetRepository.Insert(f1);
@@ -245,14 +245,14 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew(f => f.Name = "f1");
+            var f1 = Facet.Factory.CreateNew(f => f.Name = "f1");
             var facetRepository = new FacetRepository(this.databaseName);
             facetRepository.Insert(f1);
 
             // ACT & ASSERT
             // throw excetin if a Facet with existing name is inserted in MongoDb
             
-            ExceptionAssert.Throws<InvalidOperationException>(delegate { facetRepository.Insert(FacetFactory.CreateNew(f => f.Name = "f1")); });
+            ExceptionAssert.Throws<InvalidOperationException>(delegate { facetRepository.Insert(Facet.Factory.CreateNew(f => f.Name = "f1")); });
 
             Assert.IsNotNull(facetRepository.FindByIdentity(f1.Id));
         }

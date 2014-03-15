@@ -25,7 +25,7 @@
 
         protected override void ProcessRecord()
         {
-            var entity = EntityFactory.CreateNew(e => e.Name=this.Name);
+            var entity = Entity.Factory.CreateNew(e => e.Name=this.Name);
             this.entityRepository.Insert(entity);
             this.WriteObject(entity);
         }

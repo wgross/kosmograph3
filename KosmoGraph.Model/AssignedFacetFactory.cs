@@ -2,7 +2,7 @@
 {
     using System;
 
-    public sealed class AssignedFacetFactory
+    public sealed class AssignedFacetFactory 
     {
         public static AssignedFacet CreateNew(Entity entity, Facet assignedTag)
         {

@@ -29,12 +29,12 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -90,7 +90,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -99,7 +99,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -160,12 +160,12 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -223,7 +223,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -232,7 +232,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e =>
+                Entity.Factory.CreateNew(e =>
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -293,7 +293,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                 })
@@ -301,7 +301,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -359,7 +359,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -367,7 +367,7 @@
             };
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -430,12 +430,12 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e => 
+                Entity.Factory.CreateNew(e => 
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));
@@ -495,7 +495,7 @@
 
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => 
+                Facet.Factory.CreateNew(f => 
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
@@ -504,7 +504,7 @@
 
             var entities = new[]
             {
-                EntityFactory.CreateNew(e =>
+                Entity.Factory.CreateNew(e =>
                 {
                     e.Name = "e1";
                     e.Add(e.CreateNewAssignedFacet(facets.First()));

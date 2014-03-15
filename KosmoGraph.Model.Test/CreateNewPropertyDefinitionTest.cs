@@ -19,7 +19,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
             
             // ACT
 
@@ -36,7 +36,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
             var pd1 = f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1");
 
             // ACT
@@ -57,7 +57,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
             f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             // ACT
@@ -70,7 +70,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
             var pd1 = f1.Add(f1.CreateNewPropertyDefinition(pd => pd.Name = "pd1"));
 
             // ACT
@@ -87,7 +87,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
 
             // ACT
 
@@ -107,7 +107,7 @@
         {
             // ARRANGE
 
-            var f1 = FacetFactory.CreateNew();
+            var f1 = Facet.Factory.CreateNew(delegate{});
 
             // ACT & ASSERT
             // adding null as property definition causes ArgumentNullException

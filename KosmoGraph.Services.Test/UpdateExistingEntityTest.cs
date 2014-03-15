@@ -27,7 +27,7 @@
 
             var entities = new []
             {
-                EntityFactory.CreateNew(e => e.Name = "e1")
+                Entity.Factory.CreateNew(e => e.Name = "e1")
             };
             
             var entityRepository = new Mock<IEntityRepository>();

@@ -27,9 +27,9 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
 
             var relationshipRepository = new RelationshipRepository(this.databaseName);
             relationshipRepository.Insert(r1);
@@ -48,9 +48,9 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
 
             var relationshipRepository = new RelationshipRepository(this.databaseName);
             relationshipRepository.Insert(r1);
@@ -69,11 +69,11 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e3 = EntityFactory.CreateNew(e => e.Name = "e3");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
-            var r2 = RelationshipFactory.CreateNew(e2, e3);
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e3 = Entity.Factory.CreateNew(e => e.Name = "e3");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
+            var r2 = Relationship.Factory.CreateNew(e2, e3);
 
             var relationshipRepository = new RelationshipRepository(this.databaseName);
             relationshipRepository.Insert(r1);
@@ -94,11 +94,11 @@
         {
             // ARRANGE
 
-            var e1 = EntityFactory.CreateNew(e => e.Name = "e1");
-            var e2 = EntityFactory.CreateNew(e => e.Name = "e2");
-            var e3 = EntityFactory.CreateNew(e => e.Name = "e3");
-            var r1 = RelationshipFactory.CreateNew(e1, e2);
-            var r2 = RelationshipFactory.CreateNew(e2, e3);
+            var e1 = Entity.Factory.CreateNew(e => e.Name = "e1");
+            var e2 = Entity.Factory.CreateNew(e => e.Name = "e2");
+            var e3 = Entity.Factory.CreateNew(e => e.Name = "e3");
+            var r1 = Relationship.Factory.CreateNew(e1, e2);
+            var r2 = Relationship.Factory.CreateNew(e2, e3);
 
             var relationshipRepository = new RelationshipRepository(this.databaseName);
             relationshipRepository.Insert(r1);

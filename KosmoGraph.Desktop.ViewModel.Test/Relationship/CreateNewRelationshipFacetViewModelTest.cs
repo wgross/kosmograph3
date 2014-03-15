@@ -34,7 +34,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -43,8 +43,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -84,7 +84,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -97,8 +97,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -145,7 +145,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -154,13 +154,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -208,7 +208,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -221,13 +221,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[] 
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -282,7 +282,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -291,8 +291,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -335,7 +335,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -348,8 +348,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -397,7 +397,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -406,13 +406,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -463,7 +463,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -476,13 +476,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[] 
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -538,7 +538,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -547,8 +547,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -565,7 +565,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
                 .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
                 .Returns<Entity, Action<Relationship>>((e, a) =>
                 {
-                    var r = RelationshipFactory.CreateNewPartial(e);
+                    var r = Relationship.Factory.CreateNewPartial(e);
                     a(r);
                     return r;
                 });
@@ -606,7 +606,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -619,8 +619,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -638,7 +638,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
               .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
               .Returns<Entity, Action<Relationship>>((e, a) =>
               {
-                  a(r1 = RelationshipFactory.CreateNewPartial(e));
+                  a(r1 = Relationship.Factory.CreateNewPartial(e));
                   return r1;
               });
 
@@ -689,7 +689,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -698,13 +698,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -766,7 +766,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -779,13 +779,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[] 
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -856,7 +856,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -865,8 +865,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -908,7 +908,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -921,8 +921,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -969,7 +969,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -978,13 +978,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -1037,7 +1037,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -1050,13 +1050,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[] 
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -1115,7 +1115,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -1124,8 +1124,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -1142,7 +1142,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
                 .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
                  .Returns<Entity, Action<Relationship>>((e, a) =>
                  {
-                     var r = RelationshipFactory.CreateNewPartial(e);
+                     var r = Relationship.Factory.CreateNewPartial(e);
                      a(r);
                      return r;
                  });
@@ -1185,7 +1185,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -1198,8 +1198,8 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -1217,7 +1217,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
               .Setup(_ => _.CreatePartialRelationship(e1.ModelItem, It.IsAny<Action<Relationship>>()))
               .Returns<Entity, Action<Relationship>>((e, a) =>
               {
-                  a(r1 = RelationshipFactory.CreateNewPartial(e));
+                  a(r1 = Relationship.Factory.CreateNewPartial(e));
                   return r1;
               });
 
@@ -1271,7 +1271,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f => f.Name = "f1")
+                Facet.Factory.CreateNew(f => f.Name = "f1")
             };
 
             fsvc // expect Facet retrieval
@@ -1280,13 +1280,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[]
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;
@@ -1350,7 +1350,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
             var fsvc = new Mock<IManageFacets>();
             var facets = new[]
             {
-                FacetFactory.CreateNew(f =>  
+                Facet.Factory.CreateNew(f =>  
                 {
                     f.Name = "f1";
                     f.Add(f.CreateNewPropertyDefinition(pd => pd.Name="pd1"));
@@ -1363,13 +1363,13 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             var entities = new[] 
             {
-                EntityFactory.CreateNew(e=>e.Name = "e1"),
-                EntityFactory.CreateNew(e=>e.Name = "e2"),
+                Entity.Factory.CreateNew(e=>e.Name = "e1"),
+                Entity.Factory.CreateNew(e=>e.Name = "e2"),
             };
 
             var relationships = new[] 
             {
-                RelationshipFactory.CreateNew(r => 
+                Relationship.Factory.CreateNew(r => 
                 {
                     r.FromId = entities.ElementAt(0).Id;
                     r.ToId = entities.ElementAt(1).Id;

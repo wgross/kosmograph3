@@ -24,13 +24,13 @@
             
 //            ersvc // expects entity creation
 //                .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-//                .Returns((Action<Entity> a) => EntityFactory.CreateNew(a));
+//                .Returns((Action<Entity> a) => Entity.Factory.CreateNew(a));
 
 //            var fsvc = new Mock<IManageFacets>();
 
 //            fsvc // expect facet creation
 //                .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-//                .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+//                .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
 //            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
 //            var e1 = vm.Add(vm.CreateNewEntity("e1"));
@@ -63,13 +63,13 @@
 
 //            ersvc // expects entity creation
 //                .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-//                .Returns((Action<Entity> a) => EntityFactory.CreateNew(a));
+//                .Returns((Action<Entity> a) => Entity.Factory.CreateNew(a));
 
 //            var fsvc = new Mock<IManageFacets>();
 
 //            fsvc // expect facet creation
 //                .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-//                .Returns((Action<Facet> a) => FacetFactory.CreateNew(a));
+//                .Returns((Action<Facet> a) => Facet.Factory.CreateNew(a));
 
 //            var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
 //            var e1 = vm.Add(vm.CreateNewEntity("e1"));
