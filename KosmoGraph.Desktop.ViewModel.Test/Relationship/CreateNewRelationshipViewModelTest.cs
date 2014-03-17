@@ -56,11 +56,11 @@
             // ASSERT
             // relatinship is initialized and can be committed
 
-            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewRelationshipViewModelTitle, e1.Name, e2.Name), r1edit.Title);
-            Assert.IsTrue(r1edit.Commit.CanExecute());
+            Assert.AreEqual(string.Format(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewRelationshipViewModelTitle, e1.Name, "?"), r1edit.Title);
+            Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsTrue(r1edit.Rollback.CanExecute());
             Assert.AreSame(e1, r1edit.From);
-            Assert.AreSame(e2, r1edit.To);
+            Assert.IsNull(r1edit.To);
             Assert.AreEqual(0, r1edit.AssignedFacets.Count());
             Assert.AreEqual(0, r1edit.Properties.Count());
 

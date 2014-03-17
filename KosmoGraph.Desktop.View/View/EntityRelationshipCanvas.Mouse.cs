@@ -146,6 +146,7 @@
                 }
                 else if (this.entitiesHit.Count == 1)
                 {
+                    //this.Model.CreateNewRelationship()
                     //TODO:
                     var pendingEntity = this.Model.CreateNewEntity(); ///string.Format("Entity {0}", this.Model.Entities.Count()));
                     //pendingEntity.Top=this.pendingRelationship.ToPoint.Y;

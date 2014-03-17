@@ -15,10 +15,20 @@
     {
         #region Construction and initialization
 
-        public EditNewRelationshipViewModel(EntityViewModel from, EntityViewModel to, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
-            : base(Resources.EditNewRelationshipViewModelTitle, from, to)
+        public EditNewRelationshipViewModel(EntityViewModel from, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
+            : base(Resources.EditNewRelationshipViewModelTitle, from)
         {
             this.model = viewModel;
+            this.relationships = withRelationships;
+            this.SetDestination = new DelegateCommand<EntityViewModel>(this.SetDestinationExecuted, this.SetDestinationCanExecute);
+            this.ExecuteRollback();
+        }
+
+        public EditNewRelationshipViewModel(EntityViewModel from, EntityViewModel to, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
+            : base(Resources.EditNewRelationshipViewModelTitle, from)
+        {
+            this.model = viewModel;
+            this.toEntity = to;
             this.relationships = withRelationships;
             this.ExecuteRollback();   
         }
@@ -27,6 +37,41 @@
 
         private readonly IManageEntitiesAndRelationships relationships;
 
+        #endregion 
+
+        #region Set Destination Entity
+        
+        /// <summary>
+        /// Changing the destinatin is needed as while creating a new relationship
+        /// </summary>
+        public override EntityViewModel To
+        {
+            get
+            {
+                return this.toEntity;
+            }
+        }
+
+        private EntityViewModel toEntity;
+
+        public DelegateCommand<EntityViewModel> SetDestination { get; private set; }
+
+        private bool SetDestinationCanExecute(EntityViewModel toEntity)
+        {
+            if (this.hasAlreadyCommitted)
+                return false;
+
+            if (this.To != null && this.To.ModelItem.Id == toEntity.ModelItem.Id)
+                return false; // already assigned
+
+            return (this.From.ModelItem.Id != toEntity.ModelItem.Id);
+        }
+
+        private void SetDestinationExecuted(EntityViewModel toEntity)
+        {
+            this.toEntity = toEntity;
+        }
+        
         #endregion 
 
         #region Commit Editor
@@ -64,6 +109,9 @@
 
         override protected bool CanExecuteCommit()
         {
+            if (this.To == null || this.From == null)
+                return false;
+
             if (this.hasAlreadyCommitted)
                 return false;
 
@@ -76,7 +124,8 @@
 
         protected override void ExecuteRollback()
         {
-            base.RollbackFacets(this.model.Facets);
+            this.toEntity = null;
+            this.RollbackFacets(this.model.Facets);
         }
 
         protected override bool CanExecuteRollback()

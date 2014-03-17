@@ -945,7 +945,7 @@ namespace KosmoGraph.Desktop.ViewModel.Test
 
             // ASSERT
 
-            Assert.IsTrue(r1edit.Commit.CanExecute());
+            Assert.IsFalse(r1edit.Commit.CanExecute());
             Assert.IsTrue(r1edit.Rollback.CanExecute());
             Assert.AreEqual(0, r1edit.AssignedFacets.Count());
             Assert.AreEqual(0, r1edit.Properties.Count());

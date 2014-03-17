@@ -32,16 +32,17 @@
     sorted alphabetically by target type name
     -->
     
-    <Style x:Key="borderStyle"
-           TargetType="{x:Type Border}">
+    <Style x:Key="borderStyle" TargetType="{x:Type Border}"> <!--BasedOn="{StaticResource {x:Type Border}}">-->
         <Setter
             Property="BorderBrush"
             Value="{StaticResource foregroundBrush}"/>
     </Style>
 
-    <Style x:Key="labelBorderStyle"
-           TargetType="{x:Type Border}"
-           BasedOn="{StaticResource borderStyle}">
+    <!-- 
+    Any label is underlined by a border, painted with foregound brush very narrowly and 
+    having a 5 px margin from the undelined item
+    -->
+    <Style x:Key="labelBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource borderStyle}">
         <Setter
             Property="BorderThickness"
             Value="0,0,0,0.5"/>
@@ -50,13 +51,18 @@
             Value="0,0,0,5"/>
     </Style>
 
+    <!-- 
+    Any button has a label colord with the foreground brush an having a rectengular border.
+    The border has no background and is one pixel wide.
+    The padding 
+    -->
     <Style x:Key="buttonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="FontFamily"
                 Value="Segoe UI"/>
         <Setter Property="Foreground"
             Value="{StaticResource foregroundBrush}"/>
         <Setter Property="Padding"
-            Value="2"/>
+            Value="6,2,6,2"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate 

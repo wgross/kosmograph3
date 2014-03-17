@@ -17,18 +17,17 @@
             this.titleFormat = withTitleFormat;
         }
 
-        public EditRelationshipViewModelBase(string withTitleFormat, EntityViewModel from, EntityViewModel to)
+        public EditRelationshipViewModelBase(string withTitleFormat, EntityViewModel from)
         {
             this.titleFormat = withTitleFormat;
             this.From = from;
-            this.To = to;
         }
 
-        private string titleFormat;
+        private readonly string titleFormat;
 
         public EntityViewModel From { get; private set; }
 
-        public EntityViewModel To { get; private set; }
+        public abstract EntityViewModel To { get; }
 
         public bool EnableCommit { get; set; }
 
@@ -38,6 +37,9 @@
         {
             get
             {
+                if (this.To == null)
+                    return string.Format(this.titleFormat, this.From.Name, "?");
+                
                 return string.Format(this.titleFormat, this.From.Name, this.To.Name);
             }
         }

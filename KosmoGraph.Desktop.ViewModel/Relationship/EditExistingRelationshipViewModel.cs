@@ -18,7 +18,7 @@ namespace KosmoGraph.Desktop.ViewModel
         #region Construction and initialization of this instance 
 
         public EditExistingRelationshipViewModel(RelationshipViewModel edited, IManageEntitiesAndRelationships withRelationships)
-            : base(Resources.EditRelationshipViewModelTitle, edited.From.Entity, edited.To.Entity)
+            : base(Resources.EditRelationshipViewModelTitle, edited.From.Entity)
         {
             this.Edited = edited;
             this.relationships = withRelationships;
@@ -28,6 +28,17 @@ namespace KosmoGraph.Desktop.ViewModel
         private readonly IManageEntitiesAndRelationships relationships;
 
         public RelationshipViewModel Edited { get; private set; }
+
+        /// <summary>
+        /// An existing relatinship always has an unchangeable destination entity.
+        /// </summary>
+        public override EntityViewModel To
+        {
+            get
+            {
+                return this.Edited.To.Entity;
+            }
+        }
 
         #endregion 
 

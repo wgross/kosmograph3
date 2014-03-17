@@ -213,6 +213,11 @@
             return newEntity;
         }
 
+        public EditNewRelationshipViewModel CreatePendingRelationship(EntityViewModel from)
+        {
+            return new EditNewRelationshipViewModel(from, this, this.EntityRelationshipService);
+        }
+
         public EditNewRelationshipViewModel CreateNewRelationship(EntityViewModel from, EntityViewModel to)
         {
             return new EditNewRelationshipViewModel(from, to, this, this.EntityRelationshipService);
@@ -399,5 +404,7 @@
             this.Entities.ForEach(e => e.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
             this.Relationships.ForEach(r => r.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
         }
+
+        
     }
 }
