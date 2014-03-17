@@ -319,7 +319,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <Rectangle 
-                                                        Stroke="{StaticResource activeForegroundColor}" 
+                                                        Stroke="{StaticResource activeBackgroundBrush}" 
                                                         StrokeThickness="1" 
                                                         StrokeDashArray="1 2" 
                                                         Margin="14,0,0,0" 
@@ -354,7 +354,7 @@
                             Value="False">
                             <Setter 
                                 Property="TextElement.Foreground"
-                                Value="{StaticResource disabledColor}">
+                                Value="{StaticResource disabledBrush}">
                             </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>

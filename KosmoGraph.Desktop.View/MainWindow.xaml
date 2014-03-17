@@ -107,15 +107,8 @@
                             DockPanel.Dock="Bottom"
                             Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
                             CommandParameter="{Binding .}">Layout</Button>
-                <view:EntityRelationshipControl x:Name="entityRelationshipView">
-                        <view:EntityRelationshipControl.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.MergedDictionaries>
-                                    <ResourceDictionary Source="./Resources/EntityRelationshipResources.xaml" />
-                                </ResourceDictionary.MergedDictionaries>
-                            </ResourceDictionary>
-                        </view:EntityRelationshipControl.Resources>
-                    <view:EntityRelationshipControl>
+                    <view:EntityRelationshipControl x:Name="entityRelationshipView">
+                        <view:EntityRelationshipControl>
                         <view:EntityRelationshipControl.InputBindings>
                             <KeyBinding
                                 Key="Insert"

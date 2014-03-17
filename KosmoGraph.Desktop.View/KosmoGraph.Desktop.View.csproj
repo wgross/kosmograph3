@@ -110,7 +110,7 @@
     <Compile Include="ViewModel\Layout\SpringEmbedderLayout.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="View\ConnectorControl.cs" />
-    <Compile Include="View\ListBoxEx.cs" />
+    <Compile Include="Common\ListBoxEx.cs" />
     <Compile Include="Common\NullToVisibilityConverter.cs" />
     <Compile Include="Common\DependencyObjectExtensions.cs" />
     <Compile Include="View\EntityDragThumb.cs" />
@@ -147,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\EntityRelationshipResources.xaml">
+    <Page Include="View\EntityRelationshipResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

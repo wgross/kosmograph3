@@ -5,7 +5,7 @@
     xmlns:kdvm="clr-namespace:KosmoGraph.Desktop.ViewModel;assembly=KosmoGraph.Desktop.ViewModel">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="./CommonResources.xaml" />
+        <ResourceDictionary Source="../Resources/CommonResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <!--Entity Relaionship Diagram-->
