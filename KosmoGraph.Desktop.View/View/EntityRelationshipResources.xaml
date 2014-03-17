@@ -38,8 +38,7 @@
     An entity in the diagram is a box having the entities name as a Label centered inside.
     On hovering the entity with the mouse a tooltip opens with its facet properties
     -->
-    <Style x:Key="entityInDiagramStyle"
-        TargetType="{x:Type ContentPresenter}">
+    <Style x:Key="entityInDiagramStyle" TargetType="{x:Type ContentPresenter}">
         <Setter Property="Canvas.Top"
             Value="{Binding Top}" />
         <Setter Property="Canvas.Left"
@@ -224,8 +223,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="relationshipInDiagramStyle"
-        TargetType="{x:Type ContentPresenter}">
+    <!--
+    A relationship in the digram is representetd by a line from sources entities box to a destinatin entities box
+    On hovering the relatinship a tooltip with the relationships facet is opened.
+    -->
+    <Style x:Key="relationshipInDiagramStyle" TargetType="{x:Type ContentPresenter}">
         <!--
         A connection occupies in the diagram the size of the rectangle between the the two connection points 
         -->
