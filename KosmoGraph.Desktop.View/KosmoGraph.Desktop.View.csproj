@@ -90,14 +90,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Dialog\Core\DialogContainerCommands.cs" />
-    <Compile Include="Dialog\Core\DialogContainerControl.xaml.cs">
+    <Compile Include="Dialog\Container\DialogContainerCommands.cs" />
+    <Compile Include="Dialog\Container\DialogContainerControl.xaml.cs">
       <DependentUpon>DialogContainerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\DialogAction.cs" />
     <Compile Include="Dialog\KosmoGraphDialogService.cs" />
-    <Compile Include="Dialog\Core\PanelDialogExtensions.cs" />
-    <Compile Include="Dialog\Core\DialogContainerViewModel.cs" />
+    <Compile Include="Dialog\Container\PanelDialogExtensions.cs" />
+    <Compile Include="Dialog\Container\DialogContainerViewModel.cs" />
     <Compile Include="Dialog\ViewModel\MessageDialogViewModel.cs" />
     <Compile Include="Dialog\ViewModel\SelectDatabaseViewModel.cs" />
     <Compile Include="EntityRelationshipModelCommands.cs" />
@@ -108,12 +108,12 @@
     <Compile Include="ViewModel\Layout\LayoutEdgeExtensions.cs" />
     <Compile Include="ViewModel\Layout\LayoutNodeExtensions.cs" />
     <Compile Include="ViewModel\Layout\SpringEmbedderLayout.cs" />
-    <Compile Include="View\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="View\ConnectorControl.cs" />
     <Compile Include="View\ListBoxEx.cs" />
-    <Compile Include="View\NullToVisibilityConverter.cs" />
-    <Compile Include="View\DependencyObjectExtensions.cs" />
-    <Compile Include="View\DragThumb.cs" />
+    <Compile Include="Common\NullToVisibilityConverter.cs" />
+    <Compile Include="Common\DependencyObjectExtensions.cs" />
+    <Compile Include="View\EntityDragThumb.cs" />
     <Compile Include="View\EntityRelationshipCanvas.cs" />
     <Compile Include="View\EntityRelationshipCanvas.Mouse.cs" />
     <Compile Include="View\EntityRelationshipControl.xaml.cs">
@@ -121,9 +121,9 @@
     </Compile>
     <Compile Include="View\EntityRelationshipStyleSelector.cs" />
     <Compile Include="View\RelationshipPathConverter.cs" />
-    <Compile Include="View\AttachedActualSizeBindingBehaviour.cs" />
+    <Compile Include="Common\AttachedActualSizeBindingBehaviour.cs" />
     <Compile Include="View\RubberbandSelectionAdorner.cs" />
-    <Page Include="Dialog\Core\DialogContainerControl.xaml">
+    <Page Include="Dialog\Container\DialogContainerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,7 +139,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Dialog\Core\DialogContainerResources.xaml">
+    <Page Include="Dialog\Container\DialogContainerResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

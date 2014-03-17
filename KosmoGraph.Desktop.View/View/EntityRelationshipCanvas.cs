@@ -13,7 +13,7 @@
     {
         public EntityRelationshipCanvas()
         {
-            this.AddHandler(DragEntityThumb.EntityDraggedEvent,new RoutedEventHandler(this.EntityDragged));
+            this.AddHandler(EntityDragThumb.EntityDraggedEvent,new RoutedEventHandler(this.EntityDragged));
         }
 
         private EntityRelationshipViewModel Model

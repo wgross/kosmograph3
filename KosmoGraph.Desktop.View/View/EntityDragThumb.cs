@@ -6,22 +6,22 @@
     using System.Windows.Controls.Primitives;
     using System.Windows.Media;
 
-    public class DragEntityThumb : Thumb
+    public class EntityDragThumb : Thumb
     {
         public static readonly RoutedEvent EntityDraggedEvent;
 
-        static DragEntityThumb()
+        static EntityDragThumb()
         {
             EntityDraggedEvent = EventManager.RegisterRoutedEvent(
                     "EntityDragged",
                      RoutingStrategy.Bubble,
                      typeof(RoutedEventHandler),
-                     typeof(DragEntityThumb));
+                     typeof(EntityDragThumb));
         }
 
-        public DragEntityThumb()
+        public EntityDragThumb()
         {
-            base.DragDelta += new DragDeltaEventHandler(DragEntityThumb_DragDelta);
+            base.DragDelta += new DragDeltaEventHandler(EntityDragThumb_DragDelta);
         }
 
         public event RoutedEventHandler EntityDragged
@@ -36,7 +36,7 @@
             }
         }
 
-        void DragEntityThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        void EntityDragThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             var draggedItem = this.DataContext as EntityViewModel;
             
@@ -58,7 +58,7 @@
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
-            this.RaiseEvent(new RoutedEventArgs(DragEntityThumb.EntityDraggedEvent, this));
+            this.RaiseEvent(new RoutedEventArgs(EntityDragThumb.EntityDraggedEvent, this));
 
         }
     }

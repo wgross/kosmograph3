@@ -115,7 +115,7 @@
                         view:AttachedActualSizeBindingBehaviour.Observe="True"
                         view:AttachedActualSizeBindingBehaviour.ObservedActualWidth="{Binding ActualWidth, Mode=OneWayToSource}"
                         view:AttachedActualSizeBindingBehaviour.ObservedActualHeight="{Binding ActualHeight, Mode=OneWayToSource}">
-                        <view:DragEntityThumb 
+                        <view:EntityDragThumb 
                             x:Name="PART_DragThumb"
                             Cursor="SizeAll" />
                         <Border 
@@ -385,10 +385,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type view:DragEntityThumb}">
+    <Style TargetType="{x:Type view:EntityDragThumb}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type view:DragEntityThumb}">
+                <ControlTemplate TargetType="{x:Type view:EntityDragThumb}">
                     <Rectangle Fill="Transparent" />
                 </ControlTemplate>
             </Setter.Value>
