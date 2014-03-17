@@ -57,6 +57,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Resources/CommonResources.xaml" />
+                <ResourceDictionary Source="./Resources/EntityRelationshipResources.Tag.xaml" />
                 <ResourceDictionary Source="./Resources/EntityRelationshipResources.xaml" />
                 <ResourceDictionary Source="./Resources/DialogResources.xaml" />                
             </ResourceDictionary.MergedDictionaries>

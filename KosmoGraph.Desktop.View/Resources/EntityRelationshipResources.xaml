@@ -6,7 +6,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./CommonResources.xaml" />
-        <ResourceDictionary Source="./EntityRelationshipResources.Tag.xaml" />
+        <!--<ResourceDictionary Source="./EntityRelationshipResources.Tag.xaml" />-->
     </ResourceDictionary.MergedDictionaries>
     
     <!--Entity Relaionship Diagram-->
