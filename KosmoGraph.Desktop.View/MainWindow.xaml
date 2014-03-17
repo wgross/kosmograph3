@@ -57,8 +57,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Resources/CommonResources.xaml" />
-                <ResourceDictionary Source="./Resources/EntityRelationshipResources.Tag.xaml" />
-                <ResourceDictionary Source="./Resources/EntityRelationshipResources.xaml" />
                 <ResourceDictionary Source="./Resources/DialogResources.xaml" />                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -110,6 +108,13 @@
                             Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
                             CommandParameter="{Binding .}">Layout</Button>
                 <view:EntityRelationshipControl x:Name="entityRelationshipView">
+                        <view:EntityRelationshipControl.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary Source="./Resources/EntityRelationshipResources.xaml" />
+                                </ResourceDictionary.MergedDictionaries>
+                            </ResourceDictionary>
+                        </view:EntityRelationshipControl.Resources>
                     <view:EntityRelationshipControl>
                         <view:EntityRelationshipControl.InputBindings>
                             <KeyBinding
@@ -129,6 +134,13 @@
                     Grid.Column="1"
                     LastChildFill="True"
                     Margin="5,0,0,0">
+                    <DockPanel.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="./Resources/EntityRelationshipResources.Tag.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                    </DockPanel.Resources>
                 <Border
                     DockPanel.Dock="Top"
                     Style="{StaticResource labelBorderStyle}">
