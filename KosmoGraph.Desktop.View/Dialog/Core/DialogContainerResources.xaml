@@ -6,7 +6,7 @@
                     xmlns:kddvm="clr-namespace:KosmoGraph.Desktop.Dialog.ViewModel">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="./CommonResources.xaml" />
+        <ResourceDictionary Source="../../Resources/CommonResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Borders in dialogs -->
