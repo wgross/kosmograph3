@@ -12,12 +12,14 @@
 
     public abstract class EditRelationshipViewModelBase : EditFacetedViewModelBase
     {
-        public EditRelationshipViewModelBase(string withTitleFormat)
+        public EditRelationshipViewModelBase(EntityRelationshipViewModel model, string withTitleFormat)
+            :base(model)
         {
             this.titleFormat = withTitleFormat;
         }
 
         public EditRelationshipViewModelBase(string withTitleFormat, EntityViewModel from)
+            : base(from.Model)
         {
             this.titleFormat = withTitleFormat;
             this.From = from;

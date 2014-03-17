@@ -18,7 +18,7 @@ using System.Threading.Tasks;
         #region Construction and Initalization of this instance
 
         public EditExistingFacetViewModel(FacetViewModel edited, IManageFacets withFacets)
-            : base(Resources.EditExistingTagViewModelTitle)
+            : base(edited.Model, Resources.EditExistingTagViewModelTitle)
         {
             this.Edited = edited;
             this.facets = withFacets;

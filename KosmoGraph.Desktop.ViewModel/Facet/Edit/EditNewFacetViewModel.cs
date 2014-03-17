@@ -21,9 +21,8 @@ namespace KosmoGraph.Desktop.ViewModel
         #region Construction and initialization of this instance
 
         public EditNewFacetViewModel(EntityRelationshipViewModel withViewModel, IManageFacets withFacets)
-            : base(Resources.EditNewFacetViewModelTitle)
+            : base(withViewModel, Resources.EditNewFacetViewModelTitle)
         {
-            this.model = withViewModel;
             this.facets = withFacets;
             this.ExecuteRollback();
         }
@@ -31,8 +30,6 @@ namespace KosmoGraph.Desktop.ViewModel
         private bool hasAlreadyCommitted = false;
 
         private readonly IManageFacets facets;
-
-        private readonly EntityRelationshipViewModel model;
 
         #endregion
 
@@ -103,7 +100,7 @@ namespace KosmoGraph.Desktop.ViewModel
                     {
                         try
                         {
-                            this.model.Add(f);
+                            this.Model.Add(f);
                         }
                         catch (Exception ex)
                         {

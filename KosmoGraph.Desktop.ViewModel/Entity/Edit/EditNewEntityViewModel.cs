@@ -16,15 +16,12 @@ namespace KosmoGraph.Desktop.ViewModel
     {
         #region Construction andinitialization of this instance 
         
-        public EditNewEntityViewModel(EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withEntities)
-            : base(Resources.EditExistingEntityViewModelTitle)
+        public EditNewEntityViewModel(EntityRelationshipViewModel model, IManageEntitiesAndRelationships withEntities)
+            : base(model, Resources.EditExistingEntityViewModelTitle)
         {
-            this.model = viewModel;
             this.entities = withEntities;
             this.ExecuteRollback();
         }
-
-        private readonly EntityRelationshipViewModel model;
 
         private readonly IManageEntitiesAndRelationships entities;
 
@@ -66,7 +63,7 @@ namespace KosmoGraph.Desktop.ViewModel
                 })
                 .EndWith(e =>
                 {
-                    this.model.Add(e);
+                    this.Model.Add(e);
                 });
         }
 
@@ -94,7 +91,7 @@ namespace KosmoGraph.Desktop.ViewModel
         {
             // reset values to default state
             base.Name = Resources.EditNewEntityViewModelNameDefault;
-            base.RollbackFacets(this.model.Facets);
+            base.RollbackFacets(this.Model.Facets);
         }
 
         

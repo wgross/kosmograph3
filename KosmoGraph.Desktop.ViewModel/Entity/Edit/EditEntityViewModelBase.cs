@@ -16,7 +16,8 @@ namespace KosmoGraph.Desktop.ViewModel
     {
         #region Construction and Initialization of this instance
 
-        public EditEntityViewModelBase(string withTitleFormat)
+        public EditEntityViewModelBase(EntityRelationshipViewModel model, string withTitleFormat)
+            : base(model)
         {
             this.titleFormat = withTitleFormat;
             //this.assignTagCommand = new DelegateCommand<TagViewModel>(this.AssignTagExecuted);

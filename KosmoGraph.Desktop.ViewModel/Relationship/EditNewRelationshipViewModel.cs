@@ -10,6 +10,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
 
     public class EditNewRelationshipViewModel : EditRelationshipViewModelBase
     {
@@ -40,7 +41,42 @@
         #endregion 
 
         #region Set Destination Entity
-        
+
+        #region Destination point
+
+        public Point ToPoint
+        {
+            get
+            {
+                return this.toPoint;
+            }
+            set
+            {
+                if (this.toPoint == value)
+                    return;
+
+                var tmp = this.toPoint;
+                this.toPoint = value;
+                this.RaisePropertyChanged(() => this.ToPoint);
+                //this.UpdateArea();
+
+                //double deltaWidth = 0.0;
+                //double deltaHeight = 0.0;
+
+                //if (this.Area.Width - this.MinSize.Width < 0.0)
+                //    deltaWidth = this.toPoint.X - tmp.X;
+
+                //if (this.Area.Height - this.MinSize.Height < 0.0)
+                //    deltaHeight = this.toPoint.Y - tmp.Y;
+
+                //this.From.MoveConnectionPoint(deltaHeight, deltaWidth);
+            }
+        }
+
+        private Point toPoint;
+
+        #endregion
+
         /// <summary>
         /// Changing the destinatin is needed as while creating a new relationship
         /// </summary>

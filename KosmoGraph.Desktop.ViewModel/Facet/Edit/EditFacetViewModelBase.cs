@@ -15,7 +15,8 @@ namespace KosmoGraph.Desktop.ViewModel
     {
         #region Construction and initialization of this instance 
 
-        public EditFacetViewModelBase(string withTitleFormat)
+        public EditFacetViewModelBase(EntityRelationshipViewModel model, string withTitleFormat)
+            :base(model)
         {
             this.AddPropertyDefinition = new DelegateCommand(this.AddPropertyDefinitionExecuted, this.CanExecuteAddPropertyDefinition);
             this.RemovePropertyDefinition = new DelegateCommand<IEditPropertyDefinition>(this.RemovePropertyDefinitionExecuted, this.CanExecuteRemovePropertyDefinition);

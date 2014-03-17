@@ -92,7 +92,6 @@
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetAtExistingRelationshipTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetViewModelTest.cs" />
-    <Compile Include="Relationship\CreateNewRelationshipViewModelTest.cs" />
     <Compile Include="Relationship\RemoveAssignedRelationshipFacetTest.cs" />
     <Compile Include="Relationship\RemoveRelationshipFromViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipInteractivelyTest.cs" />

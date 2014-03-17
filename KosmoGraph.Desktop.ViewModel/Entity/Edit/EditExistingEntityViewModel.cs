@@ -19,7 +19,7 @@ namespace KosmoGraph.Desktop.ViewModel
         #region Construction and Initialization of this instance
 
         public EditExistingEntityViewModel(EntityViewModel edited, IManageEntitiesAndRelationships withEntities)
-            : base(Resources.EditExistingEntityViewModelTitle)
+            : base(edited.Model,Resources.EditExistingEntityViewModelTitle)
         {
             this.Edited = edited;
             this.entities = withEntities;

@@ -19,31 +19,32 @@
         {
             get 
             { 
-                return this.sourceConnector; 
+                return this.sourceConnectorControl; 
             }
             set
             {
-                if (this.sourceConnector != value)
+                if (this.sourceConnectorControl != value)
                 {
-                    this.sourceConnector = value;
+                    this.sourceConnectorControl = value;
                     
-                    Rect rectangleBounds = sourceConnector.TransformToVisual(this).TransformBounds(new Rect(this.sourceConnector.RenderSize));
+                    Rect rectangleBounds = sourceConnectorControl.TransformToVisual(this).TransformBounds(new Rect(this.sourceConnectorControl.RenderSize));
                     Point point = new Point(rectangleBounds.Left + (rectangleBounds.Width / 2), rectangleBounds.Bottom + (rectangleBounds.Height / 2));
 
-                    var entityConnectorViewModel = this.sourceConnector.DataContext as EntityViewModel;
-                    this.entitiesHit.Add(entityConnectorViewModel);
+                    var sourceEntityViewModel = this.sourceConnectorControl.DataContext as EntityViewModel;
+                    this.entitiesHit.Add(sourceEntityViewModel);
 
                     // the relationship is temporariy fake-added to the Items (not to the model itself)
                     // to be drawn on the canvas
-                    //this.pendingRelationship = new RelationshipViewModel(entityConnectorViewModel.CentralConnector, point);
-                    //entityConnectorViewModel.Model.Items.Add(this.pendingRelationship);
+                    this.pendingRelationship = this.Model.CreatePendingRelationship(sourceEntityViewModel);
+                    this.pendingRelationship.ToPoint = point;
+                    this.Model.Items.Add(this.pendingRelationship);
                 }
             }
         }
 
-        private ConnectorControl sourceConnector = null;
+        private ConnectorControl sourceConnectorControl = null;
 
-        private RelationshipViewModel pendingRelationship;
+        private EditNewRelationshipViewModel pendingRelationship;
 
         #endregion 
 
@@ -133,15 +134,15 @@
         {
             base.OnMouseUp(e);
 
-            if (sourceConnector != null)
+            if (sourceConnectorControl != null)
             {
                 // the relatinship is removed from the items. It is added regularily
                 // by the command handler
-                this.pendingRelationship.From.Entity.Model.Items.Remove(this.pendingRelationship);
+                //this.pendingRelationship.From.Model.Items.Remove(this.pendingRelationship);
 
                 if (this.entitiesHit.Count == 2)
                 {
-                    this.pendingRelationship.To = this.entitiesHit.Last().CentralConnector;
+                    this.pendingRelationship.SetDestination.Execute(this.entitiesHit.Last());
                     EntityRelationshipModelCommands.CreateRelationship.Execute(this.pendingRelationship,this);
                 }
                 else if (this.entitiesHit.Count == 1)
@@ -158,7 +159,7 @@
                 
             }
             this.entitiesHit = new List<EntityViewModel>();
-            this.sourceConnector = null;
+            this.sourceConnectorControl = null;
         }
 
         #endregion

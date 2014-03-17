@@ -14,7 +14,8 @@ namespace KosmoGraph.Desktop.ViewModel
     {
         #region Construction and initializaton of this instance 
 
-        public EditFacetedViewModelBase()
+        public EditFacetedViewModelBase(EntityRelationshipViewModel model)
+            : base(model)
         {
             this.AssignFacet = new DelegateCommand<FacetViewModel>(this.AssignFacetExecuted);
             this.UnassignFacet = new DelegateCommand<EditAssignedFacetViewModelBase>(this.UnassignFacetExecuted);

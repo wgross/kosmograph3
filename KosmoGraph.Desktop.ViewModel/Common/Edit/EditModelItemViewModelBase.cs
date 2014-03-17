@@ -9,9 +9,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public abstract class EditModelItemViewModelBase : NotificationObject
+    public abstract class EditModelItemViewModelBase : ModelItemViewModelBase
     {
-        public EditModelItemViewModelBase()
+        public EditModelItemViewModelBase(EntityRelationshipViewModel model)
+            : base(model)
         {
             this.Commit = new DelegateCommand(this.ExecuteCommit, this.CanExecuteCommit);
             this.Rollback = new DelegateCommand(this.ExecuteRollback, this.CanExecuteRollback);
