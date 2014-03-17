@@ -90,11 +90,12 @@
     <Compile Include="Facet\ToggleFacetVisiblityTogglesModelItemVisibilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\CreateNewEntityViewModelTest.cs" />
+    <Compile Include="Relationship\CreateNewRelationshipFacetAtExistingRelationshipTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipFacetViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipViewModelTest.cs" />
     <Compile Include="Relationship\RemoveAssignedRelationshipFacetTest.cs" />
     <Compile Include="Relationship\RemoveRelationshipFromViewModelTest.cs" />
-    <Compile Include="Relationship\CreateNewRelatinshipInteractivelyTest.cs" />
+    <Compile Include="Relationship\CreateNewRelationshipInteractivelyTest.cs" />
     <Compile Include="Relationship\UpdateExistingRelationshipTest.cs" />
     <Compile Include="CreateNewEntityFacetViewModelTest.cs" />
     <Compile Include="Facet\CreateNewFacetViewModelTest.cs" />

@@ -12,7 +12,7 @@
     using System.Threading.Tasks;
 
     [TestClass]
-    public class CreateNewRelatinshipInteractivelyTest
+    public class CreateNewRelationshipInteractivelyTest
     {
         private IEnumerable<Facet> facets;
         private Mock<IManageFacets> fsvc;

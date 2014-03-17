@@ -218,10 +218,10 @@
             return new EditNewRelationshipViewModel(from, this, this.EntityRelationshipService);
         }
 
-        public EditNewRelationshipViewModel CreateNewRelationship(EntityViewModel from, EntityViewModel to)
-        {
-            return new EditNewRelationshipViewModel(from, to, this, this.EntityRelationshipService);
-        }
+        //public EditNewRelationshipViewModel CreateNewRelationship(EntityViewModel from, EntityViewModel to)
+        //{
+        //    return new EditNewRelationshipViewModel(from, to, this, this.EntityRelationshipService);
+        //}
 
         private RelationshipViewModel CreateRelationshipFromModelItem(Relationship modelItem)
         {
