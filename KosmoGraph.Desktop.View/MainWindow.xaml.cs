@@ -273,18 +273,18 @@
         }
 
         private void DeleteEntityExecuted(object sender, ExecutedRoutedEventArgs args)
-        {   
-            //if(args.Parameter is ObservableCollection<object>) // called from within dialog
-            //{
-            //    var first = ((ObservableCollection<object>)args.Parameter).FirstOrDefault() as EditEntityViewModel;
-            //    if(first != null)
-            //        this.DeleteEntity(first.Edited);
-            //}
+        {
+            if (args.Parameter is ObservableCollection<object>) // called from within dialog
+            {
+                var first = ((ObservableCollection<object>)args.Parameter).FirstOrDefault() as EditExistingEntityViewModel;
+                if (first != null)
+                    this.DeleteEntity(first.Edited);
+            }
         }
 
         private void DeleteEntity(EntityViewModel entity)
         {
-            entity.Model.Remove(entity);
+            this.Model.Remove(entity);
         }
 
         #endregion 
