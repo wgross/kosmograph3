@@ -31,12 +31,19 @@
         {
             this.InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+            this.Activated += MainWindow_Activated;
+        }
+
+        void MainWindow_Activated(object sender, EventArgs e)
+        {
+            this.CreateNewModelFromStore();
+            if (this.Model == null)
+                Application.Current.Shutdown();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.Model = EntityRelationshipViewModel.CreateNewFromStore(new EfModelDatabase());
-            //this.Model.AddDummyData();
+            //this.CreateNewModelFromStore();
         }
 
         public EntityRelationshipViewModel Model
@@ -399,7 +406,7 @@
 
             if (result.HasValue && result.Value)
                 this.Model = new EntityRelationshipViewModelFactory().CreateNewFromDatabaseName(selectedDatabase);
-
+           
             //if(model!=null)
             //    this.Model = model;
             //this.Model.StartLayout();

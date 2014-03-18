@@ -94,9 +94,10 @@
         {
             // ARRANGE
 
-            this.fsvc // validate facet name
-                .Setup(_=>_.ValidateFacet(It.Is<Facet>(f => f.Name == "f1")))
-                .Returns(Task.FromResult(true));
+            //TODO:ValidateFacet
+            //this.fsvc // validate facet name
+            //    .Setup(_=>_.ValidateFacet(It.Is<Facet>(f => f.Name == "f1")))
+            //    .Returns(Task.FromResult(true));
                 
             var f1edit = vm.CreateNewFacet();
 
@@ -121,7 +122,7 @@
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
-            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<Facet>()), Times.Once);
+            //TODO:ValidateFacet//this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<Facet>()), Times.Once);
         }
 
         [TestMethod]
