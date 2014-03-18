@@ -87,6 +87,9 @@
             Assert.IsTrue(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(1)));
             Assert.IsFalse(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(0)));
             Assert.AreEqual(0, this.vm.Relationships.Count());
+            Assert.AreEqual(3, this.vm.Items.Count());
+            Assert.AreSame(r1edit, this.vm.Items.Last());
+            
 
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
@@ -121,7 +124,9 @@
             Assert.IsFalse(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(1)));
             Assert.IsFalse(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(0)));
             Assert.AreEqual(0, this.vm.Relationships.Count());
-
+            Assert.AreEqual(3, this.vm.Items.Count());
+            Assert.AreSame(r1edit, this.vm.Items.Last());
+            
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.ersvc.VerifyAll();
@@ -167,8 +172,9 @@
             Assert.AreEqual(1, this.vm.Relationships.Count());
             Assert.AreSame(this.vm.Entities.ElementAt(0), this.vm.Relationships.Single().From.Entity);
             Assert.AreSame(this.vm.Entities.ElementAt(1), this.vm.Relationships.Single().To.Entity);
+            Assert.AreEqual(3, this.vm.Items.Count());
             Assert.AreSame(this.vm.Items.ElementAt(2), this.vm.Relationships.Single());
-
+            
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.ersvc.VerifyAll();
@@ -206,6 +212,7 @@
             Assert.IsTrue(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(1)));
             Assert.IsFalse(r1edit.SetDestination.CanExecute(this.vm.Entities.ElementAt(0)));
             Assert.AreEqual(0, this.vm.Relationships.Count());
+            Assert.AreEqual(2, this.vm.Items.Count());
 
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
@@ -254,6 +261,7 @@
             Assert.AreEqual(1, this.vm.Relationships.Count());
             Assert.AreSame(this.vm.Entities.ElementAt(0), this.vm.Relationships.Single().From.Entity);
             Assert.AreSame(this.vm.Entities.ElementAt(1), this.vm.Relationships.Single().To.Entity);
+            Assert.AreEqual(3, this.vm.Items.Count());
             Assert.AreSame(this.vm.Items.ElementAt(2), this.vm.Relationships.Single());
 
             this.fsvc.VerifyAll();

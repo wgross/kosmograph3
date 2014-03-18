@@ -19,22 +19,20 @@
         public EditNewRelationshipViewModel(EntityViewModel from, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
             : base(Resources.EditNewRelationshipViewModelTitle, from)
         {
-            this.model = viewModel;
             this.relationships = withRelationships;
             this.SetDestination = new DelegateCommand<EntityViewModel>(this.SetDestinationExecuted, this.SetDestinationCanExecute);
             this.ExecuteRollback();
+            this.Model.Items.Add(this);
         }
 
-        public EditNewRelationshipViewModel(EntityViewModel from, EntityViewModel to, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
-            : base(Resources.EditNewRelationshipViewModelTitle, from)
-        {
-            this.model = viewModel;
-            this.toEntity = to;
-            this.relationships = withRelationships;
-            this.ExecuteRollback();   
-        }
-
-        private readonly EntityRelationshipViewModel model;
+        //public EditNewRelationshipViewModel(EntityViewModel from, EntityViewModel to, EntityRelationshipViewModel viewModel, IManageEntitiesAndRelationships withRelationships)
+        //    : base(Resources.EditNewRelationshipViewModelTitle, from)
+        //{
+        //    this.model = viewModel;
+        //    this.toEntity = to;
+        //    this.relationships = withRelationships;
+        //    this.ExecuteRollback();   
+        //}
 
         private readonly IManageEntitiesAndRelationships relationships;
 
@@ -198,7 +196,12 @@
                 .CompletePartialRelationship( partial, this.To.ModelItem)
                 .EndWith(succeeded:result =>  // TODO: Handle eror and cancel
                 {
-                    this.model.Add(result.Relationship, result.From, result.To);
+                    this.Model.Items
+                        .OfType<EditNewRelationshipViewModel>()
+                        .ToList()
+                        .ForEach(i => this.Model.Items.Remove(i));
+
+                    this.Model.Add(result.Relationship, result.From, result.To);
                 });
         }
 
@@ -220,7 +223,12 @@
         protected override void ExecuteRollback()
         {
             this.toEntity = null;
-            this.RollbackFacets(this.model.Facets);
+            this.RollbackFacets(this.Model.Facets);
+            this.Model.Items
+                        .OfType<EditNewRelationshipViewModel>()
+                        .ToList()
+                        .ForEach(i => this.Model.Items.Remove(i));
+            // might not be correct: visual representation is removed from diagram to early
         }
 
         protected override bool CanExecuteRollback()

@@ -72,6 +72,7 @@
     <Compile Include="Common\EditFacetedViewModelBase.cs" />
     <Compile Include="Common\Edit\EditAssignedFacetViewModelBase.cs" />
     <Compile Include="Common\Edit\EditExistingAssignedFacetViewModel.cs" />
+    <Compile Include="Contracts\IManageDiagramItems.cs" />
     <Compile Include="EntityRelationshipViewModelFactory.cs" />
     <Compile Include="Entity\Edit\EditAssignedEntityTagViewModel.cs" />
     <Compile Include="EditAssignedRelationshipTagViewModel.cs" />
@@ -93,8 +94,8 @@
     <Compile Include="Facet\EditPropertyDefinitionViewModelBase.cs" />
     <Compile Include="Property\IPropertyValue.cs" />
     <Compile Include="Property\IPropertyDefinition.cs" />
-    <Compile Include="Relationship\EditNewRelationshipViewModel.cs" />
-    <Compile Include="Relationship\EditExistingRelationshipViewModel.cs" />
+    <Compile Include="Relationship\Edit\EditNewRelationshipViewModel.cs" />
+    <Compile Include="Relationship\Edit\EditExistingRelationshipViewModel.cs" />
     <Compile Include="Facet\Edit\EditFacetViewModelBase.cs" />
     <Compile Include="Facet\Edit\EditExistingFacetViewModel.cs" />
     <Compile Include="EntityConnectorViewModel.cs" />
@@ -108,7 +109,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\PropertyDefinitionViewModel.cs" />
     <Compile Include="Property\PropertyValueViewModel.cs" />
-    <Compile Include="Relationship\EditRelationshipViewModelBase.cs" />
+    <Compile Include="Relationship\Edit\EditRelationshipViewModelBase.cs" />
     <Compile Include="Relationship\RelationshipViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

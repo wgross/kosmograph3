@@ -71,22 +71,31 @@
 
         #region Handle CreateRelationship command
 
-        private void CreateRelationshipCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        private void CreateRelationshipWithEntitiesCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
+            var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
+            if (relationshipDialogViewModel == null)
+            {
+                args.CanExecute = false;
+                return;
+            }
+
+            if (relationshipDialogViewModel.From == null || relationshipDialogViewModel.To == null)
+            {
+                args.CanExecute = false;
+                return;
+            }
+
             args.CanExecute = true;
         }
 
-        private void CreateRelationshipExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void CreateRelationshipWithEntitiesExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            //var relationshipDialogViewModel = new EditRelationshipViewModel(args.Parameter as RelationshipViewModel);
-            //var committed = this.rootPanel.ShowDialog(relationshipDialogViewModel,
-            //   DialogActionBuilder.Ok("ok", relationshipDialogViewModel.Commit),
-            //   DialogActionBuilder.Cancel("cancel", relationshipDialogViewModel.Rollback));
+            var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
 
-            //if (committed.HasValue && committed.Value)
-            //{
-            //    var adedd = this.Model.Add(args.GetParameter<RelationshipViewModel>());
-            //}
+            this.rootPanel.ShowDialog(relationshipDialogViewModel,
+               DialogActionBuilder.Ok("ok", relationshipDialogViewModel.Commit),
+               DialogActionBuilder.Cancel("cancel", relationshipDialogViewModel.Rollback));
         }
 
         #endregion

@@ -8,9 +8,9 @@
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
             Executed="CreateEntityExecuted"
             CanExecute="CreateEntityCanExecute"/>
-        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationship}"
-            Executed="CreateRelationshipExecuted"
-            CanExecute="CreateRelationshipCanExecute"/>
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntities}"
+            Executed="CreateRelationshipWithEntitiesExecuted"
+            CanExecute="CreateRelationshipWithEntitiesCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
             Executed="CreateRelationshipWithEntityExecuted"
             CanExecute="CreateRelationshipWithEntityCanExecute"/>

@@ -11,7 +11,7 @@
     {
         public static RoutedCommand CreateEntity = new RoutedCommand();
 
-        public static RoutedCommand CreateRelationship = new RoutedCommand();
+        public static RoutedCommand CreateRelationshipWithEntities = new RoutedCommand();
 
         public static RoutedCommand CreateRelationshipWithEntity = new RoutedCommand();
 

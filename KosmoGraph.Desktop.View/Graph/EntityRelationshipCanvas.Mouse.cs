@@ -56,16 +56,19 @@
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                //if we are source of event, we are rubberband selecting
                 if (e.Source == this)
                 {
-                    // in case that this click is the start for a 
-                    // drag operation we cache the start point
+                    // if this canvas is the event source, we are rubberband selecting
+                    // this click is the start for a drag operation og ehich remember the start point
                     this.rubberbandSelectionStartPoint = e.GetPosition(this);
 
-                    if(this.Model != null)
+                    if (this.Model != null)
+                    {
+                        // on pressend Ctrl key, th seection is added to an existig one. 
+                        // of the key isn't pressed, the current selection is removed
                         if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                             this.Model.ClearSelectedItems();
+                    }
                     
                     e.Handled = true;
                 }
@@ -79,14 +82,15 @@
 
                 if (this.Model == null)
                     return;
-                // editing of entity is triggered by the Drag thumb now
+                // editing of entity is triggered by the Drag thumb now. Hit test in canvas is obsolete
                 //if (senderAsFrameworkElement.DataContext is EntityViewModel)
                 //{
                 //    EntityRelationshipModelCommands.EditEntity.Execute(senderAsFrameworkElement.DataContext as EntityViewModel, this);
                 //}
                 //else 
                 {
-                    // no entity hit, try relationships
+                    // a relatinship was doubel clicked. 
+                    // sent edit command with hit relatinship
                     var relationshipHit = this.Model.Relationships.FirstOrDefault(r=>r.IsHit(e.GetPosition(this))); 
                     if (relationshipHit!=null)
                         EntityRelationshipModelCommands.EditRelationship.Execute(relationshipHit, this);
@@ -98,10 +102,15 @@
         {
             base.OnMouseMove(e);
 
-            if (this.SourceConnector != null)
+            if (this.SourceConnector != null && this.pendingRelationship!=null)
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
+                    // The mouse is moved while the left button is pressend, a source connection is set
+                    // and a pending relationship exists:
+                    // this is a relationship creation. The penden relationships destination point is updated
+                    // during the move. 
+                    // foreach point during move a hit test is performed to lookup entoties under the cursor
                     Point currentPoint = e.GetPosition(this);
                     this.pendingRelationship.ToPoint = currentPoint;
                     this.HitTestingWhilePendingConnection(currentPoint);
@@ -111,8 +120,12 @@
             {
                 // if mouse button is not pressed we have no drag operation, ...
                 if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    // a mouse button is not pressed. 
+                    // cleanup: rubber band selection start point, pending relationship?
+                    // 
                     rubberbandSelectionStartPoint = null;
-
+                }
                 // ... but if mouse button is pressed and start
                 // point value is set we do have one
                 if (this.rubberbandSelectionStartPoint.HasValue)
@@ -134,16 +147,17 @@
         {
             base.OnMouseUp(e);
 
-            if (sourceConnectorControl != null)
+            if (sourceConnectorControl != null && this.pendingRelationship != null)
             {
-                // the relatinship is removed from the items. It is added regularily
-                // by the command handler
-                //this.pendingRelationship.From.Model.Items.Remove(this.pendingRelationship);
-
+                // there is a source connector cotrol AND a pending relationship.
+                // This has to be the finalization of a relatiosnhip creation.
+                // in any cases the oending relationship is removed from the 
+                // diagram items drawn for now:
+                
                 if (this.entitiesHit.Count == 2)
                 {
                     this.pendingRelationship.SetDestination.Execute(this.entitiesHit.Last());
-                    EntityRelationshipModelCommands.CreateRelationship.Execute(this.pendingRelationship,this);
+                    EntityRelationshipModelCommands.CreateRelationshipWithEntities.Execute(this.pendingRelationship,this);
                 }
                 else if (this.entitiesHit.Count == 1)
                 {
@@ -158,8 +172,11 @@
                 }
                 
             }
+
+            // clean temporary data from diagrm canvas 
             this.entitiesHit = new List<EntityViewModel>();
             this.sourceConnectorControl = null;
+            this.pendingRelationship = null;
         }
 
         #endregion
