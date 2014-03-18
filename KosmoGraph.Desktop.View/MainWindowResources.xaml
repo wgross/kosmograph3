@@ -5,6 +5,16 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--
+    The two main columns of the working area sould be formmated equally
+    -->
+    <Style x:Key="workingAreaColumnDockPanelStyle"  TargetType="{x:Type DockPanel}">
+        <Setter Property="LastChildFill"
+                Value="True"/>
+        <Setter Property="Margin" 
+                Value="3,0,3,0"/>
+    </Style>
+        
+    <!--
     The title bar of the entity relatinship control contains a button to create new entities and
     a title label 
     -->
