@@ -8,7 +8,7 @@
     using MongoDB.Driver;
 
     [TestClass]
-    public class FindRelationshipTest
+    public class FindRelationshipByEntityTest
     {
         [TestInitialize]
         public void PrepareDatabase()

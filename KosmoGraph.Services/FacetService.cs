@@ -68,6 +68,9 @@
 
         #endregion
 
-      
+        public Task<bool> ValidateFacet(Facet facet)
+        {
+            return Task.Run(() => this.facetRepository.ExistsName(facet.Name) == false);
+        }
     }
 }

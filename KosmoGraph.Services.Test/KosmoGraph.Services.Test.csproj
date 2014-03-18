@@ -66,6 +66,7 @@
     <Compile Include="GetAllEntitiesTest.cs" />
     <Compile Include="GetAllRelationshipsTest.cs" />
     <Compile Include="RemoveFacetTest.cs" />
+    <Compile Include="ValidateFacetTest.cs" />
     <Compile Include="UpdateExistingFacetTest.cs" />
     <Compile Include="UpdateExistingRelatinshipTest.cs" />
     <Compile Include="UpdateExistingEntityTest.cs" />

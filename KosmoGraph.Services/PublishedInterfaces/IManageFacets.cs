@@ -17,5 +17,7 @@ using System.Threading.Tasks;
         Task<bool> RemoveFacet(Facet toRemove);
 
         Task<Facet> UpdateFacet(Facet updatedFacet);
+
+        Task<bool> ValidateFacet(Facet facet);
     }
 }

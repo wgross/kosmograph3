@@ -58,11 +58,10 @@
 
         [TestMethod]
         [TestCategory("CreateNewFacet")]
-        public void CreateEditNewFacetViewModel()
+        public void CreateNewFacetViewModel()
         {
             // ARRANGE
 
-         
             // ACT
             
             EditNewFacetViewModel f1edit = this.vm.CreateNewFacet();
@@ -79,7 +78,10 @@
             Assert.AreEqual(0, this.vm.Items.Count);
             
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
@@ -87,11 +89,15 @@
         #region CreateNewFacet > Modify
 
         [TestMethod]
-        [TestCategory("CreateNewFacet")]
+        [TestCategory("CreateNewFacet"),TestCategory("ValidateFacet")]
         public void ModifyNameAllowsEditNewFacetViewModelCommit()
         {
             // ARRANGE
 
+            this.fsvc // validate facet name
+                .Setup(_=>_.ValidateFacet(It.Is<Facet>(f => f.Name == "f1")))
+                .Returns(Task.FromResult(true));
+                
             var f1edit = vm.CreateNewFacet();
 
             // ACT
@@ -111,7 +117,11 @@
             Assert.AreEqual(0, this.vm.Items.Count);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<Facet>()), Times.Once);
         }
 
         [TestMethod]
@@ -145,7 +155,10 @@
             Assert.AreEqual(0, this.vm.Items.Count);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion 
@@ -183,9 +196,12 @@
             Assert.AreEqual(0, this.vm.Items.Count);
 
             Assert.AreEqual("f1", this.vm.Facets.First().Name);
-            
+
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
@@ -223,9 +239,12 @@
             Assert.AreEqual(0, this.vm.Items.Count);
 
             Assert.AreEqual("f1", this.vm.Facets.First().Name);
-            
+
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
@@ -256,7 +275,10 @@
             Assert.AreEqual(0, this.vm.Items.Count);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion 
@@ -269,7 +291,7 @@
         {
             // ARRANGE
 
-            fsvc // expect facet creation
+            this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
                 .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
@@ -297,8 +319,11 @@
             Assert.AreEqual("f1", this.vm.Facets.First().Name);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
         }
 
         #endregion 

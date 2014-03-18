@@ -2,6 +2,8 @@
 namespace KosmoGraph.Desktop.ViewModel
 {
     using KosmoGraph.Desktop.ViewModel.Properties;
+    using KosmoGraph.Model;
+    using KosmoGraph.Services;
     using Microsoft.Practices.Prism.Commands;
     using System;
     using System.Collections.Generic;
@@ -24,6 +26,8 @@ namespace KosmoGraph.Desktop.ViewModel
         }
 
         private readonly string titleFormat;
+
+        protected IManageFacets ManageFacets { get; private set; }
 
         #endregion
 
@@ -80,10 +84,10 @@ namespace KosmoGraph.Desktop.ViewModel
             {
                 if (this.name == value)
                     return;
+                
                 this.name = value;
                 this.RaisePropertyChanged(() => this.Name);
                 this.RaisePropertyChanged(() => this.Title);
-                this.RefreshCommands();
             }
         }
 

@@ -64,7 +64,7 @@
     <Compile Include="EntityCrudTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityRepositoryTest.cs" />
-    <Compile Include="FindRelationshipTest.cs" />
+    <Compile Include="FindRelationshipByEntityTest.cs" />
     <Compile Include="FacetCrudTest.cs" />
     <Compile Include="PropertyDefinitionCrudTest.cs" />
     <Compile Include="AssignedEntítyFacetCrudTest.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="RemoveRelationshipTest.cs" />
     <Compile Include="GetAllFacetTest.cs" />
     <Compile Include="GetAllEntityTest.cs" />
+    <Compile Include="ValidateFacetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KosmoGraph.Model\KosmoGraph.Model.csproj">

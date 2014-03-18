@@ -86,14 +86,15 @@ using System.Threading.Tasks;
                 .Ok;
         }
 
-        #endregion 
-    
-        #region IFacetRepository Members
-
         public IEnumerable<Facet> GetAll()
         {
             foreach (var facet in this.facetCollection.Value.FindAll())
                 yield return facet;
+        }
+
+        public bool ExistsName(string name)
+        {
+            return (this.facetCollection.Value.FindOne(Query<Facet>.EQ(f => f.Name, name))!=null);
         }
 
         #endregion

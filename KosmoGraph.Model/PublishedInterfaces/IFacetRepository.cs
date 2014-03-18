@@ -14,5 +14,7 @@
         Facet FindByIdentity(Guid id);
 
         IEnumerable<Facet> GetAll();
+
+        bool ExistsName(string name);
     }
 }
