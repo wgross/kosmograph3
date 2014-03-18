@@ -73,16 +73,18 @@
             </Grid.ColumnDefinitions>
             <!-- The left columns of the working area contains the entity relationship diagram -->
             <DockPanel Style="{StaticResource workingAreaColumnDockPanelStyle}" Grid.Column="0">
-                <!-- on top of the entity relationship diagram is the mai menu -->
-                <Border Style="{StaticResource labelBorderStyle}"   
-                    DockPanel.Dock="Top">
+                <!-- on top of the entity relationship diagram is header label and an add entity button -->
+                <Border Style="{StaticResource labelBorderStyle}" DockPanel.Dock="Top">
                         <DockPanel LastChildFill="False">
                             <Label Style="{StaticResource entityRelationshipControlLabelStyle}"
                                    DockPanel.Dock="Left"
                                    HorizontalAlignment="Right"/>
                             <Button Style="{StaticResource createEntityButtonStyle}"
                                     DockPanel.Dock="Right"
-                                    Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"/>
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"    
+                                    Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
+                                    CommandParameter="{Binding .}"/>
                         </DockPanel>
                     </Border>
                     <Button Style="{StaticResource textButtonStyle}"
@@ -112,21 +114,14 @@
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
                     </DockPanel.Resources>
-                <Border
-                    DockPanel.Dock="Top"
-                    Style="{StaticResource labelBorderStyle}">
-                    <!-- 
-                    On top ofthe facet list is a label for the list and a button which allows the 
-                    creation of a new facet
-                    -->
+                <!-- on top of the facet list is a header label and a create facet button -->
+                <Border Style="{StaticResource labelBorderStyle}" DockPanel.Dock="Top">
                     <DockPanel LastChildFill="False">
                         <Label Style="{StaticResource facetListBoxLabelStyle}"
                             DockPanel.Dock="Left"
                             HorizontalAlignment="Right"/>
                         <Button Style="{StaticResource createFacetButtonStyle}"
                             DockPanel.Dock="Right"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"    
                             Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
                             CommandParameter="{Binding .}"/>
                     </DockPanel>
