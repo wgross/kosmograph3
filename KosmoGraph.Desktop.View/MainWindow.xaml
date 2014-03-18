@@ -56,7 +56,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="./Resources/CommonResources.xaml" />
+                <ResourceDictionary Source="./MainWindowResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -67,52 +67,26 @@
             LastChildFill="True">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition
-                    Width="150"
-                    MinWidth="150"/>
+                <ColumnDefinition MinWidth="150"/>
+                <ColumnDefinition Width="150" MinWidth="150"/>
             </Grid.ColumnDefinitions>
             <!-- At the right side is the entity relationship diagram and the main menu-->
             <DockPanel
                 Grid.Column="0"
                 LastChildFill="True"
                 Margin="0,0,7,0">
-                    <DockPanel.Resources>
-                        <Style x:Key="createEntityButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
-                            <Setter Property="Content"
-                                    Value="Add Entity"/>
-                        </Style>
-                    </DockPanel.Resources>
-                <!-- on top of the entity relatinship diagram is the mai menu -->
+                <!-- on top of the entity relationship diagram is the mai menu -->
                 <Border Style="{StaticResource labelBorderStyle}"   
                     DockPanel.Dock="Top">
-                    <DockPanel LastChildFill="True">
+                        <DockPanel LastChildFill="False">
+                            <Label Style="{StaticResource entityRelationshipControlLabelStyle}"
+                                   DockPanel.Dock="Left"
+                                   HorizontalAlignment="Right"/>
                             <Button Style="{StaticResource createEntityButtonStyle}"
                                     DockPanel.Dock="Right"
                                     Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"/>
-                            <Menu Style="{StaticResource menuStyle}">
-                            <MenuItem Header="Open..."
-                            Style="{StaticResource menuItemStyle}"
-                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}">
-                                    <!--<MenuItem Header="New"
-                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
-                                Style="{StaticResource menuItemStyle}"/>
-                            <MenuItem Header="Open Database..."
-                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}"
-                                Style="{StaticResource menuItemStyle}"/>
-                            <MenuItem Header="Save As..."
-                                Command="{x:Static kd:EntityRelationshipModelCommands.SaveModelAs}"
-                                CommandParameter="{Binding .}"
-                                Style="{StaticResource menuItemStyle}"/>
-                            <MenuItem Header="Save"
-                                Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
-                                CommandParameter="{Binding .}"
-                                Style="{StaticResource menuItemStyle}"/>-->
-                                </MenuItem>
-                        </Menu>
-                    </DockPanel>
-                    
-                </Border>
+                        </DockPanel>
+                    </Border>
                     <Button Style="{StaticResource textButtonStyle}"
                             DockPanel.Dock="Bottom"
                             Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
@@ -150,8 +124,7 @@
                     On top ofthe facet list is a label for the list and a button which allows the 
                     creation of a new facet
                     -->
-                    <DockPanel
-                        LastChildFill="False">
+                    <DockPanel LastChildFill="False">
                         <Label Style="{StaticResource facetListBoxLabelStyle}"
                             DockPanel.Dock="Left"
                             HorizontalAlignment="Right"/>
@@ -166,7 +139,7 @@
                 <ListBox Name="facetListBox"
                     ItemsSource="{Binding Facets}"
                     MouseDoubleClick="facetListBox_MouseDoubleClick"
-                    ItemContainerStyle="{StaticResource facetInTagList}"
+                    ItemContainerStyle="{StaticResource facetInFacetListBoxItemStyle}"
                     Style="{StaticResource listBoxStyle}">
                     <ListBox.InputBindings>
                         <KeyBinding

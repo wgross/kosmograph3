@@ -22,11 +22,6 @@
             Value="{StaticResource unselectableListBoxItemStyle}"/>
     </Style>
 
-    <Style x:Key="entityRelationshipControlLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
-        <Setter Property="Content"
-                Value="_Entities and their Relationships"/>
-    </Style>
-
     <!-- 
     An entity in the diagram is a box having the entities name as a Label centered inside.
     On hovering the entity with the mouse a tooltip opens with its facet properties

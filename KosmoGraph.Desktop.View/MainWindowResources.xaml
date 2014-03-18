@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="./Resources/CommonResources.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--
+    The title bar of the entity relatinship control contains a button to create new entities and
+    a title label 
+    -->
+    
+    <Style x:Key="createEntityButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
+        <Setter Property="Content"
+                Value="Add Entity..."/>
+    </Style>
+
+    <Style x:Key="entityRelationshipControlLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}">
+        <Setter Property="Content"
+                Value="_Entities and their Relationships"/>
+    </Style>
+
+</ResourceDictionary>

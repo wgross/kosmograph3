@@ -10,20 +10,15 @@
 
     <Style x:Key="createFacetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
         <Setter Property="Content"
-                Value="Add Facet"/>
+                Value="Add Facet..."/>
     </Style>
 
-    <Style x:Key="facetListBoxLabelStyle"
-            BasedOn="{StaticResource labelStyle}"
-            TargetType="{x:Type Label}">
-        <Setter
-            Property="Content"
+    <Style x:Key="facetListBoxLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource labelStyle}" >
+        <Setter Property="Content"
             Value="_Facets"/>
     </Style>
 
-    <Style x:Key="facetInTagList"
-           BasedOn="{StaticResource unselectableListBoxItemStyle}"
-           TargetType="{x:Type ListBoxItem}">
+    <Style x:Key="facetInFacetListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource unselectableListBoxItemStyle}">
         <Setter
             Property="ContentTemplate">
             <Setter.Value>
