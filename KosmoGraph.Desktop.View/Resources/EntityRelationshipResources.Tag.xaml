@@ -8,9 +8,7 @@
     
     <!--Tag list on the right-->
 
-    <Style x:Key="createFacetButtonStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource buttonStyle}">
+    <Style x:Key="createFacetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
         <Setter Property="Content"
                 Value="Add Facet"/>
     </Style>

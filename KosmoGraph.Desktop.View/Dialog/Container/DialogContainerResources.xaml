@@ -24,68 +24,57 @@
 
     <!-- Buttons in dialogs -->
 
-    <Style x:Key="unassignTagButtonStyle" 
-           BasedOn="{StaticResource removeSymbolButtonStyle}"
-           TargetType="{x:Type Button}">
-        <Setter
-            Property="HorizontalAlignment"
-            Value="Right"/>
-        <Setter
-            Property="ToolTip"
-            Value="Remove Tag"/>
-    </Style>
-
-    <Style x:Key="assignTagButtonStyle" 
-           BasedOn="{StaticResource addSymbolButtonStyle}"
-           TargetType="{x:Type Button}">
+    <Style x:Key="unassignFacetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource removeSymbolButtonStyle}">
         <Setter Property="HorizontalAlignment"
             Value="Right"/>
         <Setter Property="ToolTip"
-            Value="Add Tag"/>
+            Value="Remove this Facet"/>
+    </Style>
+
+    <Style x:Key="assignFacetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource addSymbolButtonStyle}">
+        <Setter Property="HorizontalAlignment"
+            Value="Right"/>
+        <Setter Property="ToolTip"
+            Value="Add this Facet"/>
     </Style>
 
     <Style x:Key="createPropertyDefinitionButtonStyle" 
-           BasedOn="{StaticResource buttonStyle}"
+           BasedOn="{StaticResource textButtonStyle}"
            TargetType="{x:Type Button}">
         <Setter Property="Content"
                 Value="Add Property"/>
         <Setter Property="ToolTip"
-                Value="Add a new property definition to this Tag"/>
+                Value="Add a new property definition to this Facet"/>
     </Style>
 
-    <Style x:Key="removePropertyDefinitionButtonStyle" 
-           BasedOn="{StaticResource removeSymbolButtonStyle}"
-           TargetType="{x:Type Button}">
-        <Setter
-            Property="HorizontalAlignment"
+    <Style x:Key="removePropertyDefinitionButtonStyle" BasedOn="{StaticResource removeSymbolButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalAlignment"
             Value="Right"/>
-        <Setter
-            Property="ToolTip"
-            Value="Remove property definition from Tag and all its property values from entities and relationships"/>
+        <Setter Property="ToolTip"
+            Value="Remove property definition from Facet and all its property values from entities and relationships"/>
     </Style>
     
     <!-- Labels in dialogs -->
 
     <Style x:Key="nameLabelStyle" BasedOn="{StaticResource labelStyle}" TargetType="{x:Type Label}">
-        <Setter
-            Property="Content"
-            Value="_Name"/>
+        <Setter Property="Content"
+                Value="_Name"/>
     </Style>
 
-    <Style x:Key="assignedTagsListBoxLabelStyle" 
+    <Style x:Key="assignedFacetsListBoxLabelStyle" 
            BasedOn="{StaticResource labelStyle}"
            TargetType="{x:Type Label}">
         <Setter
             Property="Content"
-            Value="_Assigned Tags"/>
+            Value="_Assigned Facets"/>
     </Style>
 
-    <Style x:Key="unassignedTagsListBoxLabelStyle" 
+    <Style x:Key="unassignedFacetsListBoxLabelStyle" 
            BasedOn="{StaticResource labelStyle}"
            TargetType="{x:Type Label}">
         <Setter
             Property="Content"
-            Value="_Unassigned Tags"/>
+            Value="_Unassigned Facets"/>
     </Style>
 
     <Style x:Key="propertyValuesListBoxLabelStyle" 
@@ -93,10 +82,10 @@
            TargetType="{x:Type Label}">
         <Setter
             Property="Content"
-            Value="Assigned Tag property _Values"/>
+            Value="Assigned Facets property _Values"/>
         <Setter
             Property="ToolTip"
-            Value="A list of values assigned to the property definitions of the assigned tags"/>
+            Value="A list of values assigned to the property definitions of the assigned facets"/>
     </Style>
 
     <Style x:Key="propertyDefinitionListBoxLabelStyle" 
@@ -104,10 +93,10 @@
            TargetType="{x:Type Label}">
         <Setter
             Property="Content"
-            Value="_Properties of this Tag"/>
+            Value="_Properties of this Facet"/>
         <Setter
             Property="ToolTip"
-            Value="A list of property definitions of this tag"/>
+            Value="A list of property definitions of this facet"/>
     </Style>
 
     <Style x:Key="propertyDefinitionLabelStyle" 
@@ -158,7 +147,7 @@
 
     <!-- ListBoxes in dialogs -->
     
-    <Style x:Key="assignedTagsListBoxStyle" 
+    <Style x:Key="assignedFacetsListBoxStyle" 
            BasedOn="{StaticResource listBoxStyle}" 
            TargetType="{x:Type ListBox}">
         <Setter
@@ -172,7 +161,7 @@
             Value="{StaticResource unselectableListBoxItemStyle}"/>
     </Style>
 
-    <Style x:Key="unassignedTagsListBoxStyle" 
+    <Style x:Key="unassignedFacetsListBoxStyle" 
            BasedOn="{StaticResource listBoxStyle}" 
            TargetType="{x:Type ListBox}">
         <Setter
@@ -216,7 +205,7 @@
                     Source="{Binding Properties}">
                     <CollectionViewSource.GroupDescriptions>
                             <PropertyGroupDescription 
-                                PropertyName="Edited.Definition.Tag.Name" />
+                                PropertyName="Edited.Definition.Facet.Name" />
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </StackPanel.Resources>
@@ -248,25 +237,25 @@
                         <Border
                             Style="{StaticResource labelBorderStyle}">
                             <Label
-                                Style="{StaticResource assignedTagsListBoxLabelStyle}"
-                                Target="assignedTagsListBox"/>
+                                Style="{StaticResource assignedFacetsListBoxLabelStyle}"
+                                Target="assignedFacetsListBox"/>
                         </Border>
                         <ListBox
-                            Name="assignedTagsListBox"
-                            Style="{StaticResource assignedTagsListBoxStyle}"
-                            ItemsSource="{Binding AssignedTags}">
+                            Name="assignedFacetsListBox"
+                            Style="{StaticResource assignedFacetsListBoxStyle}"
+                            ItemsSource="{Binding AssignedFacets}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type kdvm:EditAssignedFacetViewModelBase}">
                                     <DockPanel
                                         LastChildFill="True">
                                         <Button
-                                            Style="{StaticResource unassignTagButtonStyle}"
+                                            Style="{StaticResource unassignFacetButtonStyle}"
                                             DockPanel.Dock="Right"
-                                            Command="{Binding DataContext.UnassignTag,ElementName=unassignedTagsListBox}"
+                                            Command="{Binding DataContext.UnassignFacet,ElementName=unassignedFacetsListBox}"
                                             CommandParameter="{Binding}"/>
                                         <TextBlock
                                             HorizontalAlignment="Stretch"
-                                            Text="{Binding Edited.Tag.Name}"/>
+                                            Text="{Binding Name}"/>
                                     </DockPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -274,21 +263,21 @@
                         <Border
                             Style="{StaticResource labelBorderStyle}">
                             <Label
-                                Style="{StaticResource unassignedTagsListBoxLabelStyle}"
-                                Target="unassignedTagsListBox"/>
+                                Style="{StaticResource unassignedFacetsListBoxLabelStyle}"
+                                Target="unassignedFacetsListBox"/>
                         </Border>
                         <ListBox
-                            Name="unassignedTagsListBox"
-                            Style="{StaticResource unassignedTagsListBoxStyle}"
-                            ItemsSource="{Binding UnassignedTags}">
+                            Name="unassignedFacetsListBox"
+                            Style="{StaticResource unassignedFacetsListBoxStyle}"
+                            ItemsSource="{Binding UnassignedFacets}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type kdvm:FacetViewModel}">
                                     <DockPanel
                                         LastChildFill="True">
                                         <Button
                                             DockPanel.Dock="Right"
-                                            Style="{StaticResource assignTagButtonStyle}"
-                                            Command="{Binding DataContext.AssignTag,ElementName=unassignedTagsListBox}"
+                                            Style="{StaticResource assignFacetButtonStyle}"
+                                            Command="{Binding DataContext.AssignFacet,ElementName=unassignedFacetsListBox}"
                                             CommandParameter="{Binding}"/>
                                         <TextBlock
                                             Text="{Binding Name}"/>
@@ -319,12 +308,12 @@
                             </GroupStyle>
                         </ListBox.GroupStyle>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type kdvm:EditRelationshipPropertyValueViewModel}">
+                            <DataTemplate DataType="{x:Type kdvm:EditPropertyValueViewModelBase}">
                                 <DockPanel
                                 LastChildFill="True">
                                     <TextBlock
                                     DockPanel.Dock="Left"
-                                    Text="{Binding Edited.Definition.Name}"/>
+                                    Text="{Binding Name}"/>
                                     <TextBox
                                     Style="{StaticResource propertyValueTextBoxStyle}"
                                     Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>
@@ -345,7 +334,7 @@
                     Source="{Binding Properties}">
                     <CollectionViewSource.GroupDescriptions>
                         <PropertyGroupDescription 
-                                PropertyName="Edited.Definition.Tag.Name" />
+                                PropertyName="Name.Definition.Facet.Name" />
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </StackPanel.Resources>
@@ -364,25 +353,25 @@
                         <Border
                             Style="{StaticResource labelBorderStyle}">
                             <Label
-                               Style="{StaticResource assignedTagsListBoxLabelStyle}"
-                               Target="unassignedTagsListBox"/>
+                               Style="{StaticResource assignedFacetsListBoxLabelStyle}"
+                               Target="unassignedFacetsListBox"/>
                         </Border>
                         <ListBox
-                            Name="assignedTagsListBox"
-                            Style="{StaticResource assignedTagsListBoxStyle}"
-                            ItemsSource="{Binding AssignedTags}">
+                            Name="assignedFacetsListBox"
+                            Style="{StaticResource assignedFacetsListBoxStyle}"
+                            ItemsSource="{Binding AssignedFacets}">
                             <ListBox.ItemTemplate>
-                                <DataTemplate DataType="{x:Type kdvm:EditAssignedRelationshipFacetViewModel}">
+                                <DataTemplate DataType="{x:Type kdvm:EditAssignedFacetViewModelBase}">
                                     <DockPanel
                                         LastChildFill="True">
                                         <Button
                                             DockPanel.Dock="Right"
-                                            Command="{Binding DataContext.UnassignTag,ElementName=unassignedTagsListBox}"
+                                            Command="{Binding DataContext.UnassignFacet,ElementName=unassignedFacetsListBox}"
                                             CommandParameter="{Binding}"
-                                            Style="{StaticResource unassignTagButtonStyle}"/>
+                                            Style="{StaticResource unassignFacetButtonStyle}"/>
                                         <TextBlock
                                             HorizontalAlignment="Stretch"
-                                            Text="{Binding Edited.Tag.Name}"/>
+                                            Text="{Binding Name}"/>
                                     </DockPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -390,22 +379,22 @@
                         <Border
                             Style="{StaticResource labelBorderStyle}">
                             <Label
-                               Style="{StaticResource unassignedTagsListBoxLabelStyle}"
-                               Target="unassignedTagsListBox"/>
+                               Style="{StaticResource unassignedFacetsListBoxLabelStyle}"
+                               Target="unassignedFacetsListBox"/>
                         </Border>
                         <ListBox
-                            Name="unassignedTagsListBox"
-                            Style="{StaticResource unassignedTagsListBoxStyle}"
-                            ItemsSource="{Binding UnassignedTags}">
+                            Name="unassignedFacetsListBox"
+                            Style="{StaticResource unassignedFacetsListBoxStyle}"
+                            ItemsSource="{Binding UnassignedFacets}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type kdvm:FacetViewModel}">
                                     <DockPanel
                                         LastChildFill="True">
                                         <Button
                                             DockPanel.Dock="Right"
-                                            Command="{Binding DataContext.AssignTag,ElementName=unassignedTagsListBox}"
+                                            Command="{Binding DataContext.AssignFacet,ElementName=unassignedFacetsListBox}"
                                             CommandParameter="{Binding}"
-                                            Style="{StaticResource assignTagButtonStyle}"/>
+                                            Style="{StaticResource assignFacetButtonStyle}"/>
                                         <TextBlock
                                             HorizontalAlignment="Stretch"
                                             Text="{Binding Name}"/>
@@ -436,12 +425,12 @@
                             </GroupStyle>
                         </ListBox.GroupStyle>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type kdvm:EditRelationshipPropertyValueViewModel}">
+                            <DataTemplate DataType="{x:Type kdvm:EditPropertyValueViewModelBase}">
                                 <DockPanel
                                 LastChildFill="True">
                                     <TextBlock
                                     DockPanel.Dock="Left"
-                                    Text="{Binding Edited.Definition.Name}"/>
+                                    Text="{Binding Name}"/>
                                     <TextBox
                                     Style="{StaticResource propertyValueTextBoxStyle}"
                                     Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"/>

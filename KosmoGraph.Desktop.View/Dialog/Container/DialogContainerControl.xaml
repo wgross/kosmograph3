@@ -44,7 +44,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button
-                                Style="{StaticResource buttonStyle}"
+                                Style="{StaticResource textButtonStyle}"
                                 Command="{Binding Command}"
                                 CommandParameter="{Binding .}"
                                 Content="{Binding Name}"

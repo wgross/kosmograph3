@@ -103,15 +103,14 @@
                         </MenuItem>
                     </Menu>
                 </Border>
-                    <Button Style="{StaticResource buttonStyle}"
+                    <Button Style="{StaticResource textButtonStyle}"
                             DockPanel.Dock="Bottom"
                             Command="{x:Static kd:EntityRelationshipModelCommands.LayoutModel}"
                             CommandParameter="{Binding .}">Layout</Button>
                     <view:EntityRelationshipControl x:Name="entityRelationshipView">
                         <view:EntityRelationshipControl>
                         <view:EntityRelationshipControl.InputBindings>
-                            <KeyBinding
-                                Key="Insert"
+                            <KeyBinding Key="Insert"
                                 Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"/>
                         </view:EntityRelationshipControl.InputBindings>
                     </view:EntityRelationshipControl>

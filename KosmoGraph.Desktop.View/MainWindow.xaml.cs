@@ -260,7 +260,7 @@
 
         private void DeleteFacet(FacetViewModel facet)
         {
-            facet.Model.Remove(facet);
+            this.Model.Remove(facet);
         }
 
         #endregion 

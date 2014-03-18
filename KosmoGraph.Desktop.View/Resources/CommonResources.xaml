@@ -52,21 +52,26 @@
     </Style>
 
     <!-- 
-    Any button has a label colord with the foreground brush an having a rectengular border.
-    The border has no background and is one pixel wide.
-    The padding 
+    Any button has the same generaly foregound color.
     -->
     <Style x:Key="buttonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="FontFamily"
-                Value="Segoe UI"/>
         <Setter Property="Foreground"
             Value="{StaticResource foregroundBrush}"/>
+    </Style>
+    
+    <!--
+    A Text Buttons template centers a label with the foreground brush an having a rectengular border.
+    The border has no background and is one pixel wide.
+    The padding is a bit wider as the pading of symbl buttons because of esthetical reasons
+    -->
+    <Style x:Key="textButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
+        <Setter Property="FontFamily"
+                Value="Segoe UI"/>
         <Setter Property="Padding"
             Value="6,2,6,2"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate 
-                    TargetType="ButtonBase">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
                     <Border
                         Name="focusButtonBorder"
@@ -100,12 +105,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="UIElement.IsKeyboardFocused"
                             Value="True">
-                            <Setter 
-                                TargetName="focusButtonBorder" 
-                                Property="Visibility"
+                            <Setter TargetName="focusButtonBorder" Property="Visibility"
                                 Value="Visible"/>
-                            <Setter
-                                Property="Foreground"
+                            <Setter Property="Foreground"
                                 Value="{StaticResource activeForegroundBrush}"/>
                         </Trigger>
 
@@ -116,20 +118,15 @@
                                 Value="{StaticResource activeForegroundBrush}"/>
                         </Trigger>
 
-                        <Trigger 
-                            Property="Button.IsDefaulted"
+                        <Trigger Property="Button.IsDefaulted"
                             Value="True">
-                            <Setter 
-                                TargetName="buttonBorder" 
-                                Property="Background"
+                            <Setter TargetName="buttonBorder" Property="Background"
                                 Value="{StaticResource selectedBackgroundBrush}"/>
                         </Trigger>
 
-                        <Trigger 
-                            Property="UIElement.IsEnabled"
-                            Value="False">
-                            <Setter 
-                                Property="Foreground"
+                        <Trigger Property="UIElement.IsEnabled" 
+                                 Value="False">
+                            <Setter Property="Foreground"
                                 Value="{StaticResource disabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -138,17 +135,20 @@
         </Setter>
     </Style>
 
-    <Style x:Key="symbolButtonStyle"
-           BasedOn="{StaticResource buttonStyle}"
-           TargetType="Button">
+    <!--
+    A symbol buttons template centers a Path element. 
+    The paths data is taken from buttons Content property. The symbol button can't contain ay other content
+    -->
+    <Style x:Key="symbolButtonStyle" BasedOn="{StaticResource buttonStyle}" TargetType="Button">
         <Setter Property="Width"
                 Value="15"/>
         <Setter Property="Height"
                 Value="15"/>
+        <Setter Property="Padding"
+            Value="2,2,2,2"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate 
-                    TargetType="ButtonBase">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid
                         Height="{TemplateBinding Height}"
                         Width="{TemplateBinding Width}">
@@ -196,21 +196,16 @@
                                 Value="{StaticResource activeForegroundBrush}"/>
                         </Trigger>
 
-                        <Trigger 
-                            Property="Button.IsDefaulted"
-                            Value="True">
-                            <Setter 
-                                TargetName="buttonBorder" 
-                                Property="Background"
+                        <Trigger Property="Button.IsDefaulted" 
+                                 Value="True">
+                            <Setter TargetName="buttonBorder" Property="Background"
                                 Value="{StaticResource selectedBackgroundBrush}"/>
                         </Trigger>
 
-                        <Trigger 
-                            Property="UIElement.IsEnabled"
-                            Value="False">
-                            <Setter 
-                                Property="Foreground"
-                                Value="{StaticResource disabledBrush}"/>
+                        <Trigger Property="UIElement.IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource disabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -218,9 +213,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="addSymbolButtonStyle"
-           BasedOn="{StaticResource symbolButtonStyle}"
-           TargetType="Button">
+    <Style x:Key="addSymbolButtonStyle" BasedOn="{StaticResource symbolButtonStyle}" TargetType="Button">
         <!--<Setter Property="Padding"
                 Value="1,1,2,2"/>-->
         <Setter Property="Content"
