@@ -71,7 +71,7 @@
 
         #region Handle CreateRelationship command
 
-        private void CreateRelationshipWithEntitiesCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        private void CreateRelationshipBetweenEntitiesCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
             if (relationshipDialogViewModel == null)
@@ -89,7 +89,7 @@
             args.CanExecute = true;
         }
 
-        private void CreateRelationshipWithEntitiesExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void CreateRelationshipBetweenEntitiesExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
 
@@ -109,17 +109,17 @@
 
         private void DeleteRelationshipExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            //if (args.Parameter is ObservableCollection<object>) // called from within dialog
-            //{
-            //    var first = ((ObservableCollection<object>)args.Parameter).FirstOrDefault() as EditRelationshipViewModel;
-            //    if (first != null)
-            //        this.DeleteRelationship(first.Edited);
-            //}
+            if (args.Parameter is ObservableCollection<object>) // called from within dialog
+            {
+                var first = ((ObservableCollection<object>)args.Parameter).FirstOrDefault() as EditExistingRelationshipViewModel;
+                if (first != null)
+                    this.DeleteRelationship(first.Edited);
+            }
         }
 
         private void DeleteRelationship(RelationshipViewModel relationship)
         {
-            //relationship.Model.Remove(relationship);
+            this.Model.Remove(relationship);
         }
 
         #endregion 
@@ -149,12 +149,12 @@
 
         #region Handle CreateRelatonshipWithEntity command
         
-        private void CreateRelationshipWithEntityCanExecute(object sender, CanExecuteRoutedEventArgs args)
+        private void CreateRelationshipAndEntityCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = true;
         }
 
-        private void CreateRelationshipWithEntityExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void CreateRelationshipEndEntityExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             var relationshipDialogViewModel = this.Model.EditRelationship(args.Parameter as RelationshipViewModel);
             relationshipDialogViewModel.EnableCommit = true;
@@ -241,7 +241,7 @@
 
         #endregion 
 
-        #region Handle DeleteTag command
+        #region Handle DeleteFacet command
 
         private void DeleteFacetCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {

@@ -37,7 +37,6 @@
                     // to be drawn on the canvas
                     this.pendingRelationship = this.Model.CreatePendingRelationship(sourceEntityViewModel);
                     this.pendingRelationship.ToPoint = point;
-                    this.Model.Items.Add(this.pendingRelationship);
                 }
             }
         }
@@ -149,7 +148,7 @@
 
             if (sourceConnectorControl != null && this.pendingRelationship != null)
             {
-                // there is a source connector cotrol AND a pending relationship.
+                // there is a source connector control AND a pending relationship.
                 // This has to be the finalization of a relatiosnhip creation.
                 // in any cases the oending relationship is removed from the 
                 // diagram items drawn for now:
@@ -159,17 +158,17 @@
                     this.pendingRelationship.SetDestination.Execute(this.entitiesHit.Last());
                     EntityRelationshipModelCommands.CreateRelationshipWithEntities.Execute(this.pendingRelationship,this);
                 }
-                else if (this.entitiesHit.Count == 1)
-                {
-                    //this.Model.CreateNewRelationship()
-                    //TODO:
-                    var pendingEntity = this.Model.CreateNewEntity(); ///string.Format("Entity {0}", this.Model.Entities.Count()));
-                    //pendingEntity.Top=this.pendingRelationship.ToPoint.Y;
-                    //pendingEntity.Left=this.pendingRelationship.ToPoint.X;
-                    //this.pendingRelationship.To=pendingEntity.CentralConnector;
+                //else if (this.entitiesHit.Count == 1)
+                //{
+                //    //this.Model.CreateNewRelationship()
+                //    //TODO:
+                //    var pendingEntity = this.Model.CreateNewEntity(); ///string.Format("Entity {0}", this.Model.Entities.Count()));
+                //    //pendingEntity.Top=this.pendingRelationship.ToPoint.Y;
+                //    //pendingEntity.Left=this.pendingRelationship.ToPoint.X;
+                //    //this.pendingRelationship.To=pendingEntity.CentralConnector;
 
-                    //EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
-                }
+                //    //EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
+                //}
                 
             }
 

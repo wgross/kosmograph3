@@ -400,6 +400,11 @@
             this.Relationships.ForEach(r => r.UpdatePropertyValuesOfAssignedFacet(facetViewModel));
         }
 
-        
+
+
+        public void CreateFromPendingRelationshipAndEntity(EditNewRelationshipViewModel editNewRelationshipViewModel, EditNewEntityViewModel editNewEntityViewModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
