@@ -109,20 +109,20 @@
     <Compile Include="ViewModel\Layout\LayoutNodeExtensions.cs" />
     <Compile Include="ViewModel\Layout\SpringEmbedderLayout.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
-    <Compile Include="View\ConnectorControl.cs" />
+    <Compile Include="Graph\ConnectorControl.cs" />
     <Compile Include="Common\ListBoxEx.cs" />
     <Compile Include="Common\NullToVisibilityConverter.cs" />
     <Compile Include="Common\DependencyObjectExtensions.cs" />
-    <Compile Include="View\EntityDragThumb.cs" />
-    <Compile Include="View\EntityRelationshipCanvas.cs" />
-    <Compile Include="View\EntityRelationshipCanvas.Mouse.cs" />
-    <Compile Include="View\EntityRelationshipControl.xaml.cs">
+    <Compile Include="Graph\EntityDragThumb.cs" />
+    <Compile Include="Graph\EntityRelationshipCanvas.cs" />
+    <Compile Include="Graph\EntityRelationshipCanvas.Mouse.cs" />
+    <Compile Include="Graph\EntityRelationshipControl.xaml.cs">
       <DependentUpon>EntityRelationshipControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EntityRelationshipStyleSelector.cs" />
-    <Compile Include="View\RelationshipPathConverter.cs" />
+    <Compile Include="Graph\EntityRelationshipStyleSelector.cs" />
+    <Compile Include="Graph\RelationshipPathConverter.cs" />
     <Compile Include="Common\AttachedActualSizeBindingBehaviour.cs" />
-    <Compile Include="View\RubberbandSelectionAdorner.cs" />
+    <Compile Include="Graph\RubberbandSelectionAdorner.cs" />
     <Page Include="Dialog\Container\DialogContainerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EntityRelationshipResources.xaml">
+    <Page Include="Graph\EntityRelationshipResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EntityRelationshipControl.xaml">
+    <Page Include="Graph\EntityRelationshipControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
