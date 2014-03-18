@@ -154,7 +154,7 @@
                     //pendingEntity.Left=this.pendingRelationship.ToPoint.X;
                     //this.pendingRelationship.To=pendingEntity.CentralConnector;
 
-                    EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
+                    //EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
                 }
                 
             }

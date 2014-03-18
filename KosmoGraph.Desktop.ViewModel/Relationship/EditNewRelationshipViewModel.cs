@@ -40,6 +40,61 @@
 
         #endregion 
 
+        #region Collection of points to draw for connection path
+
+        public Rect Area
+        {
+            get
+            {
+                return this.area;
+            }
+            private set
+            {
+                if (this.area == value)
+                    return;
+
+                this.area = value;
+                this.RaisePropertyChanged(() => this.Area);
+                this.UpdateConnectionPoints();
+            }
+        }
+
+        private Rect area;
+
+        private void UpdateArea()
+        {
+            this.Area = new Rect(this.FromPoint, this.ToPoint);
+        }
+
+        public List<Point> ConnectionPoints
+        {
+            get
+            {
+                return connectionPoints;
+            }
+            private set
+            {
+                if (object.ReferenceEquals(this.connectionPoints, value))
+                    return;
+
+                this.connectionPoints = value;
+                this.RaisePropertyChanged(() => this.ConnectionPoints);
+            }
+        }
+
+        private List<Point> connectionPoints;
+        
+        private void UpdateConnectionPoints()
+        {
+            this.ConnectionPoints = new List<Point>()
+            {                       
+                new Point( this.FromPoint.X  <  this.ToPoint.X ? 0d : this.Area.Width, this.FromPoint.Y  <  this.ToPoint.Y ? 0d : this.Area.Height ), 
+                new Point( this.FromPoint.X  >  this.ToPoint.X ? 0d : this.Area.Width, this.FromPoint.Y  >  this.ToPoint.Y ? 0d : this.Area.Height)
+            };
+        }
+
+        #endregion 
+
         #region Set Destination Entity
 
         #region Destination point
@@ -58,7 +113,8 @@
                 var tmp = this.toPoint;
                 this.toPoint = value;
                 this.RaisePropertyChanged(() => this.ToPoint);
-                //this.UpdateArea();
+                this.UpdateArea();
+                this.UpdateConnectionPoints();
 
                 //double deltaWidth = 0.0;
                 //double deltaHeight = 0.0;
@@ -86,6 +142,7 @@
             {
                 return this.toEntity;
             }
+            
         }
 
         private EntityViewModel toEntity;
@@ -106,6 +163,8 @@
         private void SetDestinationExecuted(EntityViewModel toEntity)
         {
             this.toEntity = toEntity;
+            this.RaisePropertyChanged(() => this.To);
+            this.ToPoint = this.toEntity.CentralConnector.GetConnectionPoint();
         }
         
         #endregion 

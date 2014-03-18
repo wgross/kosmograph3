@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+using System.Windows;
 
     public abstract class EditRelationshipViewModelBase : EditFacetedViewModelBase
     {
@@ -28,6 +29,14 @@
         private readonly string titleFormat;
 
         public EntityViewModel From { get; private set; }
+
+        public Point FromPoint
+        {
+            get
+            {
+                return this.From.CentralConnector.GetConnectionPoint();
+            }
+        }
 
         public abstract EntityViewModel To { get; }
 

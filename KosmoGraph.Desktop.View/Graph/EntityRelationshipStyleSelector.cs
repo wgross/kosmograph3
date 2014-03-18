@@ -27,6 +27,10 @@
             {
                 return (Style)itemsControl.FindResource("relationshipInDiagramStyle");
             }
+            else if (item is EditNewRelationshipViewModel)
+            {
+                return (Style)itemsControl.FindResource("pendingRelationshipInDiagramStyle");
+            }
 
             return null;
         }
