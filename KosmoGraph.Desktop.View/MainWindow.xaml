@@ -57,7 +57,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Resources/CommonResources.xaml" />
-                <!--<ResourceDictionary Source="./Resources/DialogResources.xaml" />-->                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -66,7 +65,6 @@
         Name="rootPanel">
         <DockPanel
             LastChildFill="True">
-           
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -74,19 +72,29 @@
                     Width="150"
                     MinWidth="150"/>
             </Grid.ColumnDefinitions>
+            <!-- At the right side is the entity relationship diagram and the main menu-->
             <DockPanel
                 Grid.Column="0"
                 LastChildFill="True"
                 Margin="0,0,7,0">
-                <!-- on top of the main windows is the menue bar -->
+                    <DockPanel.Resources>
+                        <Style x:Key="createEntityButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
+                            <Setter Property="Content"
+                                    Value="Add Entity"/>
+                        </Style>
+                    </DockPanel.Resources>
+                <!-- on top of the entity relatinship diagram is the mai menu -->
                 <Border Style="{StaticResource labelBorderStyle}"   
                     DockPanel.Dock="Top">
-                    <Menu
-                        Style="{StaticResource menuStyle}">
+                    <DockPanel LastChildFill="True">
+                            <Button Style="{StaticResource createEntityButtonStyle}"
+                                    DockPanel.Dock="Right"
+                                    Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"/>
+                            <Menu Style="{StaticResource menuStyle}">
                             <MenuItem Header="Open..."
-                                Style="{StaticResource menuItemStyle}"
-                                Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}">
-                            <!--<MenuItem Header="New"
+                            Style="{StaticResource menuItemStyle}"
+                            Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModelFromStore}">
+                                    <!--<MenuItem Header="New"
                                 Command="{x:Static kd:EntityRelationshipModelCommands.CreateNewModel}"
                                 Style="{StaticResource menuItemStyle}"/>
                             <MenuItem Header="Open Database..."
@@ -100,8 +108,10 @@
                                 Command="{x:Static kd:EntityRelationshipModelCommands.SaveModel}"
                                 CommandParameter="{Binding .}"
                                 Style="{StaticResource menuItemStyle}"/>-->
-                        </MenuItem>
-                    </Menu>
+                                </MenuItem>
+                        </Menu>
+                    </DockPanel>
+                    
                 </Border>
                     <Button Style="{StaticResource textButtonStyle}"
                             DockPanel.Dock="Bottom"

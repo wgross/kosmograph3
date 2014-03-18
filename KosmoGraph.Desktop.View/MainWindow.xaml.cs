@@ -57,14 +57,19 @@
 
         private void CreateEntityCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = true;
+            if (this.Model == null)
+                args.CanExecute = false;
+            else
+                args.CanExecute = true;
         }
 
         private void CreateEntityExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            var newEntity = this.Model.CreateNewEntity(); //"entity" + (model.Entities.Count()+1));
-            //if (this.EditEntity(newEntity).GetValueOrDefault(false))
-            //    this.Model.Add(newEntity);
+            var dialogViewModel = this.Model.CreateNewEntity();
+
+            new KosmoGraphDialogService().ShowDialog(this.rootPanel, dialogViewModel,
+                DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback),
+                DialogActionBuilder.Ok("create entity", dialogViewModel.Commit));
         }
 
         #endregion

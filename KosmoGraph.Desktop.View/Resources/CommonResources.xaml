@@ -73,15 +73,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                    <Border
-                        Name="focusButtonBorder"
-                        Background="Transparent"
-                        BorderThickness="1"
-                        Padding="1"
-                        BorderBrush="{StaticResource foregroundBrush}"
-                        Visibility="Hidden"/>
-                        <Border
-                            Name="buttonBorder"
+                        <Border Name="focusButtonBorder"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Padding="1"
+                            BorderBrush="{StaticResource foregroundBrush}"
+                            Visibility="Hidden"/>
+                        <Border Name="buttonBorder"
                             BorderBrush="{TemplateBinding Foreground}"
                             BorderThickness="1"
                             Background="Transparent"/>
