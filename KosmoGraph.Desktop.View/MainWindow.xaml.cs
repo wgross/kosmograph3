@@ -30,20 +30,17 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            this.Loaded += MainWindow_Loaded;
             this.Activated += MainWindow_Activated;
         }
 
         void MainWindow_Activated(object sender, EventArgs e)
         {
-            this.CreateNewModelFromStore();
             if (this.Model == null)
-                Application.Current.Shutdown();
-        }
-
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //this.CreateNewModelFromStore();
+            {
+                this.CreateNewModelFromStore();
+                if (this.Model == null)
+                    Application.Current.Shutdown();
+            }
         }
 
         public EntityRelationshipViewModel Model

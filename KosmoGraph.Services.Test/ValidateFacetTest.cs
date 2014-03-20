@@ -46,7 +46,7 @@
 
             bool result = false;
 
-            this.fsvc.ValidateFacet(this.facets.Single()).EndWith(r => result = r);
+            this.fsvc.ValidateFacet(this.facets.Single().Name).EndWith(r => result = r);
 
             // ASSERT
 
@@ -70,7 +70,7 @@
 
             bool result = false;
 
-            this.fsvc.ValidateFacet(this.facets.Single()).EndWith(r => result = r);
+            this.fsvc.ValidateFacet(this.facets.Single().Name).EndWith(r => result = r);
 
             // ASSERT
 

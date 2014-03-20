@@ -18,6 +18,6 @@ using System.Threading.Tasks;
 
         Task<Facet> UpdateFacet(Facet updatedFacet);
 
-        Task<bool> ValidateFacet(Facet facet);
+        Task<bool> ValidateFacet(string facetName);
     }
 }
