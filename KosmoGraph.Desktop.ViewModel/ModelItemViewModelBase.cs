@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public abstract class ModelItemViewModelBase : NotificationObject
+    public abstract class ModelItemViewModelBase : ExtendedNotificationObject
     {
         #region Construction and initialization of this instance
 

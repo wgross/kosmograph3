@@ -76,6 +76,7 @@
     <Compile Include="EntityRelationshipViewModelFactory.cs" />
     <Compile Include="Entity\Edit\EditAssignedEntityTagViewModel.cs" />
     <Compile Include="EditAssignedRelationshipTagViewModel.cs" />
+    <Compile Include="MsPracticesPrismViewModel\NotificationObjectExtensions.cs" />
     <Compile Include="Property\Edit\EditExistingPropertyValueViewModel.cs" />
     <Compile Include="Entity\Edit\EditExistingEntityViewModel.cs" />
     <Compile Include="Entity\Edit\EditEntityViewModelBase.cs" />
@@ -116,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SystemLinq\SystemLinqExpressionsExtensions.cs" />
     <Compile Include="System\ListExtensions.cs" />
     <Compile Include="FacetedModelItemViewModelBase.cs" />
     <Compile Include="Facet\FacetViewModel.cs" />

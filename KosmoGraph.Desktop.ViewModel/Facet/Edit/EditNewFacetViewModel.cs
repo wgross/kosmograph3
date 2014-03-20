@@ -21,15 +21,12 @@ namespace KosmoGraph.Desktop.ViewModel
         #region Construction and initialization of this instance
 
         public EditNewFacetViewModel(EntityRelationshipViewModel withViewModel, IManageFacets withFacets)
-            : base(withViewModel, Resources.EditNewFacetViewModelTitle)
+            : base(withViewModel, withFacets, Resources.EditNewFacetViewModelTitle)
         {
-            this.facets = withFacets;
             this.ExecuteRollback();
         }
 
         private bool hasAlreadyCommitted = false;
-
-        private readonly IManageFacets facets;
 
         #endregion
 
@@ -68,9 +65,7 @@ namespace KosmoGraph.Desktop.ViewModel
 
             this.hasAlreadyCommitted = true;
 
-            var scheduleAtUiThread = TaskScheduler.FromCurrentSynchronizationContext();
-
-            this.facets
+            this.ManageFacets
                 .CreateNewFacet(f =>
                 {
                     f.Name = this.Name;
@@ -81,38 +76,18 @@ namespace KosmoGraph.Desktop.ViewModel
                             pd.Name = pdvm.Name;
                         }));
                     }
-
-                    //// add new property definitions to tag
-                    //// this can be done without comparison because Add doesnt add twice the same tag
-                    //foreach (var addedPropertyDefinition in this.Properties)
-                    //{
-                    //    addedPropertyDefinition.Commit.Execute();
-                    //    this.Edited.Add(addedPropertyDefinition.Edited);
-                    //}
-
-                    //// remove removed property definitions from tag
-                    //foreach (var commitedPropertyDefinition in this.Edited.Properties.ToArray())
-                    //    if (!this.Properties.Any(pd => pd.Edited.Equals(commitedPropertyDefinition)))
-                    //        this.Edited.Remove(commitedPropertyDefinition);
                 })
                 .EndWith(
                     succeeded: f =>
                     {
-                        try
-                        {
-                            this.Model.Add(f);
-                        }
-                        catch (Exception ex)
-                        {
-                            log.ErrorException("Cought excption:", ex);
-                        }
+                        this.Model.Add(f);
                     },
                     failed: ex =>
                     {
                         this.hasAlreadyCommitted = false;
+                        //this.IsValid = false;
                         return true; // handled ?!
-                    },
-                    scheduleAt: scheduleAtUiThread);
+                    });
         }
 
         override protected bool CanExecuteCommit()
@@ -121,6 +96,9 @@ namespace KosmoGraph.Desktop.ViewModel
                 return false;
 
             if (this.hasAlreadyCommitted)
+                return false;
+
+            if (this.IsValid.GetValueOrDefault(false)==false)
                 return false;
 
             return (

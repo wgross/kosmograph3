@@ -35,6 +35,9 @@
             this.fsvc // expect retrieval of all facets
                 .Setup(_ => _.GetAllFacets())
                 .Returns(Task.FromResult(facets.AsEnumerable()));
+            this.fsvc // validate all facets independet from facet name
+                .Setup(_ => _.ValidateFacet(It.IsAny<string>()))
+                .Returns(Task.FromResult(true));
 
             this.entities = Enumerable.Empty<Entity>();
             this.relationships = Enumerable.Empty<Relationship>();
@@ -160,8 +163,11 @@
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
+            this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion 

@@ -18,14 +18,11 @@ using System.Threading.Tasks;
         #region Construction and Initalization of this instance
 
         public EditExistingFacetViewModel(FacetViewModel edited, IManageFacets withFacets)
-            : base(edited.Model, Resources.EditExistingTagViewModelTitle)
+            : base(edited.Model, withFacets, Resources.EditExistingTagViewModelTitle)
         {
             this.Edited = edited;
-            this.facets = withFacets;
             this.ExecuteRollback();
         }
-
-        private readonly IManageFacets facets;
 
         public FacetViewModel Edited { get; private set; }
 
@@ -76,7 +73,7 @@ using System.Threading.Tasks;
             
             // send edited facet to application layer
 
-            this.facets
+            this.ManageFacets
                 .UpdateFacet(this.Edited.ModelItem)
                 .EndWith(succeeded:f => this.Edited.Model.UpdateAssignedFacets(this.Edited));
 

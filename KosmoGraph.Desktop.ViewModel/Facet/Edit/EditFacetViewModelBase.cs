@@ -2,24 +2,26 @@
 namespace KosmoGraph.Desktop.ViewModel
 {
     using KosmoGraph.Desktop.ViewModel.Properties;
-    using KosmoGraph.Model;
-    using KosmoGraph.Services;
-    using Microsoft.Practices.Prism.Commands;
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+using KosmoGraph.Model;
+using KosmoGraph.Services;
+using Microsoft.Practices.Prism.Commands;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
     public abstract class EditFacetViewModelBase : EditModelItemViewModelBase, IDataErrorInfo
     {
         #region Construction and initialization of this instance 
 
-        public EditFacetViewModelBase(EntityRelationshipViewModel model, string withTitleFormat)
+        public EditFacetViewModelBase(EntityRelationshipViewModel model, IManageFacets facets, string withTitleFormat)
             :base(model)
         {
+            this.ManageFacets = facets;
             this.AddPropertyDefinition = new DelegateCommand(this.AddPropertyDefinitionExecuted, this.CanExecuteAddPropertyDefinition);
             this.RemovePropertyDefinition = new DelegateCommand<IEditPropertyDefinition>(this.RemovePropertyDefinitionExecuted, this.CanExecuteRemovePropertyDefinition);
             this.titleFormat = withTitleFormat;
@@ -82,12 +84,8 @@ namespace KosmoGraph.Desktop.ViewModel
             }
             set
             {
-                if (this.name == value)
-                    return;
-                
-                this.name = value;
-                this.RaisePropertyChanged(() => this.Name);
-                this.RaisePropertyChanged(() => this.Title);
+                if(this.SetAndValidate(() => this.Name, ref this.name, value))
+                    this.RaisePropertyChanged(() => this.Title);
             }
         }
 
@@ -102,10 +100,6 @@ namespace KosmoGraph.Desktop.ViewModel
         abstract protected void AddPropertyDefinitionExecuted();
 
         abstract protected bool CanExecuteAddPropertyDefinition();
-
-        //{
-        //    //this.Properties.Add(new EditPropertyDefinitionViewModel(this.Edited.CreateNewPropertyDefinition(string.Format("Edited {0}", this.Properties.Count + 1))));
-        //}
 
         public DelegateCommand<IEditPropertyDefinition> RemovePropertyDefinition
         {
@@ -127,10 +121,7 @@ namespace KosmoGraph.Desktop.ViewModel
             }
             protected set
             {
-                if (object.ReferenceEquals(this.properties, value))
-                    return;
-                this.properties = value;
-                this.RaisePropertyChanged(() => this.Properties);
+                this.Set(() => this.Properties, ref this.properties, value);
             }
         }
 
@@ -144,5 +135,27 @@ namespace KosmoGraph.Desktop.ViewModel
         protected bool isPropertiesChanged = false;
 
         #endregion 
+
+        #region Validate the facets date state
+
+        protected bool SetAndValidate<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        {
+            if (this.Set(propertyExpression, ref field, newValue))
+            {
+                this.ValidateFacetData(); // spawns thread for validation
+                return true;
+            }
+            return false;
+        }
+       
+        protected bool? IsValid { get; private set;}
+
+        protected void ValidateFacetData()
+        {
+            this.IsValid = null;
+            this.ManageFacets.ValidateFacet(this.Name).EndWith(valid => this.IsValid = valid);
+        }
+
+        #endregion
     }
 }
