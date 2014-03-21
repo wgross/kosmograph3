@@ -446,23 +446,19 @@
     <DataTemplate DataType="{x:Type kdvm:EditFacetViewModelBase}">
         <StackPanel
             MinWidth="300">
-            <Border
-                Style="{StaticResource dialogTitleBorderStyle}">
-                <TextBlock
-                   Style="{StaticResource dialogTitle}"
-                   Text="{Binding Title}"/>
+            <Border Style="{StaticResource dialogTitleBorderStyle}">
+                <TextBlock Style="{StaticResource dialogTitle}"
+                           Text="{Binding Title}"/>
             </Border>
             <DockPanel
                 HorizontalAlignment="Stretch"
                 LastChildFill="True">
-                <Label
+                <Label Style="{StaticResource nameLabelStyle}"
                     DockPanel.Dock="Left"
-                    Style="{StaticResource nameLabelStyle}"
                     Target="nameTextBox"
                     VerticalAlignment="Top"/>
-                <TextBox Name="nameTextBox"
+                <TextBox Name="nameTextBox" Style="{StaticResource nameTextBoxStyle}"
                     Margin="0,4,0,0"
-                    Style="{StaticResource nameTextBoxStyle}"
                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                     VerticalAlignment="Top"/>
             </DockPanel>

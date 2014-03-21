@@ -72,6 +72,7 @@
     <Compile Include="Common\EditFacetedViewModelBase.cs" />
     <Compile Include="Common\Edit\EditAssignedFacetViewModelBase.cs" />
     <Compile Include="Common\Edit\EditExistingAssignedFacetViewModel.cs" />
+    <Compile Include="Contracts\ICanValidate.cs" />
     <Compile Include="Contracts\IManageDiagramItems.cs" />
     <Compile Include="EntityRelationshipViewModelFactory.cs" />
     <Compile Include="Entity\Edit\EditAssignedEntityTagViewModel.cs" />

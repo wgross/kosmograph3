@@ -47,17 +47,17 @@ using System.Threading.Tasks;
         {
             get
             {
-                //this.HasError = false;
+                this.HasError = false;
 
-                //if (columnName == "Name")
-                //{
-                //    if (this.Edited.Name != this.Name)
-                //        if (this.Edited.Model.Tags.Any(t => t.Name.Equals(this.Name, StringComparison.InvariantCultureIgnoreCase)))
-                //        {
-                //            this.HasError = true;
-                //            return Resources.ErrorTagNameIsNotUnique;
-                //        }
-                //}
+                if (columnName == "Name")
+                {
+                    if (this.Name != this.Name)
+                        if (this.Model.Facets.Any(t => t.Name.Equals(this.Name, StringComparison.InvariantCultureIgnoreCase)))
+                        {
+                            this.HasError = true;
+                            return Resources.ErrorFacetNameIsNotUnique;
+                        }
+                }
                 return string.Empty;
             }
         }

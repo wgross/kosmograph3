@@ -1,5 +1,6 @@
 ﻿namespace KosmoGraph.Desktop.Dialog
 {
+    using KosmoGraph.Desktop.ViewModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -88,7 +89,9 @@
         {
             try
             {
-                (args.Parameter as DialogAction).ContentCommand.Execute(this.ViewModel.DialogContent);
+                // try to validate content before OK is executed
+                if(this.ViewModel.DialogContent.OfType<ICanValidate>().Aggregate(true, (valid, dc) => dc.Validate() && valid))
+                    (args.Parameter as DialogAction).ContentCommand.Execute(this.ViewModel.DialogContent);
             }
             finally
             {

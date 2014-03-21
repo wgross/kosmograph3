@@ -151,20 +151,20 @@ namespace KosmoGraph.Desktop.ViewModel.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Facet name has to be unique.
+        /// </summary>
+        public static string ErrorFacetNameIsNotUnique {
+            get {
+                return ResourceManager.GetString("ErrorFacetNameIsNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to name of Propery Definition isn&apos;t unique.
         /// </summary>
         public static string ErrorPropertyDefinitionNameIsNotUnique {
             get {
                 return ResourceManager.GetString("ErrorPropertyDefinitionNameIsNotUnique", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag name has to be unique.
-        /// </summary>
-        public static string ErrorTagNameIsNotUnique {
-            get {
-                return ResourceManager.GetString("ErrorTagNameIsNotUnique", resourceCulture);
             }
         }
     }
