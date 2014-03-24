@@ -55,19 +55,24 @@
             this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
-        #region EditFacet > Modify
+        #region EditFacet > Modify > PrepareCommit
 
         [TestMethod]
-        [TestCategory("EditFacet")]
+        [TestCategory("EditFacet"),TestCategory("ValidateFacet")]
         public void EditExistingFacetName()
         {
             // ARRANGE
+          
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1-changed"))
+                .Returns(Task.FromResult(true));
 
             var f1edit = this.vm.EditFacet(this.vm.Facets.Single());
 
             // ACT
 
             f1edit.Name = "f1-changed";
+            f1edit.PrepareCommit.Execute();
 
             // ASSERT
 
@@ -77,22 +82,27 @@
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
 
-            this.fsvc.VerifyAll();
-            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_=>_.GetAllEntities(), Times.Once);
             this.ersvc.Verify(_=>_.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.fsvc.Verify(_=>_.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion 
 
-        #region EditFacet > Modify > Commit
+        #region EditFacet > Modify > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("EditFacet")]
+        [TestCategory("EditFacet"),TestCategory("ValidateFacet")]
         public void CommitEditedExistingFacetName()
         {
             // ARRANGE
+
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1-changed"))
+                .Returns(Task.FromResult(true));
 
             this.fsvc // expect update of facet
                 .Setup(_ => _.UpdateFacet(this.facets.Single()))
@@ -101,6 +111,7 @@
             var f1edit = this.vm.EditFacet(this.vm.Facets.Single());
 
             f1edit.Name = "f1-changed";
+            f1edit.PrepareCommit.Execute();
 
             // ACT
 
@@ -114,12 +125,13 @@
             Assert.AreEqual("f1-changed", f1edit.Edited.Name);
             Assert.AreEqual("f1-changed", f1edit.Edited.ModelItem.Name);
 
-            this.fsvc.VerifyAll();
-            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
-            this.fsvc.Verify(_ => _.UpdateFacet(It.IsAny<Facet>()), Times.Once);
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.fsvc.Verify(_ => _.UpdateFacet(It.IsAny<Facet>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion 
@@ -148,24 +160,28 @@
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
 
-            this.fsvc.VerifyAll();
-            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
 
         #endregion 
 
-        #region EditFacet > Modify > Rollback > Modify > Commit
+        #region EditFacet > Modify > Rollback > Modify > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("EditFacet")]
+        [TestCategory("EditFacet"),TestCategory("ValidateFacet")]
         public void RollbackEditedExistingFacetNameAllowsCommitAgain()
         {
             // ARRANGE
-            
+
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1-changed"))
+                .Returns(Task.FromResult(true));
+
             this.fsvc // expect update of facet
                 .Setup(_ => _.UpdateFacet(this.facets.Single()))
                 .Returns<Facet>(f => Task.FromResult(f));
@@ -178,6 +194,7 @@
             // ACT
 
             f1edit.Name = "f1-changed";
+            f1edit.PrepareCommit.Execute();
             f1edit.Commit.Execute();
 
             // ASSERT
@@ -191,6 +208,7 @@
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.UpdateFacet(It.IsAny<Facet>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);

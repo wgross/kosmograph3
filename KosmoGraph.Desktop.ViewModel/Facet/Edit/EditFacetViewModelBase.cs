@@ -113,6 +113,9 @@ namespace KosmoGraph.Desktop.ViewModel
 
         private Task<bool> ValidateFacetEditor()
         {
+            if (string.IsNullOrWhiteSpace(this.Name))
+                return Task.FromResult(false);
+
             if(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
                 return Task.FromResult(false);
 
