@@ -35,10 +35,7 @@
             this.fsvc // expect retrieval of all facets
                 .Setup(_ => _.GetAllFacets())
                 .Returns(Task.FromResult(facets.AsEnumerable()));
-            this.fsvc // validate all facets independet from facet name
-                .Setup(_ => _.ValidateFacet(It.IsAny<string>()))
-                .Returns(Task.FromResult(true));
-
+            
             this.entities = Enumerable.Empty<Entity>();
             this.relationships = Enumerable.Empty<Relationship>();
 
@@ -51,13 +48,17 @@
 
         }
 
-        #region CreateNewFacet > CreateNewPropertyDefinition
+        #region CreateNewFacet > CreateNewPropertyDefinition > PrepareCommit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition"),]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition"),TestCategory("ValidateFacet")]
         public void CreateNewPropertyAtNewFacetViewModel()
         {
             // ARRANGE
+
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
 
             var f1edit = this.vm.CreateNewFacet();
 
@@ -65,6 +66,7 @@
 
             f1edit.Name = "f1";
             f1edit.AddPropertyDefinition.Execute();
+            f1edit.PrepareCommit.Execute();
             
             // ASSERT
             // Facet has new property definition, this allows commit
@@ -87,17 +89,22 @@
             this.ersvc.Verify(_ =>_.GetAllEntities(), Times.Once);
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion 
 
-        #region CreateNewFacet > CreateNewPropertyDefinition > Commit
+        #region CreateNewFacet > CreateNewPropertyDefinition > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition")]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition"),TestCategory("ValidateFacet")]
         public void CommitEditNewFacetViewModelWithPropertyCreatesNewFacet()
         {
             // ARRANGE
+
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -108,11 +115,11 @@
             f1edit.Name = "f1";
             f1edit.AddPropertyDefinition.Execute();
             f1edit.Properties.Single().Name = "pd1";
+            f1edit.PrepareCommit.Execute();
 
             // ACT
-
+            
             f1edit.Commit.Execute();
-            TestDispatcher.DoEvents();
 
             // ASSERT
             // commit create a new facet and adds it to the main view model
@@ -134,6 +141,7 @@
             this.ersvc.VerifyAll();
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion 
@@ -172,13 +180,17 @@
 
         #endregion 
 
-        #region CreateNewFacet > CreateNewPropertyDefinition > Rollback > Commit
+        #region CreateNewFacet > CreateNewPropertyDefinition > Rollback > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition")]
+        [TestCategory("CreateNewFacet"),TestCategory("AddPropertyDefinition"),TestCategory("ValidateFacet")]
         public void RollbackEditNewFacetViewModelWithPropertyAllowsEditingAgainTillCommit()
         {
             // ARRANGE
+          
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -196,10 +208,9 @@
             f1edit.Name = "f1";
             f1edit.AddPropertyDefinition.Execute();
             f1edit.Properties.Single().Name = "pd1";
+            f1edit.PrepareCommit.Execute();
             f1edit.Commit.Execute();
             
-            TestDispatcher.DoEvents();
-
             // ASSERT
 
             Assert.AreEqual("f1", f1edit.Name);
@@ -214,9 +225,10 @@
             Assert.AreEqual(1, this.vm.Facets.Single().Properties.Count());
             Assert.AreEqual("pd1", this.vm.Facets.Single().Properties.Single().Name);
 
-            ersvc.VerifyAll();
-            fsvc.VerifyAll();
-            fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.ersvc.VerifyAll();
+            this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion 

@@ -92,20 +92,13 @@ namespace KosmoGraph.Desktop.ViewModel
 
         override protected bool CanExecuteCommit()
         {
-            if (this.HasError)
+            if (!base.CanExecuteCommit())
                 return false;
 
             if (this.hasAlreadyCommitted)
                 return false;
 
-            if (this.IsValid.GetValueOrDefault(false)==false)
-                return false;
-
-            return (
-                    !(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
-                    ||
-                    this.Properties.Any()
-                );
+            return true;
         }
 
         #endregion

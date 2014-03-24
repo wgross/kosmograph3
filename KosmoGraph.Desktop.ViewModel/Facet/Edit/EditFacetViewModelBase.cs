@@ -2,24 +2,24 @@
 namespace KosmoGraph.Desktop.ViewModel
 {
     using KosmoGraph.Desktop.ViewModel.Properties;
-using KosmoGraph.Model;
-using KosmoGraph.Services;
-using Microsoft.Practices.Prism.Commands;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+    using KosmoGraph.Model;
+    using KosmoGraph.Services;
+    using Microsoft.Practices.Prism.Commands;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Text;
+    using System.Threading.Tasks;
 
     public abstract class EditFacetViewModelBase : EditModelItemViewModelBase, IDataErrorInfo
     {
-        #region Construction and initialization of this instance 
+        #region Construction and initialization of this instance
 
         public EditFacetViewModelBase(EntityRelationshipViewModel model, IManageFacets facets, string withTitleFormat)
-            :base(model)
+            : base(model)
         {
             this.ManageFacets = facets;
             this.AddPropertyDefinition = new DelegateCommand(this.AddPropertyDefinitionExecuted, this.CanExecuteAddPropertyDefinition);
@@ -30,39 +30,6 @@ using System.Threading.Tasks;
         private readonly string titleFormat;
 
         protected IManageFacets ManageFacets { get; private set; }
-
-        #endregion
-
-        #region IDataErrorInfo Members
-
-        public string Error
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                this.HasError = false;
-
-                if (columnName == "Name")
-                {
-                    if (this.Name != this.Name)
-                        if (this.Model.Facets.Any(t => t.Name.Equals(this.Name, StringComparison.InvariantCultureIgnoreCase)))
-                        {
-                            this.HasError = true;
-                            return Resources.ErrorFacetNameIsNotUnique;
-                        }
-                }
-                return string.Empty;
-            }
-        }
-
-        public bool HasError { get; private set; }
 
         #endregion
 
@@ -84,14 +51,14 @@ using System.Threading.Tasks;
             }
             set
             {
-                if(this.SetAndValidate(() => this.Name, ref this.name, value))
+                if (this.SetAndInvalidate(() => this.Name, ref this.name, value))
                     this.RaisePropertyChanged(() => this.Title);
             }
         }
 
         private string name;
 
-        #endregion 
+        #endregion
 
         #region Edit the Facets property definitions
 
@@ -103,7 +70,8 @@ using System.Threading.Tasks;
 
         public DelegateCommand<IEditPropertyDefinition> RemovePropertyDefinition
         {
-            get; private set;
+            get;
+            private set;
         }
 
         abstract protected bool CanExecuteRemovePropertyDefinition(IEditPropertyDefinition propertyDefinitionToRemove);
@@ -134,28 +102,22 @@ using System.Threading.Tasks;
 
         protected bool isPropertiesChanged = false;
 
-        #endregion 
+        #endregion
 
-        #region Validate the facets date state
+        #region Validate/Prepare Commit Editor
 
-        protected bool SetAndValidate<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        protected override void ExecutePrepareCommit()
         {
-            if (this.Set(propertyExpression, ref field, newValue))
-            {
-                this.ValidateFacetData(); // spawns thread for validation
-                return true;
-            }
-            return false;
-        }
-       
-        protected bool? IsValid { get; private set;}
-
-        protected void ValidateFacetData()
-        {
-            this.IsValid = null;
-            this.ManageFacets.ValidateFacet(this.Name).EndWith(valid => this.IsValid = valid);
+            this.ValidatePrepareCommit(this.ValidateFacetEditor());
         }
 
+        private Task<bool> ValidateFacetEditor()
+        {
+            if(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
+                return Task.FromResult(false);
+
+            return this.ManageFacets.ValidateFacet(this.Name);
+        }
         #endregion
     }
 }

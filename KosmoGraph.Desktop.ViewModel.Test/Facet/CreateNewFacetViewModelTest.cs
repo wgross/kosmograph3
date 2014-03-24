@@ -32,25 +32,21 @@
             this.facets = Enumerable.Empty<Facet>();
 
             this.fsvc = new Mock<IManageFacets>();
-            
+
             this.fsvc // expect retrieval of all facets
                .Setup(_ => _.GetAllFacets())
                .Returns(Task.FromResult(this.facets));
 
-            this.fsvc // validate any facet independent from name
-                .Setup(_ => _.ValidateFacet(It.IsAny<string>()))
-                .Returns(Task.FromResult(true));
-
             this.entities = Enumerable.Empty<Entity>();
-            
+
             this.relationships = Enumerable.Empty<Relationship>();
-            
+
             this.ersvc = new Mock<IManageEntitiesAndRelationships>();
-            
+
             this.ersvc // expect retrueval of all entities
                 .Setup(_ => _.GetAllEntities())
                 .Returns(Task.FromResult(this.entities));
-            
+
             this.ersvc
                 .Setup(_ => _.GetAllRelationships())
                 .Returns(Task.FromResult(this.relationships));
@@ -58,17 +54,18 @@
             this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
-        #region CreateNewFacet
+        #region CreateNewFacet > PrepareCommit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
         public void CreateNewFacetViewModel()
         {
             // ARRANGE
 
             // ACT
-            
+
             EditNewFacetViewModel f1edit = this.vm.CreateNewFacet();
+            f1edit.PrepareCommit.Execute();
 
             // ASSERT
             // new fact is member of Facets list and Items list
@@ -80,7 +77,7 @@
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
-            
+
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
@@ -90,24 +87,25 @@
 
         #endregion
 
-        #region CreateNewFacet > Modify + Validate
+        #region CreateNewFacet > Modify > PrepareCommit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("ValidateFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
         public void ModifyWithValidNameAllowsEditNewFacetViewModelCommit()
         {
             // ARRANGE
 
-            this.fsvc // validate facet name
-                .Setup(_=>_.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
-                
-            var f1edit = vm.CreateNewFacet();
+            this.fsvc // validate facet default test name
+               .Setup(_ => _.ValidateFacet("f1"))
+               .Returns(Task.FromResult(true));
+
+            var f1edit = this.vm.CreateNewFacet();
 
             // ACT
 
             f1edit.Name = "f1";
-            
+            f1edit.PrepareCommit.Execute();
+
             // ASSERT
             // new fact is member of Facets list and Items list
 
@@ -125,9 +123,8 @@
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
-            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Exactly(2));
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
-
 
         [TestMethod]
         [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
@@ -139,11 +136,12 @@
                 .Setup(_ => _.ValidateFacet("f1"))
                 .Returns(Task.FromResult(false));
 
-            var f1edit = vm.CreateNewFacet();
+            var f1edit = this.vm.CreateNewFacet();
 
             // ACT
 
             f1edit.Name = "f1";
+            f1edit.PrepareCommit.Execute();
 
             // ASSERT
             // new fact is member of Facets list and Items list
@@ -162,16 +160,20 @@
             this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
-            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Exactly(2));
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("RemovePropertyDefinition")]
+        [TestCategory("CreateNewFacet"), TestCategory("RemovePropertyDefinition"), TestCategory("ValidateFacet")]
         public void RemoveNewPropertyDefinitionFromNewFacet()
         {
             // ARRANGE
 
-            var f1edit = vm.CreateNewFacet();
+            this.fsvc // validate facet default test name
+               .Setup(_ => _.ValidateFacet("f1"))
+               .Returns(Task.FromResult(true));
+
+            var f1edit = this.vm.CreateNewFacet();
 
             f1edit.Name = "f1";
             f1edit.AddPropertyDefinition.Execute();
@@ -179,13 +181,14 @@
             // ACT
 
             f1edit.RemovePropertyDefinition.Execute(f1edit.Properties.First());
+            f1edit.PrepareCommit.Execute();
 
             // ASSERT
             // Facet has new property definition, this allows commit
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.AreEqual(0, f1edit.Properties.Count());
-            
+
             Assert.IsTrue(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
@@ -202,15 +205,19 @@
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
-        #region CreateNewFacet > Modify > Commit
+        #region CreateNewFacet > Modify > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
         public void CommitEditNewFacetViewModelWithNameCreatesNewFacet()
         {
             // ARRANGE
+
+            this.fsvc // validate facet default test name
+              .Setup(_ => _.ValidateFacet("f1"))
+              .Returns(Task.FromResult(true));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -219,20 +226,19 @@
             var f1edit = vm.CreateNewFacet();
 
             f1edit.Name = "f1";
-           
+            f1edit.PrepareCommit.Execute();
+
             // ACT
 
             f1edit.Commit.Execute();
 
-            TestDispatcher.DoEvents();
-            
             // ASSERT
             // commit createx a new facet and adds it to the main view model
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
-            
+
             Assert.AreEqual(1, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
 
@@ -244,18 +250,23 @@
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        [TestCategory("CreateNewFacet"),TestCategory("ValidateFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
         public void CommitEditNewFacetViewModelWithDuplicateNameFails()
         {
             // ARRANGE
 
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
+
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
-                .Returns<Action<Facet>>(a => Task.Run<Facet>(() => 
-                { 
+                .Returns<Action<Facet>>(a => Task.Run<Facet>(() =>
+                {
                     throw new InvalidOperationException();
                     return (Facet)null; // to satisfy compiler
                 }));
@@ -263,6 +274,7 @@
             var f1edit = vm.CreateNewFacet();
 
             f1edit.Name = "f1";
+            f1edit.PrepareCommit.Execute();
 
             // ACT
 
@@ -287,37 +299,39 @@
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        [TestCategory("CreateNewFacet")]
+        [TestCategory("CreateNewFacet"), TestCategory("ValidateFacet")]
         public void CommitEditNewFacetViewModelTwiceCreatesOneNewFacet()
         {
             // ARRANGE
 
-            fsvc // expect facet creation
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
+
+            this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
                 .Returns((Action<Facet> a) => Task.FromResult(Facet.Factory.CreateNew(a)));
 
             var f1edit = this.vm.CreateNewFacet();
             f1edit.Name = "f1";
+            f1edit.PrepareCommit.Execute();
             f1edit.Commit.Execute();
 
-            TestDispatcher.DoEvents();
-            
             // ACT
 
             f1edit.Commit.Execute();
 
-            TestDispatcher.DoEvents();
-           
             // ASSERT
             // commit twice creatze no new facet
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.AreEqual(0, f1edit.Properties.Count());
-            
+
             Assert.AreEqual(1, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
 
@@ -329,6 +343,7 @@
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
         #endregion
@@ -340,9 +355,9 @@
         public void RollbackEditNewFacetViewModelWithNameInitializesAgain()
         {
             // ARRANGE
+          
+            var f1edit = vm.CreateNewFacet();
 
-             var f1edit = vm.CreateNewFacet();
-            
             f1edit.Name = "f1";
             
             // ACT
@@ -364,15 +379,19 @@
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
-        #region CreateNewEntity > Modify > Rollback > Commit
+        #region CreateNewEntity > Modify > Rollback > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewFacet")]
+        [TestCategory("CreateNewFacet"),TestCategory("ValidateFacet")]
         public void RollbackEditNewFacetViewModelWithNameAllowsEditingAgainTillCommit()
         {
             // ARRANGE
+          
+            this.fsvc // validate facet default test name
+                .Setup(_ => _.ValidateFacet("f1"))
+                .Returns(Task.FromResult(true));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -386,6 +405,7 @@
             // ACT
 
             f1edit.Name = "f1";
+            f1edit.PrepareCommit.Execute();
             f1edit.Commit.Execute();
 
             TestDispatcher.DoEvents();
@@ -407,9 +427,10 @@
             this.fsvc.VerifyAll();
             this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
             this.fsvc.Verify(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()), Times.Once);
+            this.fsvc.Verify(_ => _.ValidateFacet(It.IsAny<string>()), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
         //[TestMethod]
         //[TestCategory("CreateNewFacet")]
@@ -426,10 +447,10 @@
 
         //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var f1 = vm.CreateNewFacet("f1");
-            
+
         //    // ACT
         //    // adding the f1 to the model second time doesn't create e1 second item in f1 list
-            
+
         //    TagViewModel added1 = vm.Add(f1);
         //    TagViewModel added2 = vm.Add(f1);
 
@@ -459,7 +480,7 @@
 
         //    var vm = new EntityRelationshipViewModel(ersvc.Object, fsvc.Object);
         //    var f1 = vm.Add(vm.CreateNewFacet("f1"));
-            
+
         //    // ACT & ASSERT
         //    // add facet with same name throws 
 
