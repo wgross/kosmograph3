@@ -89,11 +89,11 @@
     <Compile Include="Entity\Edit\PendingAssignedFacetPropertyDefinitionViewModel.cs" />
     <Compile Include="Entity\Edit\PendingAssignedFacetPropertyValue.cs" />
     <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="Facet\EditExistingPropertyDefinitionViewModel.cs" />
+    <Compile Include="Facet\Edit\EditExistingPropertyDefinitionViewModel.cs" />
     <Compile Include="EditRelationshipPropertyValueViewModel.cs" />
     <Compile Include="Entity\Edit\PendingAssignedFacetViewModel.cs" />
-    <Compile Include="Facet\EditNewPropertyDefinitionViewModel.cs" />
-    <Compile Include="Facet\EditPropertyDefinitionViewModelBase.cs" />
+    <Compile Include="Facet\Edit\EditNewPropertyDefinitionViewModel.cs" />
+    <Compile Include="Facet\Edit\EditPropertyDefinitionViewModelBase.cs" />
     <Compile Include="Property\IPropertyValue.cs" />
     <Compile Include="Property\IPropertyDefinition.cs" />
     <Compile Include="Relationship\Edit\EditNewRelationshipViewModel.cs" />
