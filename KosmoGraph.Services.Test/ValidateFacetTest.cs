@@ -32,6 +32,35 @@
             };
         }
 
+
+        [TestMethod]
+        [TestCategory("ValidateFacet")]
+        public void VerifyFacetNameFailsWithEmptyName()
+        {
+            // ARRANGE
+
+            this.facetRepository
+                .Setup(_ => _.ExistsName(string.Empty))
+                .Returns(false);
+
+            this.facets.Single().Name = string.Empty;
+
+            // ACT
+
+            ValidateFacetResult result = null;
+
+            this.fsvc.ValidateFacet(this.facets.Single().Name).EndWith(r => result = r);
+
+            // ASSERT
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(result.NameIsNotUnique);
+            Assert.IsTrue(result.NameIsNullOrEmpty);
+
+            this.facetRepository.VerifyAll();
+            this.facetRepository.Verify(_ => _.ExistsName(It.IsAny<string>()), Times.Once);
+        }
+
         [TestMethod]
         [TestCategory("ValidateFacet")]
         public void VerifyFacetNameSucceedsIfNameIsUnknown()
@@ -52,6 +81,7 @@
 
             Assert.IsNotNull(result);
             Assert.IsFalse(result.NameIsNotUnique);
+            Assert.IsFalse(result.NameIsNullOrEmpty);
 
             this.facetRepository.VerifyAll();
             this.facetRepository.Verify(_ => _.ExistsName(It.IsAny<string>()), Times.Once);
@@ -77,6 +107,7 @@
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.NameIsNotUnique);
+            Assert.IsFalse(result.NameIsNullOrEmpty);
 
             this.facetRepository.VerifyAll();
             this.facetRepository.Verify(_ => _.ExistsName(It.IsAny<string>()), Times.Once);

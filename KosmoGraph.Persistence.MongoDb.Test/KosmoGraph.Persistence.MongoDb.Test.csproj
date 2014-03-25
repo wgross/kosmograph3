@@ -72,6 +72,7 @@
     <Compile Include="RemoveRelationshipTest.cs" />
     <Compile Include="GetAllFacetTest.cs" />
     <Compile Include="GetAllEntityTest.cs" />
+    <Compile Include="ValidateEntityTest.cs" />
     <Compile Include="ValidateFacetTest.cs" />
   </ItemGroup>
   <ItemGroup>

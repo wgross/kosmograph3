@@ -40,6 +40,13 @@ using System.Threading.Tasks;
         public Entity To { get; private set; }
     }
 
+    public sealed class ValidateEntityResult
+    {
+        public bool NameIsNullOrEmpty { get; set; }
+
+        public bool NameIsNotUnique { get; set; }
+    }
+
     public interface IManageEntities
     {
         Task<Entity> CreateNewEntity(Action<Entity> initializeWith);
@@ -49,6 +56,8 @@ using System.Threading.Tasks;
         Task<IEnumerable<Entity>> GetAllEntities();
 
         Task<bool> RemoveEntity(Entity entity);
+
+        Task<ValidateEntityResult> ValidateEntity(string entityName);
     }
 
     public interface IManageRelationships

@@ -187,8 +187,16 @@
         #endregion
 
         #region IManageRelationships Members
-
         
         #endregion
+
+        public Task<ValidateEntityResult> ValidateEntity(string entityName)
+        {
+            return Task.Run(() => new ValidateEntityResult
+            {
+                NameIsNullOrEmpty = string.IsNullOrEmpty(entityName),
+                NameIsNotUnique = this.entityRepository.ExistsName(entityName)
+            });
+        }
     }
 }

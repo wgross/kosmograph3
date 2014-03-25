@@ -72,6 +72,7 @@
         {
             return Task.Run(() => new ValidateFacetResult 
             {
+                NameIsNullOrEmpty = string.IsNullOrEmpty(facetName),
                 NameIsNotUnique = this.facetRepository.ExistsName(facetName)
             });
         }

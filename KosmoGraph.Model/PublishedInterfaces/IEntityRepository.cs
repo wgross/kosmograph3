@@ -14,5 +14,7 @@
         Entity FindByIdentity(Guid id);
 
         IEnumerable<Entity> GetAll();
+
+        bool ExistsName(string name);
     }
 }

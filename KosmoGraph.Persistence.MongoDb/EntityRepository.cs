@@ -113,15 +113,16 @@ using System.Threading.Tasks;
                 yield return e;
         }
 
-        #endregion 
+        public bool ExistsName(string name)
+        {
+            return this.FindByName(name) != null;
+        }
+
+        #endregion
 
         public Entity FindByName(string name)
         {
-            if(string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
-            
-            return this.entityCollection.Value.Find(Query.EQ("name", name)).FirstOrDefault();
+            return (this.entityCollection.Value.FindOne(Query<Entity>.EQ(f => f.Name, name)));
         }
-
     }
 }
