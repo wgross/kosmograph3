@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="AssignedTagViewModelBase.cs" />
     <Compile Include="Common\AssignedFacetViewModel.cs" />
+    <Compile Include="Common\Edit\Dictionary.cs" />
     <Compile Include="Common\Edit\EditFacetedViewModelBase.cs" />
     <Compile Include="Common\Edit\EditAssignedFacetViewModelBase.cs" />
     <Compile Include="Common\Edit\EditExistingAssignedFacetViewModel.cs" />

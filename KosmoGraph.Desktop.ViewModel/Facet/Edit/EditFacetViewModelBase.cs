@@ -14,7 +14,7 @@ namespace KosmoGraph.Desktop.ViewModel
     using System.Text;
     using System.Threading.Tasks;
 
-    public abstract class EditFacetViewModelBase : EditModelItemViewModelBase, IDataErrorInfo
+    public abstract class EditFacetViewModelBase : EditModelItemViewModelBase
     {
         #region Construction and initialization of this instance
 
@@ -108,16 +108,27 @@ namespace KosmoGraph.Desktop.ViewModel
 
         protected override void ExecutePrepareCommit()
         {
-            this.ValidatePrepareCommit(this.ValidateFacetEditor());
+            this.ValidateFacetEditor().EndWith(
+                succeeded: result =>
+                {
+                    this.ClearErrors();
+
+                    if (result.NameIsNullOrEmpty)
+                        this.SetError(() => this.Name, Resources.ErrorFacetNameIsNullOrEmpty);
+                    if (result.NameIsNotUnique)
+                        this.SetError(() => this.Name, Resources.ErrorFacetNameIsNotUnique);
+
+                    this.IsValid = !(result.NameIsNullOrEmpty || result.NameIsNotUnique);
+                });
         }
 
-        private Task<bool> ValidateFacetEditor()
+        private Task<ValidateFacetResult> ValidateFacetEditor()
         {
             if (string.IsNullOrWhiteSpace(this.Name))
-                return Task.FromResult(false);
+                return Task.FromResult(new ValidateFacetResult { NameIsNullOrEmpty = true });
 
             if(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
-                return Task.FromResult(false);
+                return Task.FromResult(new ValidateFacetResult { NameIsNullOrEmpty = true });
 
             return this.ManageFacets.ValidateFacet(this.Name);
         }

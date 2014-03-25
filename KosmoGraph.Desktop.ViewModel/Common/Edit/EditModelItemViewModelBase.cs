@@ -3,9 +3,11 @@
     using Microsoft.Practices.Prism.Commands;
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using KosmoGraph.Services;
+    using System.Collections.Generic;
 
     public abstract class EditModelItemViewModelBase : ModelItemViewModelBase, IDataErrorInfo
     {
@@ -35,11 +37,22 @@
         {
             get
             {
-                return string.Empty;
+                string errorMessage;
+                if (!this.errors.TryGetValue(columnName, out errorMessage))
+                    return null;
+                return errorMessage;
             }
         }
 
-        public bool HasError { get; protected set; }
+        private readonly Dictionary<string, string> errors = new Dictionary<string, string>();
+
+        public bool HasError
+        {
+            get
+            {
+                return this.errors.Any();
+            }
+        }
 
         #endregion
 
@@ -66,20 +79,30 @@
             throw new NotImplementedException();
         }
 
-        protected void ValidatePrepareCommit(Task<bool> validateFrom)
+        protected void ClearErrors()
         {
-            validateFrom.EndWith(
-                succeeded: valid => 
-                {
-                    this.IsValid  = valid;
-                    this.HasError = !valid;
-                },
-                failed: ex => 
-                { 
-                    this.HasError = true; 
-                    return true; 
-                });
+            this.errors.Clear();
         }
+
+        protected void SetError<T>(Expression<Func<T>> propertyExpression, string message)
+        {
+            this.errors[propertyExpression.GetPropertyName()] = message;
+        }
+
+        //protected void ValidatePrepareCommit(Task<bool> validateFrom)
+        //{
+        //    validateFrom.EndWith(
+        //        succeeded: valid => 
+        //        {
+        //            this.IsValid  = valid;
+        //            this.HasError = !valid;
+        //        },
+        //        failed: ex => 
+        //        { 
+        //            this.HasError = true; 
+        //            return true; 
+        //        });
+        //}
 
         #endregion
 

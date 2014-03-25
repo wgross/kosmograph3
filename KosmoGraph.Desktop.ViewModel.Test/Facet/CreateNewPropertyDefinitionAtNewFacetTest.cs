@@ -58,7 +58,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             var f1edit = this.vm.CreateNewFacet();
 
@@ -104,7 +104,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -190,7 +190,7 @@
           
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))

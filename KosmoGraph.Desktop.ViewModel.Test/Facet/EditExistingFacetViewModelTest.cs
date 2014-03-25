@@ -62,10 +62,10 @@
         public void EditExistingFacetName()
         {
             // ARRANGE
-          
+
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1-changed"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             var f1edit = this.vm.EditFacet(this.vm.Facets.Single());
 
@@ -81,6 +81,7 @@
             Assert.AreEqual("f1-changed", f1edit.Name);
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
+            Assert.IsNull(f1edit["Name"]);
 
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_=>_.GetAllEntities(), Times.Once);
@@ -102,7 +103,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1-changed"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect update of facet
                 .Setup(_ => _.UpdateFacet(this.facets.Single()))
@@ -122,6 +123,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1-changed", f1edit.Name);
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual("f1-changed", f1edit.Edited.Name);
             Assert.AreEqual("f1-changed", f1edit.Edited.ModelItem.Name);
 
@@ -157,6 +159,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1", f1edit.Name);
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
 
@@ -180,7 +183,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1-changed"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect update of facet
                 .Setup(_ => _.UpdateFacet(this.facets.Single()))
@@ -202,6 +205,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1-changed", f1edit.Name);
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual("f1-changed", f1edit.Edited.Name);
             Assert.AreEqual("f1-changed", f1edit.Edited.ModelItem.Name);
 

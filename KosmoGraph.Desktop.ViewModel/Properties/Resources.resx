@@ -156,6 +156,9 @@
   <data name="ErrorFacetNameIsNotUnique" xml:space="preserve">
     <value>Facet name has to be unique</value>
   </data>
+  <data name="ErrorFacetNameIsNullOrEmpty" xml:space="preserve">
+    <value>Name of Facet may not be null or default name</value>
+  </data>
   <data name="ErrorPropertyDefinitionNameIsNotUnique" xml:space="preserve">
     <value>name of Propery Definition isn't unique</value>
   </data>

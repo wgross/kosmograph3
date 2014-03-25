@@ -44,13 +44,14 @@
 
             // ACT
 
-            bool result = false;
+            ValidateFacetResult result = null;
 
             this.fsvc.ValidateFacet(this.facets.Single().Name).EndWith(r => result = r);
 
             // ASSERT
 
-            Assert.IsTrue(result);
+            Assert.IsNotNull(result);
+            Assert.IsFalse(result.NameIsNotUnique);
 
             this.facetRepository.VerifyAll();
             this.facetRepository.Verify(_ => _.ExistsName(It.IsAny<string>()), Times.Once);
@@ -68,13 +69,14 @@
 
             // ACT
 
-            bool result = false;
+            ValidateFacetResult result = null;
 
             this.fsvc.ValidateFacet(this.facets.Single().Name).EndWith(r => result = r);
 
             // ASSERT
 
-            Assert.IsFalse(result);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.NameIsNotUnique);
 
             this.facetRepository.VerifyAll();
             this.facetRepository.Verify(_ => _.ExistsName(It.IsAny<string>()), Times.Once);

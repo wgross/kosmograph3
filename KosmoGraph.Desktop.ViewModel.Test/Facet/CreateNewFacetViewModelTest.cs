@@ -11,6 +11,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Threading;
+    using KosmoGraph.Desktop.ViewModel.Properties;
 
     [TestClass]
     public class CreateNewFacetViewModelTest
@@ -74,6 +75,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
+            Assert.AreEqual(Resources.ErrorFacetNameIsNullOrEmpty, f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -97,7 +99,7 @@
 
             this.fsvc // validate facet default test name
                .Setup(_ => _.ValidateFacet("f1"))
-               .Returns(Task.FromResult(true));
+               .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             var f1edit = this.vm.CreateNewFacet();
 
@@ -114,6 +116,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -134,7 +137,7 @@
 
             this.fsvc // invalidate facet name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(false));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = true }));
 
             var f1edit = this.vm.CreateNewFacet();
 
@@ -151,6 +154,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
+            Assert.AreEqual(Resources.ErrorFacetNameIsNotUnique, f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -171,7 +175,7 @@
 
             this.fsvc // validate facet default test name
                .Setup(_ => _.ValidateFacet("f1"))
-               .Returns(Task.FromResult(true));
+               .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             var f1edit = this.vm.CreateNewFacet();
 
@@ -193,7 +197,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
-
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -217,7 +221,7 @@
 
             this.fsvc // validate facet default test name
               .Setup(_ => _.ValidateFacet("f1"))
-              .Returns(Task.FromResult(true));
+              .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -237,6 +241,7 @@
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());
@@ -261,7 +266,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -288,6 +293,7 @@
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(0, this.vm.Facets.Count());
@@ -310,7 +316,7 @@
 
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -330,6 +336,7 @@
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());
@@ -368,6 +375,7 @@
 
             Assert.AreEqual(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetViewModelNameDefault, f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -391,7 +399,7 @@
           
             this.fsvc // validate facet default test name
                 .Setup(_ => _.ValidateFacet("f1"))
-                .Returns(Task.FromResult(true));
+                .Returns(Task.FromResult(new ValidateFacetResult { NameIsNotUnique = false }));
 
             this.fsvc // expect facet creation
                 .Setup(_ => _.CreateNewFacet(It.IsAny<Action<Facet>>()))
@@ -408,12 +416,11 @@
             f1edit.PrepareCommit.Execute();
             f1edit.Commit.Execute();
 
-            TestDispatcher.DoEvents();
-
             // ASSERT
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
+            Assert.IsNull(f1edit["Name"]);
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());
