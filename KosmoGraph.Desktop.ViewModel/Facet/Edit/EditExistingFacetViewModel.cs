@@ -83,7 +83,7 @@ using System.Threading.Tasks;
 
         override protected bool CanExecuteCommit()
         {
-            return (!this.HasError) 
+            return (!this.HasErrors) 
                 && (
                     (this.Edited.Name != this.Name) 
                     || 

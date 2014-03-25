@@ -8,8 +8,9 @@
     using System.Threading.Tasks;
     using KosmoGraph.Services;
     using System.Collections.Generic;
+    using System.Collections;
 
-    public abstract class EditModelItemViewModelBase : ModelItemViewModelBase, IDataErrorInfo
+    public abstract class EditModelItemViewModelBase : ModelItemViewModelBase, INotifyDataErrorInfo
     {
         #region Construction and initialization of this instance
 
@@ -23,46 +24,16 @@
 
         #endregion
 
-        #region IDataErrorInfo Members
-
-        public string Error
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                string errorMessage;
-                if (!this.errors.TryGetValue(columnName, out errorMessage))
-                    return null;
-                return errorMessage;
-            }
-        }
-
-        private readonly Dictionary<string, string> errors = new Dictionary<string, string>();
-
-        public bool HasError
-        {
-            get
-            {
-                return this.errors.Any();
-            }
-        }
-
-        #endregion
-
         #region Notification and Validation Helper
 
         protected bool SetAndInvalidate<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
             var changed = this.Set(propertyExpression, ref field, newValue);
-            if(changed)
+            if (changed)
+            {
                 this.IsValid = null;
+                this.ClearErrors(propertyExpression);
+            }
             return changed;
         }
 
@@ -77,16 +48,6 @@
         virtual protected void ExecutePrepareCommit() 
         {
             throw new NotImplementedException();
-        }
-
-        protected void ClearErrors()
-        {
-            this.errors.Clear();
-        }
-
-        protected void SetError<T>(Expression<Func<T>> propertyExpression, string message)
-        {
-            this.errors[propertyExpression.GetPropertyName()] = message;
         }
 
         //protected void ValidatePrepareCommit(Task<bool> validateFrom)
@@ -114,7 +75,7 @@
 
         virtual protected bool CanExecuteCommit()
         {
-            return (this.IsValid.GetValueOrDefault(false) && !this.HasError);
+            return (this.IsValid.GetValueOrDefault(false) && !this.HasErrors);
         }
 
         #endregion
@@ -135,5 +96,72 @@
             this.Commit.RaiseCanExecuteChanged();
             this.Rollback.RaiseCanExecuteChanged();
         }
+
+        #region INotifyDataErrorInfo Members
+        
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            List<string> errorMessages;
+            if (!this.errors.TryGetValue(propertyName, out errorMessages))
+                return Enumerable.Empty<string>();
+            return errorMessages;
+        }
+
+        public bool HasErrors
+        {
+            get 
+            {
+                return this.errors.Any();
+            }
+        }
+
+        #endregion
+
+        #region Internal error handling
+
+        private readonly Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
+
+        private void ClearErrors<T>(Expression<Func<T>> propertyExpression)
+        {
+            string propertyName = propertyExpression.GetPropertyName();
+
+            List<string> errorMessages;
+            if (this.errors.TryGetValue(propertyName, out errorMessages))
+            {
+                errorMessages.Clear();
+            }
+        }
+
+        protected void ClearErrors()
+        {
+            this.errors.Clear();
+        }
+
+        protected void SetError<T>(Expression<Func<T>> propertyExpression, string message)
+        {
+            string propertyName = propertyExpression.GetPropertyName();
+
+            List<string> errorMessages;
+            if (!this.errors.TryGetValue(propertyName, out errorMessages))
+            {
+                errorMessages = new List<string>();
+                this.errors.Add(propertyName, errorMessages);
+            }
+
+            errorMessages.Add(message);
+
+            this.RaiseErrorsChanged(propertyName);
+        }
+
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            var tmp = this.ErrorsChanged;
+            if(tmp!=null)
+                tmp(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        #endregion 
     }
 }

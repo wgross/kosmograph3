@@ -81,7 +81,7 @@
             Assert.AreEqual("f1-changed", f1edit.Name);
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
 
             this.ersvc.VerifyAll();
             this.ersvc.Verify(_=>_.GetAllEntities(), Times.Once);
@@ -123,7 +123,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1-changed", f1edit.Name);
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual("f1-changed", f1edit.Edited.Name);
             Assert.AreEqual("f1-changed", f1edit.Edited.ModelItem.Name);
 
@@ -159,7 +159,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1", f1edit.Name);
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual("f1", f1edit.Edited.Name);
             Assert.AreEqual("f1", f1edit.Edited.ModelItem.Name);
 
@@ -205,7 +205,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsFalse(f1edit.Rollback.CanExecute());
             Assert.AreEqual("f1-changed", f1edit.Name);
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual("f1-changed", f1edit.Edited.Name);
             Assert.AreEqual("f1-changed", f1edit.Edited.ModelItem.Name);
 

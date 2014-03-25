@@ -75,7 +75,7 @@
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
-            Assert.AreEqual(Resources.ErrorFacetNameIsNullOrEmpty, f1edit["Name"]);
+            Assert.AreEqual(Resources.ErrorFacetNameIsNullOrEmpty, f1edit.GetErrors("Name").Cast<string>().Single());
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -116,7 +116,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -154,7 +154,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
-            Assert.AreEqual(Resources.ErrorFacetNameIsNotUnique, f1edit["Name"]);
+            Assert.AreEqual(Resources.ErrorFacetNameIsNotUnique, f1edit.GetErrors("Name").Cast<string>().Single());
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -197,7 +197,7 @@
             Assert.IsTrue(f1edit.Rollback.CanExecute());
             Assert.IsTrue(f1edit.AddPropertyDefinition.CanExecute());
             Assert.IsFalse(f1edit.RemovePropertyDefinition.CanExecute(null));
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -241,7 +241,7 @@
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());
@@ -293,7 +293,7 @@
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
             Assert.IsTrue(f1edit.Rollback.CanExecute());
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(0, this.vm.Facets.Count());
@@ -336,7 +336,7 @@
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());
@@ -375,7 +375,7 @@
 
             Assert.AreEqual(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewFacetViewModelNameDefault, f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Facets.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
@@ -420,7 +420,7 @@
 
             Assert.AreEqual("f1", f1edit.Name);
             Assert.IsFalse(f1edit.Commit.CanExecute());
-            Assert.IsNull(f1edit["Name"]);
+            Assert.AreEqual(0, f1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, f1edit.Properties.Count());
 
             Assert.AreEqual(1, this.vm.Facets.Count());

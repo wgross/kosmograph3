@@ -670,21 +670,25 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+            
         <Setter Property="Validation.ErrorTemplate">
-            <Setter.Value>
+            <Setter.Value>                
                 <ControlTemplate>
                     <StackPanel>  
-                        <Border 
-                            BorderBrush="{StaticResource validationErrorBackgroundBrush}" 
-                            BorderThickness="1">
-                            <AdornedElementPlaceholder Name="MyAdorner" />
+                        <Border BorderBrush="{StaticResource validationErrorBackgroundBrush}" 
+                                BorderThickness="1">
+                            <AdornedElementPlaceholder Name="MyAdorner"/>
                         </Border>
-                        <Border
-                            Background="{StaticResource validationErrorBackgroundBrush}">
-                             <TextBlock
-                                Foreground="{StaticResource validationErrorForegroundBrush}"                            
-                                Text="{Binding ElementName=MyAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
-                            </Border>
+                        <Border Background="{StaticResource validationErrorBackgroundBrush}">
+                            <ItemsControl ItemsSource="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ErrorContent}" 
+                                                   Foreground="{StaticResource validationErrorForegroundBrush}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
