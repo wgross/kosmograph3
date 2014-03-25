@@ -16,14 +16,11 @@ namespace KosmoGraph.Desktop.ViewModel
     {
         #region Construction andinitialization of this instance 
         
-        public EditNewEntityViewModel(EntityRelationshipViewModel model, IManageEntitiesAndRelationships withEntities)
-            : base(model, Resources.EditExistingEntityViewModelTitle)
+        public EditNewEntityViewModel(EntityRelationshipViewModel model, IManageEntities withEntities)
+            : base(model, withEntities, Resources.EditExistingEntityViewModelTitle)
         {
-            this.entities = withEntities;
             this.ExecuteRollback();
         }
-
-        private readonly IManageEntitiesAndRelationships entities;
 
         private bool hasAlreadyCommitted = false;
 
@@ -36,7 +33,7 @@ namespace KosmoGraph.Desktop.ViewModel
             if (this.hasAlreadyCommitted)
                 return;
 
-            this.entities
+            this.ManageEntities
                 .CreateNewEntity(e =>
                 {
                     e.Name = this.Name;
@@ -72,7 +69,7 @@ namespace KosmoGraph.Desktop.ViewModel
             if (this.hasAlreadyCommitted)
                 return false;
 
-            if (this.HasError)
+            if (this.HasErrors)
                 return false;
             
             return (
@@ -94,7 +91,6 @@ namespace KosmoGraph.Desktop.ViewModel
             base.RollbackFacets(this.Model.Facets);
         }
 
-        
         override protected bool CanExecuteRollback()
         {
             return (!this.hasAlreadyCommitted);

@@ -11,21 +11,22 @@ namespace KosmoGraph.Desktop.ViewModel
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using KosmoGraph.Services;
 
-    public abstract class EditEntityViewModelBase : EditFacetedViewModelBase, IDataErrorInfo
+    public abstract class EditEntityViewModelBase : EditFacetedViewModelBase
     {
         #region Construction and Initialization of this instance
 
-        public EditEntityViewModelBase(EntityRelationshipViewModel model, string withTitleFormat)
+        public EditEntityViewModelBase(EntityRelationshipViewModel model, IManageEntities entities, string withTitleFormat)
             : base(model)
         {
             this.titleFormat = withTitleFormat;
-            //this.assignTagCommand = new DelegateCommand<TagViewModel>(this.AssignTagExecuted);
-            //this.unassignTagCommand = new DelegateCommand<EditAssignedEntityTagViewModel>(this.UnassignTagExecuted);
-            
+            this.ManageEntities = entities;    
         }
-
+        
         private readonly string titleFormat;
+
+        protected IManageEntities ManageEntities { get; private set; }
 
         public bool EnableCommit { get; set; }
 
@@ -49,12 +50,8 @@ namespace KosmoGraph.Desktop.ViewModel
             }
             set
             {
-                if (this.name == value)
-                    return;
-                this.name = value;
-                this.RaisePropertyChanged(() => this.Name);
-                this.RaisePropertyChanged(() => this.Title);
-                this.RefreshCommands();
+                if(this.SetAndInvalidate(() => this.Name, ref this.name, value))
+                    this.RaisePropertyChanged(() => this.Title);
             }
         }
 
@@ -62,37 +59,31 @@ namespace KosmoGraph.Desktop.ViewModel
 
         #endregion 
 
-        #region IDataErrorInfo Members
+        #region Validate/Prepare Commit Editor
 
-        public string Error
+        protected override void ExecutePrepareCommit()
         {
-            get
-            {
-                return string.Empty;
-            }
-        }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                this.HasError = false;
-
-                if (columnName == "Name")
+            this.ValidateEntityEditor().EndWith(
+                succeeded: result =>
                 {
-                    //TODO: This has to be checked by the database in the background
-                    //if (this.Edited.Name != this.Name)
-                    //    if (this.Edited.Model.Entities.Any(e => StringComparer.InvariantCultureIgnoreCase.Equals(e.Name, this.Name)))
-                    //    {
-                    //        this.HasError = true;
-                    //        return Resources.ErrorEntityNameIsNotUnique;
-                    //    }
-                }
-                return string.Empty;
-            }
+                    this.ClearErrors();
+
+                    if (result.NameIsNullOrEmpty)
+                        this.SetError(() => this.Name, Resources.ErrorEntityNameIsNullOrEmpty);
+                    if (result.NameIsNotUnique)
+                        this.SetError(() => this.Name, Resources.ErrorEntityNameIsNotUnique);
+
+                    this.IsValid = !(result.NameIsNullOrEmpty || result.NameIsNotUnique);
+                });
         }
 
-        public bool HasError { get; private set; }
+        private Task<ValidateEntityResult> ValidateEntityEditor()
+        {
+            if (StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewEntityViewModelNameDefault))
+                return Task.FromResult(new ValidateEntityResult { NameIsNullOrEmpty = true });
+
+            return this.ManageEntities.ValidateEntity(this.Name);
+        }
 
         #endregion
     }

@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Threading;
+    using KosmoGraph.Desktop.ViewModel.Properties;
 
     [TestClass]
     public class CreateNewEntityViewModelTest
@@ -26,7 +27,7 @@
             // install sync Task Scheduler
             CurrentThreadTaskScheduler.InstallAsDefaultScheduler();
             SynchronizationContext.SetSynchronizationContext(new ImmediateExecutionSynchronizationContext());
-            
+
             // There is only a view model
 
             this.ersvc = new Mock<IManageEntitiesAndRelationships>();
@@ -45,10 +46,10 @@
             this.vm = new EntityRelationshipViewModel(this.ersvc.Object, this.fsvc.Object);
         }
 
-        #region CreateNewEntity
+        #region CreateNewEntity > PrepareCommit
 
         [TestMethod]
-        [TestCategory("CreateNewEntity")]
+        [TestCategory("CreateNewEntity"), TestCategory("ValidateEntity")]
         public void CreateEditNewEntityViewModel()
         {
             // ARRANGE
@@ -56,54 +57,75 @@
             // ACT
 
             EditNewEntityViewModel e1edit = this.vm.CreateNewEntity();
-            
+            e1edit.PrepareCommit.Execute();
+
             // ASSERT
             // edit is initialized but cant commit
 
             Assert.AreEqual(KosmoGraph.Desktop.ViewModel.Properties.Resources.EditNewEntityViewModelNameDefault, e1edit.Name);
             Assert.IsFalse(e1edit.Commit.CanExecute());
+            Assert.IsTrue(e1edit.Rollback.CanExecute());
+            Assert.IsTrue(e1edit.PrepareCommit.CanExecute());
+            Assert.IsTrue(e1edit.HasErrors);
+            Assert.AreEqual(Resources.ErrorEntityNameIsNullOrEmpty, e1edit.GetErrors("Name").Cast<string>().Single());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Entities.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
-            
+
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
-        #region CreateNewEntity > Modify
+        #region CreateNewEntity > Modify > PrepareCommit
 
         [TestMethod]
-        [TestCategory("CreateNewEntity")]
+        [TestCategory("CreateNewEntity"), TestCategory("ValidateEntity")]
         public void ModifyNameAllowsEditNewEntityViewModelCommit()
         {
             // ARRANGE
+
+            this.ersvc // validate entity test name
+                .Setup(_ => _.ValidateEntity("e1"))
+                .Returns(Task.FromResult(new ValidateEntityResult { NameIsNotUnique = false, NameIsNullOrEmpty = false }));
 
             var e1edit = this.vm.CreateNewEntity();
 
             // ACT
 
             e1edit.Name = "e1";
+            e1edit.PrepareCommit.Execute();
 
             // ASSERT
             // valid name make edit committable
 
             Assert.AreEqual("e1", e1edit.Name);
             Assert.IsTrue(e1edit.Commit.CanExecute());
+            Assert.IsTrue(e1edit.Rollback.CanExecute());
+            Assert.IsTrue(e1edit.PrepareCommit.CanExecute());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
+            Assert.IsFalse(e1edit.HasErrors);
+            Assert.AreEqual(0, e1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
             Assert.AreEqual(0, this.vm.Entities.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
+            this.ersvc.Verify(_ => _.ValidateEntity(It.IsAny<string>()), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
-        #endregion 
+        #endregion
 
-        #region CreateNewEntity > Modify > Commit
+        #region CreateNewEntity > Modify > PrepareCommit > Commit
 
         [TestMethod]
         [TestCategory("CreateNewEntity")]
@@ -115,13 +137,18 @@
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
                 .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
 
+            this.ersvc // validate entity test name
+                .Setup(_ => _.ValidateEntity("e1"))
+                .Returns(Task.FromResult(new ValidateEntityResult { NameIsNotUnique = false, NameIsNullOrEmpty = false }));
+
             var e1edit = this.vm.CreateNewEntity();
             e1edit.Name = "e1";
+            e1edit.PrepareCommit.Execute();
 
             // ACT
 
             e1edit.Commit.Execute();
-            
+
             // ASSERT
             // commit added entity to model and call entity service
 
@@ -129,33 +156,43 @@
             Assert.AreEqual("e1", e1edit.Name);
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
-            
+            Assert.IsFalse(e1edit.HasErrors);
+            Assert.AreEqual(0, e1edit.GetErrors("Name").Cast<string>().Count());
             Assert.AreEqual(1, this.vm.Entities.Count());
             Assert.AreEqual(1, this.vm.Items.Count());
 
             Assert.AreSame(this.vm.Items.First(), this.vm.Entities.First());
             Assert.AreEqual("e1", this.vm.Entities.First().Name);
-            
+
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.ersvc.Verify(_ => _.ValidateEntity(It.IsAny<string>()), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         [TestMethod]
-        [TestCategory("CreateNewEntity")]
+        [TestCategory("CreateNewEntity"), TestCategory("ValidateEntity")]
         public void CommitEditNewEntityViewModelTwiceCreatesOneNewEntity()
         {
             // ARRANGE
 
-            ersvc // expects entity creation
+            this.ersvc // expects entity creation
                 .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
                 .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
+
+            this.ersvc // validate entity test name
+               .Setup(_ => _.ValidateEntity("e1"))
+               .Returns(Task.FromResult(new ValidateEntityResult { NameIsNotUnique = false, NameIsNullOrEmpty = false }));
 
             var e1edit = this.vm.CreateNewEntity();
 
             e1edit.Name = "e1";
+            e1edit.PrepareCommit.Execute();
             e1edit.Commit.Execute();
-            
+
             // ACT
 
             e1edit.Commit.Execute();
@@ -166,6 +203,8 @@
             Assert.AreEqual("e1", e1edit.Name);
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
+            Assert.IsFalse(e1edit.HasErrors);
+            Assert.AreEqual(0, e1edit.GetErrors("Name").Cast<string>().Count());
 
             Assert.AreEqual(1, this.vm.Entities.Count());
             Assert.AreEqual(1, this.vm.Items.Count);
@@ -174,8 +213,12 @@
             Assert.AreEqual("e1", this.vm.Entities.First().Name);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.ersvc.Verify(_ => _.ValidateEntity(It.IsAny<string>()), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
@@ -202,35 +245,46 @@
             Assert.IsFalse(e1edit.Commit.CanExecute());
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
+            Assert.IsFalse(e1edit.HasErrors);
+            Assert.AreEqual(0, e1edit.GetErrors("Name").Cast<string>().Count());
+
             Assert.AreEqual(0, this.vm.Entities.Count());
             Assert.AreEqual(0, this.vm.Items.Count);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
         }
 
         #endregion
 
-        #region CreateNewEntity > Modify > Rollback > Commit
+        #region CreateNewEntity > Modify > Rollback > PrepareCommit > Commit
 
         [TestMethod]
-        [TestCategory("CreateNewEntity")]
+        [TestCategory("CreateNewEntity"), TestCategory("ValidateEntity")]
         public void RollbackEditNewEntityViewModelAllowsEditingAgainTillCommit()
         {
             // ARRANGE
 
-            ersvc // expects entity creation
-              .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
-              .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
+            this.ersvc // expects entity creation
+                .Setup(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()))
+                .Returns((Action<Entity> a) => Task.FromResult(Entity.Factory.CreateNew(a)));
+
+            this.ersvc // validate entity test name
+                .Setup(_ => _.ValidateEntity("e1"))
+                .Returns(Task.FromResult(new ValidateEntityResult { NameIsNotUnique = false, NameIsNullOrEmpty = false }));
 
             var e1edit = this.vm.CreateNewEntity();
-            
+
             e1edit.Name = "e1";
             e1edit.Rollback.Execute();
-            
+
             // ACT
 
             e1edit.Name = "e1";
+            e1edit.PrepareCommit.Execute();
             e1edit.Commit.Execute();
 
             // ASSERT
@@ -239,6 +293,8 @@
             Assert.AreEqual("e1", e1edit.Name);
             Assert.AreEqual(0, e1edit.AssignedFacets.Count());
             Assert.AreEqual(0, e1edit.Properties.Count());
+            Assert.IsFalse(e1edit.HasErrors);
+            Assert.AreEqual(0, e1edit.GetErrors("Name").Cast<string>().Count());
 
             Assert.AreEqual(1, this.vm.Entities.Count());
             Assert.AreEqual(1, this.vm.Items.Count);
@@ -247,11 +303,16 @@
             Assert.AreEqual("e1", this.vm.Entities.First().Name);
 
             this.ersvc.VerifyAll();
+            this.ersvc.Verify(_ => _.GetAllEntities(), Times.Once);
+            this.ersvc.Verify(_ => _.GetAllRelationships(), Times.Once);
             this.ersvc.Verify(_ => _.CreateNewEntity(It.IsAny<Action<Entity>>()), Times.Once);
+            this.ersvc.Verify(_ => _.ValidateEntity(It.IsAny<string>()), Times.Once);
             this.fsvc.VerifyAll();
+            this.fsvc.Verify(_ => _.GetAllFacets(), Times.Once);
+            
         }
 
-        #endregion 
+        #endregion
 
         //[TestMethod]
         //[TestCategory("CreateNewEntity")]

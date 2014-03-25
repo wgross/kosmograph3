@@ -153,6 +153,9 @@
   <data name="ErrorEntityNameIsNotUnique" xml:space="preserve">
     <value>Entity is name has to be unique</value>
   </data>
+  <data name="ErrorEntityNameIsNullOrEmpty" xml:space="preserve">
+    <value>Name of Entity may not be null or default name</value>
+  </data>
   <data name="ErrorFacetNameIsNotUnique" xml:space="preserve">
     <value>Facet name has to be unique</value>
   </data>

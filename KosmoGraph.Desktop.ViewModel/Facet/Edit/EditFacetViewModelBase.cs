@@ -1,17 +1,10 @@
-﻿
-namespace KosmoGraph.Desktop.ViewModel
+﻿namespace KosmoGraph.Desktop.ViewModel
 {
     using KosmoGraph.Desktop.ViewModel.Properties;
-    using KosmoGraph.Model;
     using KosmoGraph.Services;
     using Microsoft.Practices.Prism.Commands;
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Text;
     using System.Threading.Tasks;
 
     public abstract class EditFacetViewModelBase : EditModelItemViewModelBase
@@ -124,14 +117,12 @@ namespace KosmoGraph.Desktop.ViewModel
 
         private Task<ValidateFacetResult> ValidateFacetEditor()
         {
-            if (string.IsNullOrWhiteSpace(this.Name))
-                return Task.FromResult(new ValidateFacetResult { NameIsNullOrEmpty = true });
-
             if(StringComparer.CurrentCultureIgnoreCase.Equals(this.Name, Resources.EditNewFacetViewModelNameDefault))
                 return Task.FromResult(new ValidateFacetResult { NameIsNullOrEmpty = true });
 
             return this.ManageFacets.ValidateFacet(this.Name);
         }
+
         #endregion
     }
 }

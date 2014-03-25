@@ -151,6 +151,15 @@ namespace KosmoGraph.Desktop.ViewModel.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of Entity may not be null or default name.
+        /// </summary>
+        public static string ErrorEntityNameIsNullOrEmpty {
+            get {
+                return ResourceManager.GetString("ErrorEntityNameIsNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Facet name has to be unique.
         /// </summary>
         public static string ErrorFacetNameIsNotUnique {
