@@ -9,6 +9,7 @@
 
     public static class DialogCommands
     {
+        public static RoutedCommand Validate = new RoutedCommand();
         public static RoutedCommand Ok = new RoutedCommand();
         public static RoutedCommand Cancel = new RoutedCommand();
         public static RoutedCommand Escape = new RoutedCommand();

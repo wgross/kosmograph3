@@ -14,17 +14,28 @@ using System.Windows.Controls;
     {
         public bool? ShowDialog(Panel grid, object viewModel, params DialogAction[] dialogActions)
         {
-            return grid.ShowDialog(new[] { viewModel }, dialogActions);
+            return this.ShowDialog(grid, new[]{viewModel}, (DialogValidation)null, dialogActions);
+        }
+
+        public bool? ShowDialog(Panel grid, object viewModel, DialogValidation validateDialog,  params DialogAction[] dialogActions)
+        {
+            return this.ShowDialog(grid, new[] { viewModel }, validateDialog, dialogActions);
         }
 
         public bool? ShowDialog(Panel grid, object[] viewModels, params DialogAction[] dialogActions)
+        {
+            return this.ShowDialog(grid, viewModels, (DialogValidation)null, dialogActions);
+        }
+
+        public bool? ShowDialog(Panel grid, object[] viewModels, DialogValidation validateDialog, params DialogAction[] dialogActions)
         {
             var dlg = new DialogContainerControl
             {
                 ViewModel = new DialogContainerViewModel
                 {
                     DialogContent = new ObservableCollection<object>(viewModels),
-                    DialogActions = dialogActions
+                    DialogActions = dialogActions,
+                    DialogValidation = validateDialog
                 }
             };
 

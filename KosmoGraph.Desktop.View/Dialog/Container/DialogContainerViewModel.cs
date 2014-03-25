@@ -1,16 +1,8 @@
 ﻿namespace KosmoGraph.Desktop.Dialog
 {
-    using Microsoft.Practices.Prism.Commands;
     using Microsoft.Practices.Prism.ViewModel;
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
-
-    
 
     public sealed class DialogContainerViewModel : NotificationObject
     {
@@ -36,6 +28,12 @@
         }
 
         private ObservableCollection<object> dialogContent;
+
+        #endregion 
+
+        #region Dialog has validateion
+
+        public DialogValidation DialogValidation { get; set; }
 
         #endregion 
 

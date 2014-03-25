@@ -15,7 +15,7 @@
             return Ok(title, new DelegateCommand<object>(onOk));
         }
 
-        public static DialogAction Ok(string title, ICommand contentCommand)
+        public static DialogAction Ok(string title, ICommand contentCommitCommand)
         {
             return new DialogAction
             {
@@ -23,7 +23,7 @@
                 IsCancel = false,
                 Name = title,
                 Command = DialogCommands.Ok,
-                ContentCommand = contentCommand
+                ContentCommand = contentCommitCommand
             };
         }
 

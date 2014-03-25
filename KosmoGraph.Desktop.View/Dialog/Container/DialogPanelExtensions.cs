@@ -1,15 +1,15 @@
 ﻿namespace KosmoGraph.Desktop.Dialog
 {
     using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
 
-    public static class PanelDialogExtensions
+    public static class DialogPanelExtensions
     {
         public static bool? ShowDialog(this Panel grid, object viewModel, params DialogAction[] dialogActions)
         {
@@ -26,11 +26,11 @@ using System.Windows.Controls;
                     DialogActions = dialogActions
                 }
             };
-            
+
             try
             {
                 grid.Children.Add(dlg);
-            
+
                 return dlg.WaitModal();
             }
             finally

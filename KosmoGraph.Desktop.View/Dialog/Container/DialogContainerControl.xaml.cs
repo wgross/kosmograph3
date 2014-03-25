@@ -23,16 +23,16 @@
     /// </summary>
     public partial class DialogContainerControl : UserControl
     {
-        #region Constraction and initialization of this instance 
+        #region Constraction and initialization of this instance
 
         public DialogContainerControl()
         {
             this.InitializeComponent();
-            this.CommandBindings.Add( new CommandBinding(DialogCommands.Ok, this.OkExecuted, this.OkCanExecute));
+            this.CommandBindings.Add(new CommandBinding(DialogCommands.Ok, this.OkExecuted, this.OkCanExecute));
             this.CommandBindings.Add(new CommandBinding(DialogCommands.Cancel, this.CancelExecuted, this.CancelCanExecute));
         }
 
-        #endregion 
+        #endregion
 
         public DialogContainerViewModel ViewModel
         {
@@ -50,13 +50,14 @@
 
         public bool? DialogResult
         {
-            get;set;
+            get;
+            set;
         }
 
         internal bool? WaitModal()
         {
             this.pendingDispatcher = new DispatcherFrame();
-            
+
             Dispatcher.PushFrame(this.pendingDispatcher);
 
             return this.DialogResult;
@@ -64,13 +65,13 @@
 
         internal void EndModal(bool? result)
         {
-            this.DialogResult=result;
-            this.pendingDispatcher.Continue=false;
+            this.DialogResult = result;
+            this.pendingDispatcher.Continue = false;
         }
 
         private DispatcherFrame pendingDispatcher;
 
-        #endregion 
+        #endregion
 
         void dialogContent_Loaded(object sender, RoutedEventArgs e)
         {
@@ -81,17 +82,26 @@
 
         private void OkCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            if(args.Parameter!=null)
-                args.CanExecute= (args.Parameter as DialogAction).ContentCommand.CanExecute(this.ViewModel.DialogContent);
+            if (this.ViewModel.DialogValidation != null)
+                args.CanExecute = this.ViewModel.DialogValidation.ContentCommand.CanExecute(this.ViewModel.DialogContent);
+            else if (args.Parameter != null)
+                args.CanExecute = (args.Parameter as DialogAction).ContentCommand.CanExecute(this.ViewModel.DialogContent);
         }
 
         private void OkExecuted(object sender, ExecutedRoutedEventArgs args)
         {
+            if (this.ViewModel.DialogValidation != null)
+            { 
+                this.ViewModel.DialogValidation.ContentCommand.Execute(this.ViewModel.DialogContent);
+                
+                if(!(args.Parameter as DialogAction).ContentCommand.CanExecute(this.ViewModel.DialogContent))
+                    return;
+            }
+
             try
             {
-                // try to validate content before OK is executed
-                if(this.ViewModel.DialogContent.OfType<ICanValidate>().Aggregate(true, (valid, dc) => dc.Validate() && valid))
-                    (args.Parameter as DialogAction).ContentCommand.Execute(this.ViewModel.DialogContent);
+      
+                (args.Parameter as DialogAction).ContentCommand.Execute(this.ViewModel.DialogContent);  
             }
             finally
             {
@@ -105,7 +115,7 @@
 
         private void CancelCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
-            if( args.Parameter!=null)
+            if (args.Parameter != null)
                 args.CanExecute = (args.Parameter as DialogAction).ContentCommand.CanExecute(this.ViewModel.DialogContent);
         }
 
@@ -133,7 +143,7 @@
         #endregion
 
         #region //Handle resize Grip events
-        
+
         //void resizeGrip_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         //{
         //    if (this.resizeGrip.IsMouseCaptured)
@@ -159,7 +169,7 @@
 
         //private Point originalOrigin;
         //private double originalWidth, originalHeight;
-        
+
         //void resizeGrip_MouseMove(object sender, MouseEventArgs e)
         //{
         //    if (this.resizeGrip.IsMouseCaptured)

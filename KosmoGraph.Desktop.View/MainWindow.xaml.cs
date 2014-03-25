@@ -145,6 +145,7 @@
             var dialogViewModel = this.Model.CreateNewFacet();
 
             new KosmoGraphDialogService().ShowDialog(this.rootPanel, dialogViewModel,
+                DialogValidationBuilder.Validate(dialogViewModel.PrepareCommit),
                 DialogActionBuilder.Cancel("cancel", dialogViewModel.Rollback),
                 DialogActionBuilder.Ok("create facet", dialogViewModel.Commit));
 

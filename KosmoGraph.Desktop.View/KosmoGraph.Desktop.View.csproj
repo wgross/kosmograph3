@@ -95,8 +95,9 @@
       <DependentUpon>DialogContainerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\DialogAction.cs" />
+    <Compile Include="Dialog\DialogValidation.cs" />
     <Compile Include="Dialog\KosmoGraphDialogService.cs" />
-    <Compile Include="Dialog\Container\PanelDialogExtensions.cs" />
+    <Compile Include="Dialog\Container\DialogPanelExtensions.cs" />
     <Compile Include="Dialog\Container\DialogContainerViewModel.cs" />
     <Compile Include="Dialog\ViewModel\MessageDialogViewModel.cs" />
     <Compile Include="Dialog\ViewModel\SelectDatabaseViewModel.cs" />
