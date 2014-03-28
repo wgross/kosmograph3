@@ -4,38 +4,43 @@
                     xmlns:mwt="clrnamespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
     <!-- a controls default colors -->
-    <SolidColorBrush x:Key="foregroundBrush" Color="White"/>
-    <SolidColorBrush x:Key="backgroundBrush" Color="DimGray"/>
+    <SolidColorBrush x:Key="foregroundBrush" Color="DimGray"/>
+    <SolidColorBrush x:Key="backgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="textForegroundBrush" Color="DimGray"/>
+    <SolidColorBrush x:Key="borderForegroundBrush" Color="DimGray"/>
     <!-- validation error default colors -->
     <SolidColorBrush x:Key="validationErrorForegroundBrush" Color="white"/>
     <SolidColorBrush x:Key="validationErrorBackgroundBrush" Color="Red"/>
     <!-- an active/inactive and enabled Controls colors -->
     <SolidColorBrush x:Key="activeForegroundBrush" Color="Orange"/>
     <SolidColorBrush x:Key="activeSelectedForegroundBrush" Color="Red"/>
-    <SolidColorBrush x:Key="activeBackgroundBrush" Color="DimGray"/>
+    <SolidColorBrush x:Key="activeBackgroundBrush" Color="White"/>
     <SolidColorBrush x:Key="inactiveForegroundBrush" Color="LightGray"/>
     <!-- a selectable controls color in selected state -->
     <SolidColorBrush x:Key="selectedForegroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="selectedBackgroundBrush" Color="Orange"/>
     <!-- a selectable controls color in unselected state -->
     <SolidColorBrush x:Key="unselectedForegroundBrush" Color="Orange"/>
-    <SolidColorBrush x:Key="unselectedBackgroundBrush" Color="DimGray"/>
+    <SolidColorBrush x:Key="unselectedBackgroundBrush" Color="#FF909090"/>
     <!-- inverted Orange for textbox background/cursor color -->
     <SolidColorBrush x:Key="invertedForegroundBrush" Color="#FF005AFF"/>
     <SolidColorBrush x:Key="disabledBrush" Color="DarkGray"/>
     <!--<SolidColorBrush x:Key="selectedForegroundBrush" Color="Red"/>-->
-    <SolidColorBrush x:Key="dialogBackgroundBrush" Opacity="0.5" Color="Black"/>
-    <SolidColorBrush x:Key="dialogContentBackgroundBrush" Opacity="0.8" Color="Black"/>
+    <SolidColorBrush x:Key="dialogBackgroundBrush" Opacity="0.5" Color="#FF909090"/>
+    <SolidColorBrush x:Key="dialogContentBackgroundBrush" Opacity="0.8" Color="#FF909090"/>
     
     <!--
     DEFAULT STYLES
     sorted alphabetically by target type name
     -->
     
-    <Style x:Key="borderStyle" TargetType="{x:Type Border}"> <!--BasedOn="{StaticResource {x:Type Border}}">-->
+    <!-- basic settings for any border -->
+    <Style x:Key="borderStyle" TargetType="{x:Type Border}">
         <Setter
             Property="BorderBrush"
-            Value="{StaticResource foregroundBrush}"/>
+            Value="{StaticResource borderForegroundBrush}"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
     </Style>
 
     <!-- 
@@ -43,12 +48,10 @@
     having a 5 px margin from the undelined item
     -->
     <Style x:Key="labelBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource borderStyle}">
-        <Setter
-            Property="BorderThickness"
-            Value="0,0,0,0.5"/>
-        <Setter
-            Property="Margin"
-            Value="0,0,0,5"/>
+        <Setter Property="BorderThickness"
+                Value="0,0,0,0.5"/>
+        <Setter Property="Margin" 
+                Value="0,0,0,5"/>
     </Style>
 
     <!-- 
@@ -56,19 +59,25 @@
     -->
     <Style x:Key="buttonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Foreground"
-            Value="{StaticResource foregroundBrush}"/>
+                Value="{StaticResource foregroundBrush}"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
     </Style>
     
     <!--
     A Text Buttons template centers a label with the foreground brush an having a rectengular border.
     The border has no background and is one pixel wide.
-    The padding is a bit wider as the pading of symbl buttons because of esthetical reasons
+    The padding is a bit wider as the pading of symbol buttons because of esthetical reasons
+    The foregound brush is 'textForgroundBrush'
+    Text and Border have same the foreground color
     -->
     <Style x:Key="textButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
         <Setter Property="FontFamily"
                 Value="Segoe UI"/>
         <Setter Property="Padding"
             Value="6,2,6,2"/>
+        <!--<Setter Property="Foreground"
+            Value="{StaticResource textForegroundBrush}"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -77,10 +86,10 @@
                             Background="Transparent"
                             BorderThickness="1"
                             Padding="1"
-                            BorderBrush="{StaticResource foregroundBrush}"
+                            BorderBrush="{StaticResource borderForegroundBrush}"
                             Visibility="Hidden"/>
                         <Border Name="buttonBorder"
-                            BorderBrush="{TemplateBinding Foreground}"
+                            BorderBrush="{StaticResource textForegroundBrush}"
                             BorderThickness="1"
                             Background="Transparent"/>
                     <!--<mwt:ButtonChrome 
@@ -144,22 +153,22 @@
                 Value="15"/>
         <Setter Property="Padding"
             Value="2,2,2,2"/>
+        <Setter Property="Foreground"
+                Value="{StaticResource textForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid
                         Height="{TemplateBinding Height}"
                         Width="{TemplateBinding Width}">
-                        <Border
-                            Name="focusButtonBorder"
+                        <Border Name="focusButtonBorder"
                             Background="Transparent"
                             BorderThickness="1"
                             Padding="1"
-                            BorderBrush="{StaticResource foregroundBrush}"
+                            BorderBrush="{StaticResource borderForegroundBrush}"
                             SnapsToDevicePixels="True"
                             Visibility="Hidden"/>
-                        <Border
-                            Name="buttonBorder"
+                        <Border Name="buttonBorder"
                             Margin="1"
                             Background="Transparent"
                             BorderBrush="{TemplateBinding Foreground}"
@@ -211,20 +220,18 @@
         </Setter>
     </Style>
 
-    <Style x:Key="addSymbolButtonStyle" BasedOn="{StaticResource symbolButtonStyle}" TargetType="Button">
+    <Style x:Key="addSymbolButtonStyle"  TargetType="{x:Type Button}" BasedOn="{StaticResource symbolButtonStyle}">
         <!--<Setter Property="Padding"
                 Value="1,1,2,2"/>-->
         <Setter Property="Content"
                 Value="M 1,4.5 L 9,4.5 M 4.5,1 L 4.5,9"/>
     </Style>
 
-    <Style x:Key="removeSymbolButtonStyle"
-           BasedOn="{StaticResource symbolButtonStyle}"
-           TargetType="Button">
+    <Style x:Key="removeSymbolButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource symbolButtonStyle}">
         <!--<Setter Property="Padding"
                 Value="1,1,2,2"/>-->
         <Setter Property="Content"
-                Value="M 1,3.5 L 9,3.5"/>
+                Value="M 1,1.5 L 9,1.5"/>
     </Style>
 
     <Style x:Key="checkBoxStyle"
@@ -355,11 +362,9 @@
             
     </Style>
 
-    <Style x:Key="labelStyle"
-        BasedOn="{StaticResource {x:Type Label}}" 
-        TargetType="{x:Type Label}">
+    <Style x:Key="labelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
         <Setter Property="Foreground"
-            Value="{StaticResource foregroundBrush}"/>
+            Value="{StaticResource textForegroundBrush}"/>
         <Setter Property="FontFamily"
                 Value="Segoe UI"/>
     </Style>
@@ -572,9 +577,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="listBoxStyle"
-        BasedOn="{StaticResource {x:Type ListBox}}"
-        TargetType="{x:Type ListBox}">
+    <Style x:Key="listBoxStyle" BasedOn="{StaticResource {x:Type ListBox}}" TargetType="{x:Type ListBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate 
@@ -603,18 +606,14 @@
             Value="Stretch" />
     </Style>
 
-    <Style x:Key="textBlockStyle" 
-        BasedOn="{StaticResource {x:Type TextBlock}}" 
-        TargetType="{x:Type TextBlock}">
+    <Style x:Key="textBlockStyle" BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground"
-            Value="{StaticResource foregroundBrush}"/>
+            Value="{StaticResource textForegroundBrush}"/>
         <Setter Property="FontFamily"
                 Value="Segoe UI"/>
     </Style>
 
-    <Style x:Key="textBoxStyle" 
-        BasedOn="{StaticResource {x:Type TextBox}}" 
-        TargetType="{x:Type TextBox}">
+    <Style x:Key="textBoxStyle" BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
         <Setter
             Property="Foreground"
             Value="{StaticResource foregroundBrush}"/>
@@ -625,42 +624,39 @@
                 Value="Segoe UI"/>
         <Setter Property="BorderThickness"
             Value="0,0,0,0.5"/>
+        <Setter Property="Foreground"
+                Value="{StaticResource textForegroundBrush}"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate 
-                    TargetType="{x:Type TextBoxBase}">
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <!--RenderMouseOver="{TemplateBinding UIElement.IsMouseOver}" 
                         RenderFocused="{TemplateBinding UIElement.IsKeyboardFocusWithin}"-->
                     <!-- background of border is set explicitely here. The Template value id taken for inverted Caret color -->
-                    <Border
+                    <Border Name="Bd" 
                         Background="Transparent" 
                         BorderBrush="{TemplateBinding Foreground}" 
                         BorderThickness="{TemplateBinding Border.BorderThickness}" 
-                        Name="Bd" 
                         SnapsToDevicePixels="True">
-                        <ScrollViewer 
-                            Name="PART_ContentHost" 
-                            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                        <ScrollViewer Name="PART_ContentHost" 
+                                      SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger
-                            Property="UIElement.IsKeyboardFocusWithin"
+                        <Trigger Property="UIElement.IsKeyboardFocusWithin"
                             Value="True">
                             <Setter
                                 Property="Foreground"
                                 Value="{StaticResource activeForegroundBrush}"/>
                         </Trigger>
                         <Trigger Property="UIElement.IsMouseOver"
-                            Value="True">
-                            <Setter
-                                Property="Foreground"
-                                Value="{StaticResource activeForegroundBrush}"/>
+                                 Value="True">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource activeForegroundBrush}"/>
                         </Trigger>
-                        <Trigger 
-                            Property="UIElement.IsEnabled"
+                        <Trigger Property="UIElement.IsEnabled"
                             Value="False">
-                            <Setter 
-                                Property="TextElement.Foreground">
+                            <Setter Property="TextElement.Foreground">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
                                 </Setter.Value>
@@ -670,7 +666,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-            
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>                
                 <ControlTemplate>
@@ -695,15 +690,13 @@
         </Setter>
     </Style>
 
-    <Style x:Key="toolTipStyle"
-            BasedOn="{StaticResource {x:Type ToolTip}}"
-            TargetType="ToolTip">
+    <Style x:Key="toolTipStyle" BasedOn="{StaticResource {x:Type ToolTip}}" TargetType="{x:Type ToolTip}">
         <Setter Property="HasDropShadow"
             Value="True" />
         <Setter Property="Background"
             Value="{StaticResource dialogContentBackgroundBrush}"/>
         <Setter Property="Foreground"
-            Value="{StaticResource foregroundBrush}"/>
+            Value="{StaticResource textForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
@@ -720,11 +713,9 @@
                             VerticalAlignment="Top" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger 
-                            Property="HasDropShadow"
-                            Value="true">
-                            <Setter 
-                                TargetName="Border"
+                        <Trigger Property="HasDropShadow"
+                                Value="true">
+                            <Setter TargetName="Border"
                                 Property="SnapsToDevicePixels"
                                 Value="true" />
                         </Trigger>
