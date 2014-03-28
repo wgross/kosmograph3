@@ -220,20 +220,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="addSymbolButtonStyle"  TargetType="{x:Type Button}" BasedOn="{StaticResource symbolButtonStyle}">
-        <!--<Setter Property="Padding"
-                Value="1,1,2,2"/>-->
-        <Setter Property="Content"
-                Value="M 1,4.5 L 9,4.5 M 4.5,1 L 4.5,9"/>
-    </Style>
-
-    <Style x:Key="removeSymbolButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource symbolButtonStyle}">
-        <!--<Setter Property="Padding"
-                Value="1,1,2,2"/>-->
-        <Setter Property="Content"
-                Value="M 1,1.5 L 9,1.5"/>
-    </Style>
-
+    
     <Style x:Key="checkBoxStyle"
            BasedOn="{StaticResource {x:Type CheckBox}}"
            TargetType="{x:Type CheckBox}">
