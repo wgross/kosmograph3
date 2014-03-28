@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:KosmoGraph.Desktop.View"
         xmlns:kd="clr-namespace:KosmoGraph.Desktop"
-        Title="MainWindow" Height="350" Width="525">
+        Title="KosmoGraph" Height="350" Width="525">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
             Executed="CreateEntityExecuted"
