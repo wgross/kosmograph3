@@ -3,12 +3,12 @@
                     xmlns:local="clr-namespace:KosmoGraph.Desktop.View">
     <!-- 
     COLORS & BRUSHES
-    forground and backgrond colors for dark areas and light areas 
+    forground and backgrond colors for title area and Work area of the window structure
     -->
-    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#FF909090"/>
-    <SolidColorBrush x:Key="DarkForegroundBrush" Color="White"/>
-    <SolidColorBrush x:Key="DarkActivatedForegroundBrush" Color="Orange"/>
-    <SolidColorBrush x:Key="LightBackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="titleAreaBackgroundBrush" Color="#FF909090"/>
+    <SolidColorBrush x:Key="titleAreaForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="titleAreaActivatedForegroundBrush" Color="Orange"/>
+    <SolidColorBrush x:Key="workAreaBackgroundBrush" Color="White"/>
 
     <!--  
     WINDOW BUTTONS
@@ -22,7 +22,7 @@
         <Setter Property="FontSize" 
                     Value="13.333" />
         <Setter Property="Foreground" 
-                    Value="{StaticResource DarkForegroundBrush}"/>
+                    Value="{StaticResource titleAreaForegroundBrush}"/>
         <Setter Property="Margin" 
                     Value="0,2,3,0"/>
         <Setter Property="Template">
@@ -48,7 +48,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkActivatedForegroundBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource titleAreaActivatedForegroundBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -82,7 +82,7 @@
     -->
     <Style x:Key="windowTitleTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Foreground"
-                Value="{StaticResource DarkForegroundBrush}"/>
+                Value="{StaticResource titleAreaForegroundBrush}"/>
         <Setter Property="FontSize"
                 Value="16"/>
         <Setter Property="FontFamily"
@@ -113,7 +113,7 @@
            
     <Style x:Key="windowPanelStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background"
-                Value="{StaticResource DarkBackgroundBrush}"/>
+                Value="{StaticResource titleAreaBackgroundBrush}"/>
     </Style>
 
     <!-- Window style -->
@@ -123,11 +123,11 @@
         <Setter Property="ResizeMode" 
                 Value="NoResize"/>
         <Setter Property="Background" 
-                Value="{StaticResource LightBackgroundBrush}"/>
+                Value="{StaticResource workAreaBackgroundBrush}"/>
         <Setter Property="BorderThickness" 
                 Value="1"/>
         <Setter Property="BorderBrush" 
-                Value="{StaticResource DarkBackgroundBrush}"/>
+                Value="{StaticResource titleAreaBackgroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:KosmoGraphWindow}">
