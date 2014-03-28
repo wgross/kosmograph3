@@ -105,6 +105,8 @@
     <Compile Include="ExecuteRoutedEventArgsWithType.cs" />
     <Compile Include="KosmoGraphBootstrapper.cs" />
     <Compile Include="KosmoGraphBootstrapperLogger.cs" />
+    <Compile Include="Window\KosmoGraphWindow.cs" />
+    <Compile Include="Window\KosmoGraphWindow.Mouse.cs" />
     <Compile Include="ViewModel\EntityRelationshipViewModelFactoryExtensions.cs" />
     <Compile Include="ViewModel\Layout\LayoutEdgeExtensions.cs" />
     <Compile Include="ViewModel\Layout\LayoutNodeExtensions.cs" />
@@ -161,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Graph\EntityRelationshipControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

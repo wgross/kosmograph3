@@ -1,0 +1,155 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KosmoGraph.Desktop.View">
+    <!-- 
+    COLORS & BRUSHES
+    forground and backgrond colors for dark areas and light areas 
+    -->
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#FF909090"/>
+    <SolidColorBrush x:Key="DarkForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="DarkActivatedForegroundBrush" Color="Orange"/>
+    <SolidColorBrush x:Key="LightBackgroundBrush" Color="White"/>
+
+    <!--  
+    WINDOW BUTTONS
+    Use windings font for graphic representation on transparent background.
+    -->
+    <Style x:Key="windowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" 
+                    Value="Transparent"/>
+        <Setter Property="FontFamily" 
+                    Value="Webdings"/>
+        <Setter Property="FontSize" 
+                    Value="13.333" />
+        <Setter Property="Foreground" 
+                    Value="{StaticResource DarkForegroundBrush}"/>
+        <Setter Property="Margin" 
+                    Value="0,2,3,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="Chrome"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Margin="{TemplateBinding Padding}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource DarkActivatedForegroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--
+    Minimize Button
+    -->
+    <Style x:Key="minimizeWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource windowButtonStyle}">
+        <Setter Property="Content"
+                Value="0"/>
+    </Style>
+
+    <!--
+    Restore Button
+    -->
+    <Style x:Key="restoreWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource windowButtonStyle}">
+        <Setter Property="Content"
+                Value="1"/>
+    </Style>
+
+    <!--
+    Close Window Button
+    -->
+    <Style x:Key="closeWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource windowButtonStyle}">
+        <Setter Property="Content"
+                Value="r"/>
+    </Style>
+    
+    <!--
+    Resize Rectangles
+    -->
+    <Style x:Key="resizeRectangleStyle" TargetType="{x:Type Rectangle}">
+        <Setter Property="Stroke"
+                Value="{x:Null}"/>
+        <Setter Property="Fill"
+                Value="Transparent"/>
+        <Setter Property="Height"
+                Value="5"/>
+        <Setter Property="Width"
+                Value="5"/>
+    </Style>
+           
+    <Style x:Key="windowPanelStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background"
+                Value="{StaticResource DarkBackgroundBrush}"/>
+    </Style>
+
+    <!-- Window style -->
+    <Style x:Key="{x:Type local:KosmoGraphWindow}" TargetType="{x:Type local:KosmoGraphWindow}" BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="WindowStyle" 
+                Value="None"/>
+        <Setter Property="ResizeMode" 
+                Value="NoResize"/>
+        <Setter Property="Background" 
+                Value="{StaticResource LightBackgroundBrush}"/>
+        <Setter Property="BorderThickness" 
+                Value="1"/>
+        <Setter Property="BorderBrush" 
+                Value="{StaticResource DarkBackgroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:KosmoGraphWindow}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <Grid x:Name="windowPanel" Style="{StaticResource windowPanelStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Row="0" Grid.Column="0" x:Name="moveWindowRectangle"
+                                           Fill="Transparent"/>
+                                <StackPanel Grid.Row="0" Grid.Column="1" 
+                                            Orientation="Horizontal">
+                                    <Button x:Name="minimizeButton" Style="{StaticResource minimizeWindowButtonStyle}"/>
+                                    <Button x:Name="restoreButton" Style="{StaticResource restoreWindowButtonStyle}"/>
+                                    <Button x:Name="closeButton" Style="{StaticResource closeWindowButtonStyle}"/>
+                                </StackPanel>
+                                <Grid Grid.Row="1" Grid.ColumnSpan="2" 
+                                      Background="{TemplateBinding Background}"
+                                      Margin="0,30,0,0">
+                                    <AdornerDecorator>
+                                        <ContentPresenter/>
+                                    </AdornerDecorator>
+                                </Grid>
+                            </Grid>
+                            <Grid x:Name="resizeWindowGrid">
+                                <!-- resize only possible at bottom right corner -->
+                                <Rectangle x:Name="bottomRight" Style="{StaticResource resizeRectangleStyle}"
+                                           VerticalAlignment="Bottom"
+                                           HorizontalAlignment="Right">
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

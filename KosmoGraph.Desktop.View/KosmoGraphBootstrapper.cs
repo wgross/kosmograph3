@@ -21,12 +21,12 @@
 
         protected override DependencyObject CreateShell()
         {
-            return ServiceLocator.Current.GetInstance<MainWindow>();
+            return ServiceLocator.Current.GetInstance<KosmoGraphWindow>();
         }
 
         protected override void InitializeShell()
         {
-            Application.Current.MainWindow = (MainWindow)(this.Shell);
+            Application.Current.MainWindow = (KosmoGraphWindow)(this.Shell);
             Application.Current.MainWindow.Show();
         }
 

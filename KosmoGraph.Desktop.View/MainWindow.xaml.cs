@@ -31,6 +31,7 @@
         {
             this.InitializeComponent();
             this.Activated += MainWindow_Activated;
+            new KosmoGraphWindow().Show();
         }
 
         void MainWindow_Activated(object sender, EventArgs e)
@@ -39,6 +40,7 @@
             {
                 this.CreateNewModelFromStore();
                 if (this.Model == null)
+                    if(Application.Current!=null)
                     Application.Current.Shutdown();
             }
         }
