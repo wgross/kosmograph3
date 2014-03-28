@@ -1,4 +1,4 @@
-﻿<Window x:Class="KosmoGraph.Desktop.View.MainWindow"
+﻿<view:KosmoGraphWindow x:Class="KosmoGraph.Desktop.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:KosmoGraph.Desktop.View"
@@ -141,4 +141,4 @@
             </DockPanel>
         </Grid>
     </Grid>
-</Window>
+</view:KosmoGraphWindow>

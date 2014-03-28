@@ -23,7 +23,7 @@
     using KosmoGraph.Desktop.Dialog;
     
     [Export]
-    public partial class MainWindow : Window
+    public partial class MainWindow : KosmoGraphWindow
     {
         #region Construction and initialization of this instance
 
@@ -31,7 +31,6 @@
         {
             this.InitializeComponent();
             this.Activated += MainWindow_Activated;
-            new KosmoGraphWindow().Show();
         }
 
         void MainWindow_Activated(object sender, EventArgs e)

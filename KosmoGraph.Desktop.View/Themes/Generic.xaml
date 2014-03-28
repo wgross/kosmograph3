@@ -78,7 +78,8 @@
     </Style>
     
     <!--
-    Resize Rectangles
+    WINDOW RECTANGLES
+    Implement entities to perform window action like resize and move
     -->
     <Style x:Key="resizeRectangleStyle" TargetType="{x:Type Rectangle}">
         <Setter Property="Stroke"
@@ -89,6 +90,13 @@
                 Value="5"/>
         <Setter Property="Width"
                 Value="5"/>
+    </Style>
+    
+    <Style x:Key="dragRectangleStyle" TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill"
+                Value="Transparent"/>
+        <Setter Property="Height"
+                Value="60"/>
     </Style>
            
     <Style x:Key="windowPanelStyle" TargetType="{x:Type Grid}">
@@ -123,17 +131,23 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Row="0" Grid.Column="0" x:Name="moveWindowRectangle"
-                                           Fill="Transparent"/>
+                                <!-- 
+                                'dark area' content: a rectagöe to move window and a stack panel with 
+                                window buttons at the upper right
+                                -->
+                                <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="moveWindowRectangle"
+                                           Style="{StaticResource dragRectangleStyle}"/>
                                 <StackPanel Grid.Row="0" Grid.Column="1" 
-                                            Orientation="Horizontal">
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right">
                                     <Button x:Name="minimizeButton" Style="{StaticResource minimizeWindowButtonStyle}"/>
                                     <Button x:Name="restoreButton" Style="{StaticResource restoreWindowButtonStyle}"/>
                                     <Button x:Name="closeButton" Style="{StaticResource closeWindowButtonStyle}"/>
                                 </StackPanel>
                                 <Grid Grid.Row="1" Grid.ColumnSpan="2" 
                                       Background="{TemplateBinding Background}"
-                                      Margin="0,30,0,0">
+                                      Margin="0,0,0,0">
                                     <AdornerDecorator>
                                         <ContentPresenter/>
                                     </AdornerDecorator>
