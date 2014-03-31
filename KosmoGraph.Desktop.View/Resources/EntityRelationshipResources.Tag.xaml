@@ -5,7 +5,6 @@
         <ResourceDictionary Source="./CommonResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    
     <!--Tag list on the right-->
 
     <Style x:Key="createFacetButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource textButtonStyle}">
@@ -29,14 +28,11 @@
                 <DataTemplate>
                     <StackPanel
                         Orientation="Horizontal">
-                        <CheckBox
-                            Name="cb"
+                        <CheckBox Name="cb" Style="{StaticResource checkBoxStyle}"
                             IsChecked="{Binding IsVisible}"
-                            Style="{StaticResource checkBoxStyle}"
                             VerticalAlignment="Center"/>
-                        <TextBlock
+                        <TextBlock Text="{Binding Name}"
                             Margin="4,0,0,0"
-                            Text="{Binding Name}"
                             VerticalAlignment="Center"/>
                     </StackPanel>
                     <DataTemplate.Triggers>
