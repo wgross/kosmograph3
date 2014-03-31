@@ -167,15 +167,14 @@
                             <Setter Property="TextElement.Foreground"
                                     Value="{StaticResource activeSelectedForegroundBrush}"/>
                         </DataTrigger>
-                        <!-- obsolete for now
-                        <DataTrigger Binding="{Binding IsVisible}" Value="false">
-                            --><!-- change foreground color if entity is invisible --><!--
+                        <DataTrigger Binding="{Binding IsVisible}" Value="true">
+                            <!-- change foreground color if entity is invisible -->
                             <Setter Property="Border.BorderBrush"
-                                    Value="{StaticResource inactiveForegroundBrush}"/>
+                                    Value="{StaticResource activeForegroundBrush}"/>
                             <Setter Property="TextElement.Foreground"
-                                    Value="{StaticResource inactiveForegroundBrush}"/>
+                                    Value="{StaticResource activeForegroundBrush}"/>
                         </DataTrigger>
-                        -->
+                        
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <!-- make connector visible if mouse is over entity -->
@@ -330,17 +329,17 @@
                         </view:PublishDesiredSizeListBox>
                     </Grid>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected}"
-                            Value="true">
+                        <DataTrigger Binding="{Binding IsSelected}" Value="true">
                             <Setter Property="Shape.Stroke"
                                 Value="{StaticResource activeSelectedForegroundBrush}"/>
                         </DataTrigger>
-                        <!-- obsolete for now
-                        <DataTrigger Binding="{Binding IsVisible}" Value="false">
+                        <DataTrigger Binding="{Binding IsVisible}" Value="true">
                             <Setter Property="Shape.Stroke"
-                                    Value="{StaticResource inactiveForegroundBrush}"/>
+                                    Value="{StaticResource activeForegroundBrush}"/>
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{StaticResource activeForegroundBrush}"/>
                         </DataTrigger>
-                        -->
+                        
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </Setter.Value>
