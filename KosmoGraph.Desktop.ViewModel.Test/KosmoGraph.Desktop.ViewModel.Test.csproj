@@ -76,6 +76,7 @@
     <Compile Include="Entity\RemoveAssignedEntityFacetTest.cs" />
     <Compile Include="Entity\RemoveEntityAndRelationshipsFromViewModelTest.cs" />
     <Compile Include="Entity\RemoveEntityFromViewModelTest.cs" />
+    <Compile Include="Entity\InitializeNewEntityWithSelectedFacetsTest.cs" />
     <Compile Include="Entity\UpdateExistingEntityViewModelTest.cs" />
     <Compile Include="Facet\CreateNewPropertyDefinitionAtRelationshipFacetTest.cs" />
     <Compile Include="Facet\RemovePropertyDefinitionFromEntityFacetTest.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Relationship\RemoveAssignedRelationshipFacetTest.cs" />
     <Compile Include="Relationship\RemoveRelationshipFromViewModelTest.cs" />
     <Compile Include="Relationship\CreateNewRelationshipInteractivelyTest.cs" />
+    <Compile Include="Relationship\InitializeNewRelationshipWithVisibleFactetsTest.cs" />
     <Compile Include="Relationship\UpdateExistingRelationshipTest.cs" />
     <Compile Include="CreateNewEntityFacetViewModelTest.cs" />
     <Compile Include="Facet\CreateNewFacetViewModelTest.cs" />

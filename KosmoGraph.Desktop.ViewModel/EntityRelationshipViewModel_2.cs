@@ -164,7 +164,16 @@
 
         public EditNewEntityViewModel CreateNewEntity()
         {
-            return new EditNewEntityViewModel(this, this.EntityRelationshipService);
+            var newEntityEditor = new EditNewEntityViewModel(this, this.EntityRelationshipService);
+            
+            this.Facets.Where(f => f.IsVisible).ForEach(f =>
+            {
+                if (newEntityEditor.AssignFacet.CanExecute(f))
+                    newEntityEditor.AssignFacet.Execute(f);
+            });
+            
+            return newEntityEditor;
+
 
             //if(this.Entities.Any(e => StringComparer.CurrentCultureIgnoreCase.Equals(e.Name, name)))
             //    throw new InvalidOperationException(string.Format("Duplicate entity name '{0}", name));
@@ -215,7 +224,15 @@
 
         public EditNewRelationshipViewModel CreatePendingRelationship(EntityViewModel from)
         {
-            return new EditNewRelationshipViewModel(from, this, this.EntityRelationshipService);
+            var newRelationshipEditor = new EditNewRelationshipViewModel(from, this, this.EntityRelationshipService);
+
+            this.Facets.Where(f => f.IsVisible).ForEach(f =>
+            {
+                if (newRelationshipEditor.AssignFacet.CanExecute(f))
+                    newRelationshipEditor.AssignFacet.Execute(f);
+            });
+
+            return newRelationshipEditor;   
         }
 
         private RelationshipViewModel CreateRelationshipFromModelItem(Relationship modelItem)
