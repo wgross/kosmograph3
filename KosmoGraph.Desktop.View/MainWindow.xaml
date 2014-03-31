@@ -8,11 +8,11 @@
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateEntity}"
             Executed="CreateEntityExecuted"
             CanExecute="CreateEntityCanExecute"/>
-        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntities}"
+        <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipBetweenEntities}"
             Executed="CreateRelationshipBetweenEntitiesExecuted"
             CanExecute="CreateRelationshipBetweenEntitiesCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateRelationshipWithEntity}"
-            Executed="CreateRelationshipEndEntityExecuted"
+            Executed="CreateRelationshipAndEntityExecuted"
             CanExecute="CreateRelationshipAndEntityCanExecute"/>
         <CommandBinding Command="{x:Static kd:EntityRelationshipModelCommands.CreateFacet}"
             Executed="CreateNewFacetExecuted"

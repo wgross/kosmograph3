@@ -79,7 +79,7 @@
 
         #endregion
 
-        #region Handle CreateRelationship command
+        #region Handle CreateRelationshipBetweenEntities command
 
         private void CreateRelationshipBetweenEntitiesCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
@@ -162,20 +162,38 @@
         
         private void CreateRelationshipAndEntityCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
+            var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
+            if (relationshipDialogViewModel == null)
+            {
+                args.CanExecute = false;
+                return;
+            }
+
+            //if (relationshipDialogViewModel.From == null || relationshipDialogViewModel.To == null)
+            //{
+            //    args.CanExecute = false;
+            //    return;
+            //}
+
             args.CanExecute = true;
         }
 
-        private void CreateRelationshipEndEntityExecuted(object sender, ExecutedRoutedEventArgs args)
+        private void CreateRelationshipAndEntityExecuted(object sender, ExecutedRoutedEventArgs args)
         {
-            var relationshipDialogViewModel = this.Model.EditRelationship(args.Parameter as RelationshipViewModel);
-            relationshipDialogViewModel.EnableCommit = true;
+            var relationshipDialogViewModel = args.Parameter as EditNewRelationshipViewModel;
+            
+            relationshipDialogViewModel.Rollback.Execute();
 
-            var entityDialogViewModel = this.Model.EditEntity(args.GetParameter<RelationshipViewModel>().To.Entity);
-            entityDialogViewModel.EnableCommit = true;
+            //var relationshipDialogViewModel = this.Model.EditRelationship(args.Parameter as EditNewRelationshipViewModel);
+            
+            //relationshipDialogViewModel.EnableCommit = true;
 
-            var committed = this.rootPanel.ShowDialog(new object[]{entityDialogViewModel, relationshipDialogViewModel},
-                DialogActionBuilder.Ok("ok", entityDialogViewModel.Commit, relationshipDialogViewModel.Commit), 
-                DialogActionBuilder.Cancel("cancel", entityDialogViewModel.Rollback, relationshipDialogViewModel.Rollback));
+            //var entityDialogViewModel = this.Model.EditEntity(args.GetParameter<RelationshipViewModel>().To.Entity);
+            //entityDialogViewModel.EnableCommit = true;
+
+            //var committed = this.rootPanel.ShowDialog(new object[]{entityDialogViewModel, relationshipDialogViewModel},
+            //    DialogActionBuilder.Ok("ok", entityDialogViewModel.Commit, relationshipDialogViewModel.Commit), 
+            //    DialogActionBuilder.Cancel("cancel", entityDialogViewModel.Rollback, relationshipDialogViewModel.Rollback));
            
             //if (committed.HasValue && committed.Value)
             //{

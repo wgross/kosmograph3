@@ -156,20 +156,21 @@
                 if (this.entitiesHit.Count == 2)
                 {
                     this.pendingRelationship.SetDestination.Execute(this.entitiesHit.Last());
-                    EntityRelationshipModelCommands.CreateRelationshipWithEntities.Execute(this.pendingRelationship,this);
+                    EntityRelationshipModelCommands.CreateRelationshipBetweenEntities.Execute(this.pendingRelationship,this);
                 }
-                //else if (this.entitiesHit.Count == 1)
-                //{
-                //    //this.Model.CreateNewRelationship()
-                //    //TODO:
-                //    var pendingEntity = this.Model.CreateNewEntity(); ///string.Format("Entity {0}", this.Model.Entities.Count()));
-                //    //pendingEntity.Top=this.pendingRelationship.ToPoint.Y;
-                //    //pendingEntity.Left=this.pendingRelationship.ToPoint.X;
-                //    //this.pendingRelationship.To=pendingEntity.CentralConnector;
+                else if (this.entitiesHit.Count == 1)
+                {
+                    EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
+                    //    //this.Model.CreateNewRelationship()
+                    //    //TODO:
+                    //    var pendingEntity = this.Model.CreateNewEntity(); ///string.Format("Entity {0}", this.Model.Entities.Count()));
+                    //    //pendingEntity.Top=this.pendingRelationship.ToPoint.Y;
+                    //    //pendingEntity.Left=this.pendingRelationship.ToPoint.X;
+                    //    //this.pendingRelationship.To=pendingEntity.CentralConnector;
 
-                //    //EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
-                //}
-                
+                    //    //EntityRelationshipModelCommands.CreateRelationshipWithEntity.Execute(this.pendingRelationship, this);
+                    //}
+                }      
             }
 
             // clean temporary data from diagrm canvas 
