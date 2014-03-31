@@ -52,7 +52,7 @@
                     <ToolTip.Resources>
                         <CollectionViewSource x:Key="groupedPropertiesCollection" Source="{Binding Properties}">
                             <CollectionViewSource.GroupDescriptions>
-                                <PropertyGroupDescription PropertyName="Definition.Tag.Name" />
+                                <PropertyGroupDescription PropertyName="Definition.Facet.Name" />
                             </CollectionViewSource.GroupDescriptions>
                         </CollectionViewSource>
                     </ToolTip.Resources>
@@ -112,7 +112,7 @@
                                     <CollectionViewSource x:Key="groupedVisiblePropertiesCollection"
                                                           Source="{Binding VisibleProperties}">
                                         <CollectionViewSource.GroupDescriptions>
-                                            <PropertyGroupDescription PropertyName="Definition.Tag.Name" />
+                                            <PropertyGroupDescription PropertyName="Definition.Facet.Name" />
                                         </CollectionViewSource.GroupDescriptions>
                                     </CollectionViewSource>
                                 </StackPanel.Resources>
@@ -215,7 +215,7 @@
                             Source="{Binding Properties}">
                             <CollectionViewSource.GroupDescriptions>
                                 <PropertyGroupDescription 
-                                    PropertyName="Definition.Tag.Name" />
+                                    PropertyName="Definition.Facet.Name" />
                             </CollectionViewSource.GroupDescriptions>
                         </CollectionViewSource>
                     </ToolTip.Resources>
@@ -267,7 +267,7 @@
                             <CollectionViewSource x:Key="groupedVisiblePropertiesCollection"
                                                     Source="{Binding VisibleProperties}">
                                 <CollectionViewSource.GroupDescriptions>
-                                    <PropertyGroupDescription PropertyName="Definition.Tag.Name" />
+                                    <PropertyGroupDescription PropertyName="Definition.Facet.Name" />
                                 </CollectionViewSource.GroupDescriptions>
                             </CollectionViewSource>
                         </Grid.Resources>
@@ -378,7 +378,7 @@
                             <CollectionViewSource x:Key="groupedVisiblePropertiesCollection"
                                                     Source="{Binding VisibleProperties}">
                                 <CollectionViewSource.GroupDescriptions>
-                                    <PropertyGroupDescription PropertyName="Definition.Tag.Name" />
+                                    <PropertyGroupDescription PropertyName="Definition.Facet.Name" />
                                 </CollectionViewSource.GroupDescriptions>
                             </CollectionViewSource>
                         </Grid.Resources>

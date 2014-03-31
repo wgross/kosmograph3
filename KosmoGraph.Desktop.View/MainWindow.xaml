@@ -61,11 +61,11 @@
         </ResourceDictionary>
     </Window.Resources>
     <!--
-    The root panel secified the backgrond color of the woriking area and is the anchor for diaplaying 
-    dialog fro dialog service.
+    The root panel secified the backgrond color of the working area and is the anchor for diaplaying 
+    dialogs from dialog service.
     -->
     <Grid Name="rootPanel" 
-        Background="{StaticResource backgroundBrush}">
+          Background="{StaticResource backgroundBrush}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="150"/>

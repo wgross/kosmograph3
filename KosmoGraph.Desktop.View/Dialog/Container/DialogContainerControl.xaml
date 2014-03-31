@@ -13,45 +13,36 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Border
-            Background="{StaticResource dialogBackgroundBrush}"/>
-        <StackPanel
-            Name="contentPanel"
-            Background="{StaticResource dialogContentBackgroundBrush}"
-            HorizontalAlignment="Center"
-            Orientation="Vertical"
-            VerticalAlignment="Top">
-            <ItemsControl
-                Name="dialogContent"
-                Margin="5"
-                ItemsSource="{Binding DialogContent}"
-                Loaded="dialogContent_Loaded"/>
+    <Grid Background="{StaticResource inactiveAreaBackgroundBrush}">
+        <StackPanel Name="contentPanel"
+                    HorizontalAlignment="Center"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource workAreaBackgroundBrush}">
+            <ItemsControl Name="dialogContent"
+                          ItemsSource="{Binding DialogContent}"
+                          Loaded="dialogContent_Loaded"/>
             <StackPanel
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <ItemsControl
+                <ItemsControl ItemsSource="{Binding DialogActions}"
                     DockPanel.Dock="Bottom"
-                    ItemsSource="{Binding DialogActions}"
                     Margin="5">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel
-                                Orientation="Horizontal"
-                                IsItemsHost="True"/>
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button
-                                Style="{StaticResource textButtonStyle}"
-                                Command="{Binding Command}"
-                                CommandParameter="{Binding .}"
-                                Content="{Binding Name}"
-                                IsCancel="{Binding IsCancel}"
-                                IsDefault="{Binding IsDefault}"
-                                Margin="5,0,0,0"
-                                MinWidth="35"/>
+                            <Button Style="{StaticResource textButtonStyle}"
+                                    Command="{Binding Command}"
+                                    CommandParameter="{Binding .}"
+                                    Content="{Binding Name}"
+                                    IsCancel="{Binding IsCancel}"
+                                    IsDefault="{Binding IsDefault}"
+                                    Margin="5,0,0,0"
+                                    MinWidth="35"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

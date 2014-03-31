@@ -9,20 +9,30 @@
         <ResourceDictionary Source="../../Resources/CommonResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- Borders in dialogs -->
+    <!-- 
+    COLORS & BRUSHES (Repeates the colors from custom window)
+    forground and backgrond colors for title area and Work area of the window structure
+    -->
+    <SolidColorBrush x:Key="titleAreaBackgroundBrush" Color="#FF909090"/>
+    <SolidColorBrush x:Key="titleAreaForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="workAreaBackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="workAreaForegroundBrush" Color="#FF909090"/>
+    <SolidColorBrush x:Key="inactiveAreaBackgroundBrush" Color="Black" Opacity="0.3"/>
+    <!--<SolidColorBrush x:Key="dialogBackgroundBrush" Opacity="0.5" Color="#FF909090"/>-->
+    <!--<SolidColorBrush x:Key="dialogContentBackgroundBrush" Opacity="0.8" Color="#FF909090"/>-->
 
-    <Style x:Key="dialogTitleBorderStyle" 
-           BasedOn="{StaticResource borderStyle}"
-           TargetType="{x:Type Border}">
-        <Setter
-            Property="BorderThickness"
-            Value="0,3,0,0"/>
-        <Setter
-            Property="Margin"
-            Value="0,2,0,2"/>
+    <!-- BORDER -->
+
+    <Style x:Key="dialogTitleBorderStyle" BasedOn="{StaticResource borderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness"
+                Value="0"/>
+        <Setter Property="Margin"
+                Value="0"/>
+        <Setter Property="Background"
+                Value="{StaticResource titleAreaBackgroundBrush}"/>
     </Style>
 
-    <!-- Buttons in dialogs -->
+    <!-- BUTTON -->
 
     <Style x:Key="addSymbolButtonStyle"  TargetType="{x:Type Button}" BasedOn="{StaticResource symbolButtonStyle}">
         <!--<Setter Property="Padding"
@@ -66,7 +76,7 @@
             Value="Remove property definition from Facet and all its property values from entities and relationships"/>
     </Style>
     
-    <!-- Labels in dialogs -->
+    <!-- LABEL -->
 
     <Style x:Key="nameLabelStyle" BasedOn="{StaticResource labelStyle}" TargetType="{x:Type Label}">
         <Setter Property="Content"
@@ -107,26 +117,53 @@
                 Value="Edit property definition"/>
     </Style>
     
-    <Style x:Key="databaseNameLabelStyle" BasedOn="{StaticResource nameLabelStyle}" TargetType="{x:Type Label}">
-        <Setter Property="Content" 
-                Value="Database _Name"/>
+    <!-- LISTBOX -->
+
+    <Style x:Key="assignedFacetsListBoxStyle" BasedOn="{StaticResource listBoxStyle}" TargetType="{x:Type ListBox}">
+        <Setter Property="MinWidth"
+                Value="100"/>
+        <Setter Property="MinHeight"
+                Value="50"/>
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource unselectableListBoxItemStyle}"/>
     </Style>
 
-    <!-- TextBlock in dialogs -->
+    <Style x:Key="unassignedFacetsListBoxStyle" BasedOn="{StaticResource listBoxStyle}" TargetType="{x:Type ListBox}">
+        <Setter Property="MinWidth"
+                Value="100"/>
+        <Setter Property="MinHeight"
+                Value="50"/>
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource unselectableListBoxItemStyle}"/>
+    </Style>
+
+    <Style x:Key="propertyValuesListBoxStyle" BasedOn="{StaticResource listBoxStyle}" TargetType="{x:Type ListBox}">
+        <Setter Property="MinWidth"
+                Value="100"/>
+        <Setter Property="MinHeight"
+                Value="50"/>
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource unselectableListBoxItemStyle}"/>
+    </Style>
+    
+    <!-- TEXTBLOCK -->
     
     <Style x:Key="dialogTitle" BasedOn="{StaticResource textBlockStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" 
                 Value="20"/>
         <Setter Property="Margin" 
-                Value="0,0,0,5"/>
+                Value="5"/>
+        <Setter Property="Foreground"
+                Value="{StaticResource titleAreaForegroundBrush}"/>
     </Style>
 
-    <!-- TextBoxes in Dialogs-->
+    <!-- TEXTBOX -->
     
     <Style x:Key="nameTextBoxStyle" BasedOn="{StaticResource textBoxStyle}" TargetType="{x:Type TextBox}">
-        <Setter
-            Property="Margin"
-            Value="0,0,0,5"/>
+        <Setter Property="Margin"
+                Value="0,0,0,5"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Bottom"/>
     </Style>
 
     <Style x:Key="propertyValueTextBoxStyle" 
@@ -137,53 +174,8 @@
             Value="Stretch"/>
     </Style>
 
-    <Style x:Key="databaseNameTextBoxStyle" BasedOn="{StaticResource nameTextBoxStyle}" TargetType="{x:Type TextBox}"/>
-
-    <!-- ListBoxes in dialogs -->
     
-    <Style x:Key="assignedFacetsListBoxStyle" 
-           BasedOn="{StaticResource listBoxStyle}" 
-           TargetType="{x:Type ListBox}">
-        <Setter
-            Property="MinWidth"
-            Value="100"/>
-        <Setter
-            Property="MinHeight"
-            Value="50"/>
-        <Setter
-            Property="ItemContainerStyle"
-            Value="{StaticResource unselectableListBoxItemStyle}"/>
-    </Style>
-
-    <Style x:Key="unassignedFacetsListBoxStyle" 
-           BasedOn="{StaticResource listBoxStyle}" 
-           TargetType="{x:Type ListBox}">
-        <Setter
-            Property="MinWidth"
-            Value="100"/>
-        <Setter
-            Property="MinHeight"
-            Value="50"/>
-        <Setter
-            Property="ItemContainerStyle"
-            Value="{StaticResource unselectableListBoxItemStyle}"/>
-    </Style>
-
-    <Style x:Key="propertyValuesListBoxStyle" 
-           BasedOn="{StaticResource listBoxStyle}" 
-           TargetType="{x:Type ListBox}">
-        <Setter
-            Property="MinWidth"
-            Value="100"/>
-        <Setter
-            Property="MinHeight"
-            Value="50"/>
-        <Setter
-            Property="ItemContainerStyle"
-            Value="{StaticResource unselectableListBoxItemStyle}"/>
-    </Style>
-
-    <!-- templates for dialog types -->
+    <!-- DIALOG VIEW MODELS -->
     
     <DataTemplate DataType="{x:Type kdd:MessageDialogViewModel}">
         <Grid>
@@ -194,20 +186,15 @@
     <DataTemplate DataType="{x:Type kdvm:EditEntityViewModelBase}">
         <StackPanel>
             <StackPanel.Resources>
-                <CollectionViewSource 
-                    x:Key="groupedPropertiesCollection"
-                    Source="{Binding Properties}">
+                <CollectionViewSource x:Key="groupedPropertiesCollection" Source="{Binding Properties}">
                     <CollectionViewSource.GroupDescriptions>
-                            <PropertyGroupDescription 
-                                PropertyName="Edited.Definition.Facet.Name" />
+                            <PropertyGroupDescription PropertyName="Edited.Definition.Facet.Name" />
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </StackPanel.Resources>
-            <Border
-                Style="{StaticResource dialogTitleBorderStyle}">
-                <TextBlock
-                   Style="{StaticResource dialogTitle}"
-                   Text="{Binding Title}"/>
+            <Border Style="{StaticResource dialogTitleBorderStyle}">
+                <TextBlock Text="{Binding Title}"
+                           Style="{StaticResource dialogTitle}"/>
             </Border>
             <DockPanel
                 LastChildFill="True"
@@ -520,16 +507,37 @@
     </DataTemplate>
    
     <DataTemplate DataType="{x:Type kddvm:SelectModelDatabaseViewModel}">
-        <StackPanel>
+        <StackPanel MinHeight="150">
+            <StackPanel.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="databaseNameLabelStyle" BasedOn="{StaticResource nameLabelStyle}" TargetType="{x:Type Label}">
+                        <Setter Property="Content" 
+                                Value="_Database Name"/>
+                    </Style>
+                    <Style x:Key="serverNameLabelStyle" BasedOn="{StaticResource nameLabelStyle}" TargetType="{x:Type Label}">
+                        <Setter Property="Content" 
+                                Value="_Server Name"/>
+                    </Style>
+                </ResourceDictionary>
+            </StackPanel.Resources>
             <Border Style="{StaticResource dialogTitleBorderStyle}">
                 <TextBlock Style="{StaticResource dialogTitle}"
-                   Text="{Binding Title}"/>
+                           Text="{Binding Title}"/>
             </Border>
-            <Label Style="{StaticResource databaseNameLabelStyle}"
-                   Target="databaseNameTextBox"/>
-            <TextBox Name ="databaseNameTextBox" 
-                     Style="{StaticResource databaseNameTextBoxStyle}"
-                     Text="{Binding DatabaseName}"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{StaticResource serverNameLabelStyle}"
+                       Target="serverNameTextBox"/>
+                <TextBox Name ="serverNameTextBox" 
+                         Style="{StaticResource nameTextBoxStyle}"
+                         Text="localhost"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{StaticResource databaseNameLabelStyle}"
+                       Target="databaseNameTextBox"/>
+                <TextBox Name ="databaseNameTextBox" 
+                         Style="{StaticResource nameTextBoxStyle}"
+                         Text="{Binding DatabaseName}"/>
+            </StackPanel>            
         </StackPanel>
     </DataTemplate>
     
